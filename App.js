@@ -4,7 +4,7 @@ import { createStackNavigator, createBottomTabNavigator, createAppContainer } fr
 import SettingsScreen from "./Components/Settings"
 import MainScreen from "./Components/Main"
 import TimeTables from "./Components/TimeTables"
-import BulletinBoards from "./Components/BulletinBoards"
+import BulletinBoards from "./Components/BulletinBoards/BulletinBoards"
 
 const MainStack = createStackNavigator({
   Main: MainScreen,

@@ -11,18 +11,29 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
+import BulletinBoardsEntries from './BulletinBoardsEntries';
+import { BulletinBoardsEntries_Mock } from '../../Mockup_Datas/UnifiedEntries'
+
 
 class BulletinBoards extends Component{
+
     static navigationOptions = {
         title: 'BulletinBoards Page',
       };
 
     render(){
+        const list = BulletinBoardsEntries_Mock.map(function(entry){
+            return(<BulletinBoardsEntries   userid = {entry.userid}
+                                            username = {entry.username}
+                                            profile = {entry.profile}
+                                            likes = {entry.likes}
+                                            date = {entry.date}
+                                            ismine = {entry.ismine}/>);
+        });
+
         return(
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Text>
-                    게시판
-                </Text>
+                {list}
             </View>
         );
     }

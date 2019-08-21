@@ -6,32 +6,42 @@
     Prop 안받음
 */
 
-export const BulletinBoardEntries = [
+export const BulletinBoardsEntries_Mock = [
     {
-        id: 1,
+        userid: 1,
         username: 'blackpanther',
-        useravatar: 'IMAGELINK (To be implemented)',
+        profile: 'IMAGELINK (To be implemented)',
+        likes: 200,
+        date: '2019-08-20',
+        ismine: true,
         title: 'Why you little!!',
-        content: 'Love Simpsons!',
+        contents: 'Love Simpsons!',
         pictures: 'IMAGELINK (To be implemented)'
     },
     {
-        id: 2,
+        userid: 2,
         username: 'loveyou',
-        useravatar: 'IMAGELINK (To be implemented)',
+        profile: 'IMAGELINK (To be implemented)',
+        likes: 1,
+        date: '2019-07-21',
+        ismine: false,
         title: 'yes',
-        content: 'Love Simpsons!',
+        contents: 'I am yesman',
         pictures: 'IMAGELINK (To be implemented)'
     },
     {
-        id: 441,
+        userid: 441,
         username: 'good',
-        useravatar: 'IMAGELINK (To be implemented)',
+        profile: 'IMAGELINK (To be implemented)',
+        likes: 23,
+        date: '2019-02-21',
+        ismine: false,
         title: 'as hell',
-        content: 'yeah',
+        contents: 'yeah',
         pictures: 'IMAGELINK (To be implemented)'
     },
 ];
+
 
 export const CommentEntries = [
     {
@@ -116,3 +126,8 @@ export const CourseRatingEntries = [
         jokbo: 'Array'
     },
 ];
+
+export default {
+    BulletinBoardsEntries_Mock, CommentEntries, 
+    TimeTableEntries, CourseRatingEntries,
+}
