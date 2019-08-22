@@ -6,8 +6,20 @@
     Prop 안받음
 */
 
+//BulletinBoards Mock
+//userid :  해당 유저의 id
+//username : 해당 유저의 이름
+//profile : 해당 유저의 프로필 사진
+//likes : 좋아요 갯수
+//date : 작성 날짜
+//ismine : 본인 글인지 여부
+//title : 게시글 제목
+//contents : 댓글 내용
+//pictures : 삽입된 사진 링크
+
 export const BulletinBoardsEntries_Mock = [
     {
+        id: 112,
         userid: 1,
         username: 'blackpanther',
         profile: 'IMAGELINK (To be implemented)',
@@ -19,6 +31,7 @@ export const BulletinBoardsEntries_Mock = [
         pictures: 'IMAGELINK (To be implemented)'
     },
     {
+        id: 321,
         userid: 2,
         username: 'loveyou',
         profile: 'IMAGELINK (To be implemented)',
@@ -30,6 +43,7 @@ export const BulletinBoardsEntries_Mock = [
         pictures: 'IMAGELINK (To be implemented)'
     },
     {
+        id: 10,
         userid: 441,
         username: 'good',
         profile: 'IMAGELINK (To be implemented)',
@@ -42,27 +56,53 @@ export const BulletinBoardsEntries_Mock = [
     },
 ];
 
+//Comment Mock
+//parentid : 부모 게시글의 id
+//userid :  해당 유저의 id
+//username : 해당 유저의 이름
+//profile : 해당 유저의 프로필 사진
+//likes : 좋아요 갯수
+//date : 작성 날짜
+//ismine : 본인 글인지 여부
+//contents : 댓글 내용
+//pictures : 삽입된 사진 링크
+export const CommentEntries_Mock = [
+    {
+        parentid: 321,
+        id: 132,
+        userid: 1,
+        username: 'guide',
+        profile: 'IMAGELINK (To be implemented)',
+        likes: 21,
+        date: '2019-01-02',
+        ismine: false,
+        contents: 'Gooooood',
+        pictures: 'IMAGELINK (To be implemented)'
+    },
 
-export const CommentEntries = [
     {
-        id: 1,
-        username: 'blackpanther',
-        useravatar: 'IMAGELINK (To be implemented)',
-        content: 'Love Simpsons!',
+        parentid: 321,
+        id: 22,
+        userid: 342,
+        username: 'Div',
+        profile: 'IMAGELINK (To be implemented)',
+        likes: 33,
+        date: '2019-03-12',
+        ismine: true,
+        contents: 'This is your comment',
         pictures: 'IMAGELINK (To be implemented)'
     },
+
     {
-        id: 2,
-        username: 'loveyou',
-        useravatar: 'IMAGELINK (To be implemented)',
-        content: 'Love Simpsons!',
-        pictures: 'IMAGELINK (To be implemented)'
-    },
-    {
-        id: 441,
-        username: 'good',
-        useravatar: 'IMAGELINK (To be implemented)',
-        content: 'yeah',
+        parentid: 112,
+        id: 342,
+        userid: 422,
+        username: 'Probius',
+        profile: 'IMAGELINK (To be implemented)',
+        likes: 10,
+        date: '2019-05-16',
+        ismine: false,
+        contents: '!@#%%!@#!@#',
         pictures: 'IMAGELINK (To be implemented)'
     },
 ];
@@ -128,6 +168,6 @@ export const CourseRatingEntries = [
 ];
 
 export default {
-    BulletinBoardsEntries_Mock, CommentEntries, 
+    BulletinBoardsEntries_Mock, CommentEntries_Mock, 
     TimeTableEntries, CourseRatingEntries,
 }

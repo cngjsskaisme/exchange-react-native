@@ -13,7 +13,6 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import PropTypes from 'prop-types';
 import BulletinBoardContentEntries_Mock from '../../Mockup_Datas/UnifiedEntries'
 import { withNavigation } from 'react-navigation';
-import NavGoto from '../NavButtons/NavGoto'
 
 
 class BulletinBoardsEntries extends Component{
@@ -46,25 +45,12 @@ class BulletinBoardsEntries extends Component{
         }
 
         return(
-            <View>
+            <View style={styles.BulletinBoardsEntries}>
                 <Text>{this.state.userid}</Text>
                 <Text>{this.state.username}</Text>
                 <Text>{this.state.likes}</Text>
                 <Text>{this.state.date}</Text>
                 {EditPost(this.state.ismine)}
-                <NavGoto    title = "Go to Post"
-                            target = "Post"
-                            props = {{
-                                userid: this.state.userid,
-                                username: this.state.username,
-                                profile: this.state.profile,
-                                likes: this.state.likes,
-                                date: this.state.date,
-                                ismine: this.state.ismine,
-                                title: this.state.title,
-                                contents: this.state.contents,
-                                pictures: this.state.pictures
-                            }}/>
             </View>
         );
     }
@@ -73,5 +59,16 @@ class BulletinBoardsEntries extends Component{
 BulletinBoardsEntries.propTypes = {
     
   };
+
+const styles = StyleSheet.create({
+    BulletinBoardsEntries: {
+        width: '90%',
+        height: '15%',
+        margin: "2%",
+        borderWidth: 0.5,
+        borderColor: 'black',
+        borderRadius: 10
+    }
+});
 
 export default BulletinBoardsEntries;

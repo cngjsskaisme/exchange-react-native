@@ -28,7 +28,8 @@ class BulletinBoards extends Component{
                                             profile = {entry.profile}
                                             likes = {entry.likes}
                                             date = {entry.date}
-                                            ismine = {entry.ismine}/>);
+                                            ismine = {entry.ismine}
+                                            style = {styles.BulletinBoardsEntries}/>);
         });
 
         return(
@@ -41,5 +42,13 @@ class BulletinBoards extends Component{
 
 BulletinBoards.propTypes = {
   };
+
+const styles = StyleSheet.create({
+    BulletinBoards: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+    }
+});
 
 export default BulletinBoards;

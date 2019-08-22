@@ -11,6 +11,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
+import BulletinBoardsReplies from './Replies/BulletinBoardsReplies'
 import NavGoBack from '../NavButtons/NavGoBack';
 
 const EditPost = ({ ismine }) => {
@@ -21,15 +22,16 @@ const EditPost = ({ ismine }) => {
 
 class BulletinBoardsContent extends Component{
     defaultProps = {
-        userid: null,
-        username: null,
-        profile: null,
-        likes: null,
-        date: null,
+        id: 0,
+        userid: 0,
+        username: "",
+        profile: "",
+        likes: 0,
+        date: "2019-01-01",
         ismine: false,
-        title: props.title,
-        contents: props.contents,
-        pictures: props.pictures
+        title: "",
+        contents: "",
+        pictures: ""
     }
     
     constructor(props){
@@ -58,6 +60,7 @@ class BulletinBoardsContent extends Component{
                 <Text>{this.state.date}</Text>
                 <Text>{this.EditPost}</Text>
                 <Text>ReplyPanel</Text>
+                <BulletinBoardsReplies parentid = {this.state.id} />
                 <NavGoBack/>
             </View>
         );
