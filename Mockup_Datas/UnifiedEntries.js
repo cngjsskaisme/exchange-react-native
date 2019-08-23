@@ -54,6 +54,78 @@ export const BulletinBoardsEntries_Mock = [
         contents: 'yeah',
         pictures: 'IMAGELINK (To be implemented)'
     },
+    {
+        id: 32,
+        userid: 1,
+        username: 'blackpanther',
+        profile: 'IMAGELINK (To be implemented)',
+        likes: 200,
+        date: '2019-08-20',
+        ismine: true,
+        title: 'Why you little!!',
+        contents: 'Love Simpsons!',
+        pictures: 'IMAGELINK (To be implemented)'
+    },
+    {
+        id: 51,
+        userid: 2,
+        username: 'loveyou',
+        profile: 'IMAGELINK (To be implemented)',
+        likes: 1,
+        date: '2019-07-21',
+        ismine: false,
+        title: 'yes',
+        contents: 'I am yesman',
+        pictures: 'IMAGELINK (To be implemented)'
+    },
+    {
+        id: 1023,
+        userid: 441,
+        username: 'good',
+        profile: 'IMAGELINK (To be implemented)',
+        likes: 23,
+        date: '2019-02-21',
+        ismine: false,
+        title: 'as hell',
+        contents: 'yeah',
+        pictures: 'IMAGELINK (To be implemented)'
+    },
+    {
+        id: 11422,
+        userid: 1,
+        username: 'blackpanther',
+        profile: 'IMAGELINK (To be implemented)',
+        likes: 200,
+        date: '2019-08-20',
+        ismine: true,
+        title: 'Why you little!!',
+        contents: 'Love Simpsons!',
+        pictures: 'IMAGELINK (To be implemented)'
+    },
+    {
+        id: 325211,
+        userid: 2,
+        username: 'loveyou',
+        profile: 'IMAGELINK (To be implemented)',
+        likes: 1,
+        date: '2019-07-21',
+        ismine: false,
+        title: 'yes',
+        contents: 'I am yesman',
+        pictures: 'IMAGELINK (To be implemented)'
+    },
+    {
+        id: 103321,
+        userid: 441,
+        username: 'good',
+        profile: 'IMAGELINK (To be implemented)',
+        likes: 23,
+        date: '2019-02-21',
+        ismine: false,
+        title: 'as hell',
+        contents: 'yeah',
+        pictures: 'IMAGELINK (To be implemented)'
+    },
 ];
 
 //Comment Mock

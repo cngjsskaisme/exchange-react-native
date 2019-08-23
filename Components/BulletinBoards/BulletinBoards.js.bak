@@ -1,0 +1,55 @@
+/*
+작성자 : 추헌남
+최초작성일 : 2019/08/14
+설명 : 자유게시판 페이지입니다.
+다음을 Prop으로 받겠습니다 (받는 타입은 PropTypes에서 기술) :
+    일단 안받습니다.
+*/
+
+
+
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
+import PropTypes from 'prop-types';
+import BulletinBoardsEntries from './BulletinBoardsEntries';
+import { BulletinBoardsEntries_Mock } from '../../Mockup_Datas/UnifiedEntries'
+
+
+class BulletinBoards extends Component{
+
+    static navigationOptions = {
+        title: 'BulletinBoards Page',
+      };
+
+    render(){
+        const list = BulletinBoardsEntries_Mock.map(function(entry){
+            return(<BulletinBoardsEntries   key = {entry.id}
+                                            userid = {entry.userid}
+                                            username = {entry.username}
+                                            profile = {entry.profile}
+                                            likes = {entry.likes}
+                                            date = {entry.date}
+                                            ismine = {entry.ismine}
+                                            title = {entry.title}
+                                            contents = {entry.contents}
+                                            style = {styles.BulletinBoardsEntries}/>);
+        });
+
+        return(
+            <ScrollView style={styles.BulletinBoards}>
+                {list}
+            </ScrollView>
+        );
+    }
+}
+
+BulletinBoards.propTypes = {
+  };
+
+const styles = StyleSheet.create({
+    BulletinBoards: {
+        flexDirection: 'column',
+    }
+});
+
+export default BulletinBoards;

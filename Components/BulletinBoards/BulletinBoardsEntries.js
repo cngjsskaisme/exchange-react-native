@@ -9,49 +9,61 @@
 
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableNativeFeedback, Dimensions, Alert } from 'react-native';
 import PropTypes from 'prop-types';
-import BulletinBoardContentEntries_Mock from '../../Mockup_Datas/UnifiedEntries'
 import { withNavigation } from 'react-navigation';
 
 
 class BulletinBoardsEntries extends Component{
     static defaultProps = {
-        userid: null,
-        username: null,
-        profile: null,
-        likes: null,
-        date: null,
-        ismine: false
+        id: null,
+        userid: 0,
+        username: '',
+        profile: '',
+        likes: 0,
+        date: '2019-01-01',
+        ismine: false,
+        title: '',
+        contents: ''
     }
-    
+
     constructor(props){
         super(props)
         this.state = {
+            id: props.id, 
             userid: props.userid,
             username: props.username,
             profile: props.profile,
             likes: props.likes,
             date: props.date,
-            ismine: props.ismine
+            ismine: props.ismine,
+            title: props.title,
+            contents: props.contents
         }
     }
 
+    _handlePress = () => {
+        
+    };
+
     render(){
-        const EditPost = ({ ismine }) => {
+        const EditPost = (ismine) => {
             if (ismine){
-                return <Text>!!!In triple dots, Insert edit menu.!!!</Text>
+                return (
+                    <Text>
+                        (Edit Menu)
+                    </Text>);
             }
         }
 
         return(
-            <View style={styles.BulletinBoardsEntries}>
-                <Text>{this.state.userid}</Text>
-                <Text>{this.state.username}</Text>
-                <Text>{this.state.likes}</Text>
-                <Text>{this.state.date}</Text>
-                {EditPost(this.state.ismine)}
-            </View>
+            <TouchableNativeFeedback onPress={() => withNavigation(this.props.navigation.navigate('Post'))} key={this.state.id}>
+                <View style={styles.BulletinBoardsEntries}>
+                    <Text style={styles.BulletinBoardsEntriesTitle}>{this.state.title}</Text>
+                    <Text style={styles.BulletinBoardsEntriesContents}>  {this.state.contents} </Text>
+                    <Text style={styles.BulletinBoardsEntriesMetadata}>{EditPost(this.state.ismine)} written by {this.state.username} at {this.state.date}, {this.state.likes} Likes</Text>
+                </View>
+            </TouchableNativeFeedback>
         );
     }
 }
@@ -62,13 +74,33 @@ BulletinBoardsEntries.propTypes = {
 
 const styles = StyleSheet.create({
     BulletinBoardsEntries: {
-        width: '90%',
-        height: '15%',
-        margin: "2%",
-        borderWidth: 0.5,
+        flexDirection: "column",
+        width: '100%',
+        height: Dimensions.get('window').width * 0.25,
+        paddingTop: '2%',
+        paddingLeft: '3%',
+        borderLeftWidth: 0.5,
+        borderRightWidth: 0.5,
+        borderBottomWidth: 0.5,
         borderColor: 'black',
-        borderRadius: 10
-    }
+    },
+    BulletinBoardsEntriesTitle:{
+        flex: 3,
+        fontSize: 17,
+        fontWeight: 'bold',
+        paddingBottom: 3
+    },
+    BulletinBoardsEntriesContents:{
+        flex: 5,
+        fontSize: 14,
+    },
+    BulletinBoardsEntriesMetadata:{
+        flex: 2,
+        fontSize: 12,
+        color: 'gray',
+        textAlign: "right",
+        paddingBottom: 2
+    },
 });
 
 export default BulletinBoardsEntries;
