@@ -11,7 +11,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
-import BulletinBoardsReplies from './Replies/BulletinBoardsReplies'
 import NavGoBack from '../NavButtons/NavGoBack';
 
 const EditPost = ({ ismine }) => {
@@ -60,12 +59,14 @@ class BulletinBoardsContent extends Component{
                 <Text>{this.state.date}</Text>
                 <Text>{this.EditPost}</Text>
                 <Text>ReplyPanel</Text>
-                <BulletinBoardsReplies parentid = {this.state.id} />
+                
                 <NavGoBack/>
             </View>
         );
     }
 }
+
+//<BulletinBoardsReplies parentid = {this.state.id} />
 
 BulletinBoardsContent.propTypes = {
     
