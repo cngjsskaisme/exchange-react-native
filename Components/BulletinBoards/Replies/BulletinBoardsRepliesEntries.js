@@ -9,9 +9,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
+import PostMenu from '../../PostMenu';
 
 class BulletinBoardRepliesEntries extends Component{
     static defaultProps = {
+        parentid: 0,
         id: 0,
         userid: 0,
         username: "",
@@ -26,20 +28,27 @@ class BulletinBoardRepliesEntries extends Component{
     constructor(props){
         super(props);
         this.state = {
-            ...this.props
+            parentid: this.props.parentid,
+            id: this.props.id,
+            userid: this.props.userid,
+            username: this.props.username,
+            profile: this.props.profile,
+            likes: this.props.likes,
+            date: this.props.date,
+            ismine: this.props.ismine,
+            contents: this.props.contents,
+            pictures: this.props.pictures
         }
     }
 
     render(){
         return(
             <View>
-                <Text>{this.state.id}</Text>
-                <Text>{this.state.userid}</Text>
-                <Text>{this.state.username}</Text>
-                <Text>{this.state.profile}</Text>
-                <Text>{this.state.likes}</Text>
-                <Text>{this.state.date}</Text>
-                <Text>{this.state.ismine}</Text>
+                <Text>Name : {this.state.username}</Text>
+                <Text>Profile : {this.state.profile}</Text>
+                <Text>{this.state.likes} Likes</Text>
+                <Text>Written at {this.state.date}</Text>
+                <PostMenu ismine = {this.state.ismine}/>
                 <Text>{this.state.contents}</Text>
                 <Text>{this.state.pictures}</Text>
             </View>

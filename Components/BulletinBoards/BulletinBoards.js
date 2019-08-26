@@ -23,7 +23,7 @@ class BulletinBoards extends Component{
     
     _renderItem = ({ item }) => {
         return(
-            <BulletinBoardsEntries   
+            <BulletinBoardsEntries
                 key = {item.id}
                 userid = {item.userid}
                 username = {item.username}

@@ -9,18 +9,15 @@
 
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, ScrollView, Button } from 'react-native';
 import PropTypes from 'prop-types';
-import NavGoBack from '../NavButtons/NavGoBack';
+import { withNavigation } from 'react-navigation';
+import BulletinBoardsReplies from './Replies/BulletinBoardsReplies';
+import PostMenu from '../PostMenu';
 
-const EditPost = ({ ismine }) => {
-    if (ismine == true){
-        return <Text>!!!insert edit, delete!!!</Text>
-    }
-}
 
 class BulletinBoardsContent extends Component{
-    defaultProps = {
+    static defaultProps = {
         id: 0,
         userid: 0,
         username: "",
@@ -36,15 +33,16 @@ class BulletinBoardsContent extends Component{
     constructor(props){
         super(props)
         this.state = {
-            userid: props.userid,
-            username: props.username,
-            profile: props.profile,
-            likes: props.likes,
-            date: props.date,
-            ismine: props.ismine,
-            title: props.title,
-            contents: props.contents,
-            pictures: props.pictures
+            id: this.props.navigation.getParam('id'),
+            userid: this.props.navigation.getParam('userid'),
+            username: this.props.navigation.getParam('username'),
+            profile: this.props.navigation.getParam('profile'),
+            likes: this.props.navigation.getParam('likes'),
+            date: this.props.navigation.getParam('date'),
+            ismine: this.props.navigation.getParam('ismine'),
+            title: this.props.navigation.getParam('title'),
+            contents: this.props.navigation.getParam('contents'),
+            pictures: this.props.navigation.getParam('pictures')
             
         }
     }
@@ -52,16 +50,18 @@ class BulletinBoardsContent extends Component{
 
     render(){
         return(
-            <View>
-                <Text>{this.state.userid}</Text>
-                <Text>{this.state.username}</Text>
-                <Text>{this.state.likes}</Text>
-                <Text>{this.state.date}</Text>
-                <Text>{this.EditPost}</Text>
-                <Text>ReplyPanel</Text>
-                
-                <NavGoBack/>
-            </View>
+            <ScrollView>
+                <Text>Username : {this.state.username}</Text>
+                <Text>{this.state.likes} Likes</Text>
+                <Text>Written at {this.state.date}</Text>
+                <Text>{this.state.contents}</Text>
+                <PostMenu ismine = {this.state.ismine}/>
+                <BulletinBoardsReplies
+                    parentid = {this.state.id}
+                    userid = '10'
+                    username = 'testing'
+                    profile = 'hello'/>
+            </ScrollView>
         );
     }
 }
@@ -72,4 +72,4 @@ BulletinBoardsContent.propTypes = {
     
   };
 
-export default BulletinBoardsContent;
+export default withNavigation(BulletinBoardsContent);

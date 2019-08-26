@@ -16,7 +16,8 @@ const SettingsStack = createStackNavigator({
 });
 
 const BulletinBoardsStack = createStackNavigator({
-  BulletinBoards: BulletinBoards
+  BulletinBoards: BulletinBoards,
+  Post: BulletinBoardsContent
 });
 
 const TimeTablesStack = createStackNavigator({

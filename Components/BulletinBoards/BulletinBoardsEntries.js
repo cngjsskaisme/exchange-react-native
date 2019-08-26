@@ -11,12 +11,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableNativeFeedback, Dimensions, Alert } from 'react-native';
 import PropTypes from 'prop-types';
-import { withNavigation } from 'react-navigation';
+import { NavigationActions, withNavigation } from 'react-navigation';
+import PostMenu from '../PostMenu';
 
 
 class BulletinBoardsEntries extends Component{
     static defaultProps = {
-        id: null,
+        navigation: null,
+        id: 0,
         userid: 0,
         username: '',
         profile: '',
@@ -57,17 +59,31 @@ class BulletinBoardsEntries extends Component{
         }
 
         return(
-            <TouchableNativeFeedback onPress={() => withNavigation(this.props.navigation.navigate('Post'))} key={this.state.id}>
+            <TouchableNativeFeedback key={this.state.id} 
+                                    onPress={() => this.props.navigation.navigate('Post', { userid: this.state.userid,
+                                                                                    username: this.state.username,
+                                                                                    profile: this.state.profile,
+                                                                                    likes: this.state.likes,
+                                                                                    date: this.state.date,
+                                                                                    ismine: this.state.ismine,
+                                                                                    title: this.state.title,
+                                                                                    contents: this.state.contents,
+                                                                                    pictures: this.state.pictures})}>
                 <View style={styles.BulletinBoardsEntries}>
                     <Text style={styles.BulletinBoardsEntriesTitle}>{this.state.title}</Text>
                     <Text style={styles.BulletinBoardsEntriesContents}>  {this.state.contents} </Text>
-                    <Text style={styles.BulletinBoardsEntriesMetadata}>{EditPost(this.state.ismine)} written by {this.state.username} at {this.state.date}, {this.state.likes} Likes</Text>
+                    <PostMenu ismine = {this.state.ismine}/>
+                    <Text style={styles.BulletinBoardsEntriesMetadata}> written by {this.state.username} at {this.state.date}, {this.state.likes} Likes</Text>
                 </View>
             </TouchableNativeFeedback>
         );
     }
 }
 
+
+navigateToSettings = () => {
+
+  }
 BulletinBoardsEntries.propTypes = {
     
   };
@@ -82,7 +98,7 @@ const styles = StyleSheet.create({
         borderLeftWidth: 0.5,
         borderRightWidth: 0.5,
         borderBottomWidth: 0.5,
-        borderColor: 'black',
+        borderColor: '#d4d4d4',
     },
     BulletinBoardsEntriesTitle:{
         flex: 3,
@@ -103,4 +119,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default BulletinBoardsEntries;
+export default withNavigation(BulletinBoardsEntries);
