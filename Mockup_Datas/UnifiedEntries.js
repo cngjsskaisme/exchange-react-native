@@ -6,6 +6,44 @@
     Prop 안받음
 */
 
+//BulletinBoards List
+//boardid : 게시판 id 번호
+//boardname : ""
+export const CourseRatingEntries = [
+    {
+        id: 132,
+        subject: 'Computer Science',
+        professor: 'Won Young Jun',
+        ratings: '3', // 12345
+        comments: 'Not bad',
+        doestest: '1', // 12345
+        homeworks: '3', // 12345
+        jokbo: 'Array' // Link Component
+    },
+    {
+        id: 414,
+        subject: 'Accountings',
+        professor: 'Ahn...',
+        ratings: '1',
+        comments: 'Sucks as hell',
+        doestest: '5',
+        homeworks: '5',
+        jokbo: 'Array'
+    },
+    {
+        id: 777,
+        subject: 'Politics',
+        professor: 'Shin Du Cheol',
+        ratings: '5',
+        comments: 'Nice class',
+        doestest: '2',
+        homeworks: '1',
+        jokbo: 'Array'
+    },
+];
+
+
+
 //BulletinBoards Mock
 //userid :  해당 유저의 id
 //username : 해당 유저의 이름
@@ -19,7 +57,8 @@
 
 export const BulletinBoardsEntries_Mock = [
     {
-        id: 112,
+        boardid: 0,
+        entryid: 112,
         userid: 1,
         username: 'blackpanther',
         profile: 'IMAGELINK (To be implemented)',
@@ -31,7 +70,8 @@ export const BulletinBoardsEntries_Mock = [
         pictures: 'IMAGELINK (To be implemented)'
     },
     {
-        id: 321,
+        boardid: 0,
+        entryid: 321,
         userid: 2,
         username: 'loveyou',
         profile: 'IMAGELINK (To be implemented)',
@@ -43,7 +83,8 @@ export const BulletinBoardsEntries_Mock = [
         pictures: 'IMAGELINK (To be implemented)'
     },
     {
-        id: 10,
+        boardid: 0,
+        entryid: 10,
         userid: 441,
         username: 'good',
         profile: 'IMAGELINK (To be implemented)',
@@ -55,7 +96,8 @@ export const BulletinBoardsEntries_Mock = [
         pictures: 'IMAGELINK (To be implemented)'
     },
     {
-        id: 32,
+        boardid: 0,
+        entryid: 32,
         userid: 1,
         username: 'dodo',
         profile: 'IMAGELINK (To be implemented)',
@@ -67,7 +109,8 @@ export const BulletinBoardsEntries_Mock = [
         pictures: 'IMAGELINK (To be implemented)'
     },
     {
-        id: 51,
+        boardid: 0,
+        entryid: 51,
         userid: 2,
         username: 'asdf123',
         profile: 'IMAGELINK (To be implemented)',
@@ -79,7 +122,8 @@ export const BulletinBoardsEntries_Mock = [
         pictures: 'IMAGELINK (To be implemented)'
     },
     {
-        id: 1023,
+        boardid: 0,
+        entryid: 1023,
         userid: 441,
         username: 'good',
         profile: 'IMAGELINK (To be implemented)',
@@ -91,7 +135,8 @@ export const BulletinBoardsEntries_Mock = [
         pictures: 'IMAGELINK (To be implemented)'
     },
     {
-        id: 11422,
+        boardid: 0,
+        entryid: 11422,
         userid: 1,
         username: 'blackpanther',
         profile: 'IMAGELINK (To be implemented)',
@@ -103,7 +148,8 @@ export const BulletinBoardsEntries_Mock = [
         pictures: 'IMAGELINK (To be implemented)'
     },
     {
-        id: 325211,
+        boardid: 0,
+        entryid: 325211,
         userid: 2,
         username: 'loveyou',
         profile: 'IMAGELINK (To be implemented)',
@@ -115,7 +161,8 @@ export const BulletinBoardsEntries_Mock = [
         pictures: 'IMAGELINK (To be implemented)'
     },
     {
-        id: 103321,
+        boardid: 0,
+        entryid: 103321,
         userid: 441,
         username: 'good',
         profile: 'IMAGELINK (To be implemented)',
@@ -129,7 +176,7 @@ export const BulletinBoardsEntries_Mock = [
 ];
 
 //Comment Mock
-//parentid : 부모 게시글의 id
+//entryid : 부모 게시글의 id
 //userid :  해당 유저의 id
 //username : 해당 유저의 이름
 //profile : 해당 유저의 프로필 사진
@@ -138,10 +185,12 @@ export const BulletinBoardsEntries_Mock = [
 //ismine : 본인 글인지 여부
 //contents : 댓글 내용
 //pictures : 삽입된 사진 링크
+
 export const CommentEntries_Mock = [
     {
-        parentid: 321,
-        id: 132,
+        boardid: 0,
+        entryid: 321,
+        replyid: 132,
         userid: 1,
         username: 'guide',
         profile: 'IMAGELINK (To be implemented)',
@@ -153,8 +202,9 @@ export const CommentEntries_Mock = [
     },
 
     {
-        parentid: 321,
-        id: 22,
+        boardid: 0,
+        entryid: 321,
+        replyid: 22,
         userid: 342,
         username: 'Div',
         profile: 'IMAGELINK (To be implemented)',
@@ -166,8 +216,9 @@ export const CommentEntries_Mock = [
     },
 
     {
-        parentid: 112,
-        id: 342,
+        boardid: 0,
+        entryid: 112,
+        replyid: 342,
         userid: 422,
         username: 'Probius',
         profile: 'IMAGELINK (To be implemented)',

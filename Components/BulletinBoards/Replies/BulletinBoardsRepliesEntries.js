@@ -13,8 +13,9 @@ import PostMenu from '../../PostMenu';
 
 class BulletinBoardRepliesEntries extends Component{
     static defaultProps = {
-        parentid: 0,
-        id: 0,
+        boardid: 0,
+        entryid: 0,
+        replyid: 0,
         userid: 0,
         username: "",
         profile: "",
@@ -28,8 +29,9 @@ class BulletinBoardRepliesEntries extends Component{
     constructor(props){
         super(props);
         this.state = {
-            parentid: this.props.parentid,
-            id: this.props.id,
+            boardid: this.props.boardid,
+            entryid: this.props.entryid,
+            replyid: this.props.replyid,
             userid: this.props.userid,
             username: this.props.username,
             profile: this.props.profile,
@@ -43,7 +45,7 @@ class BulletinBoardRepliesEntries extends Component{
 
     render(){
         return(
-            <View>
+            <View key={this.state.replyid}>
                 <Text>Name : {this.state.username}</Text>
                 <Text>Profile : {this.state.profile}</Text>
                 <Text>{this.state.likes} Likes</Text>

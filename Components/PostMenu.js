@@ -8,41 +8,83 @@
 
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
+import { Button, Menu, Divider } from 'react-native-paper';
+import { withNavigation } from 'react-navigation'
 import PropTypes from 'prop-types';
 
-const showMenu = (ismine) => {
-    if(ismine){
-        return <Text>Add menus for MyPost!</Text>
-    }
-    else{
-        return <Text>Add menus for just Post!</Text>
-    }
-};
 
 class PostMenu extends Component{
     static defaultProps = {
-        ismine: false
+        ismine: false,
+        admin: false,
+        visible: false
     }
     constructor(props){
         super(props);
         this.state = {
-            ismine: this.props.ismine
+            ismine: this.props.ismine,
+            false: this.props.admin,
+            visible: false
         }
     }
 
+    _openMenu = () => this.setState({ visible: true });
 
+    _closeMenu = () => this.setState({ visible: false });
 
     render(){
-        return(
-            <View>
-                {showMenu(this.state.ismine)}
-            </View>
-        );
+        if(this.state.ismine || this.state.admin){
+            return (
+                <View>
+                <Menu
+                    visible={this.state.visible}
+                    onDismiss={this._closeMenu}
+                    anchor={
+                    <Button onPress={this._openMenu}>Show menu</Button>
+                    }
+                >
+                    <Menu.Item onPress={() => {}} title="Delete" />
+                    <Menu.Item onPress={() => {
+                                        this._closeMenu();
+                                        this.props.navigation.navigate('EntryEdit', { 
+                                                                                    boardid: this.state.boardid,
+                                                                                    entryid: this.state.entryid,
+                                                                                    userid: this.state.userid,
+                                                                                    username: this.state.username,
+                                                                                    profile: this.state.profile,
+                                                                                    likes: this.state.likes,
+                                                                                    date: this.state.date,
+                                                                                    ismine: this.state.ismine,
+                                                                                    title: this.state.title,
+                                                                                    contents: this.state.contents,
+                                                                                    pictures: this.state.pictures});}} title="Modify" />
+                    <Menu.Item onPress={() => {}} title="Report" />
+                    <Divider />
+                    <Menu.Item onPress={() => {}} title="Like this!" />
+                </Menu>
+            </View>);
+        }
+        else{
+            return (
+                <View>
+                <Menu
+                    visible={this.state.visible}
+                    onDismiss={this._closeMenu}
+                    anchor={
+                    <Button onPress={this._openMenu}>Show menu</Button>
+                    }
+                >
+                    <Menu.Item onPress={() => {}} title="Report" />
+                    <Divider />
+                    <Menu.Item onPress={() => {}} title="Like this!" />
+                </Menu>
+            </View>);
+        }
     }
 }
 
 PostMenu.propTypes = {
 };
 
-export default PostMenu;
+export default withNavigation(PostMenu);

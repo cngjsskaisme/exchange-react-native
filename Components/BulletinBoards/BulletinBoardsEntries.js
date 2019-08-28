@@ -18,7 +18,8 @@ import PostMenu from '../PostMenu';
 class BulletinBoardsEntries extends Component{
     static defaultProps = {
         navigation: null,
-        id: 0,
+        boardid: 0,
+        entryid: 0,
         userid: 0,
         username: '',
         profile: '',
@@ -32,7 +33,8 @@ class BulletinBoardsEntries extends Component{
     constructor(props){
         super(props)
         this.state = {
-            id: props.id, 
+            boardid: props.boardid,
+            entryid: props.key, 
             userid: props.userid,
             username: props.username,
             profile: props.profile,
@@ -49,18 +51,12 @@ class BulletinBoardsEntries extends Component{
     };
 
     render(){
-        const EditPost = (ismine) => {
-            if (ismine){
-                return (
-                    <Text>
-                        (Edit Menu)
-                    </Text>);
-            }
-        }
-
         return(
-            <TouchableNativeFeedback key={this.state.id} 
-                                    onPress={() => this.props.navigation.navigate('Post', { userid: this.state.userid,
+            <TouchableNativeFeedback key={this.state.entryid} 
+                                    onPress={() => this.props.navigation.navigate('Post', { 
+                                                                                    boardid: this.state.boardid,
+                                                                                    entryid: this.state.entryid,
+                                                                                    userid: this.state.userid,
                                                                                     username: this.state.username,
                                                                                     profile: this.state.profile,
                                                                                     likes: this.state.likes,
@@ -92,7 +88,7 @@ const styles = StyleSheet.create({
     BulletinBoardsEntries: {
         flexDirection: "column",
         width: '100%',
-        height: Dimensions.get('window').width * 0.25,
+        height: 90,
         paddingTop: '2%',
         paddingLeft: '3%',
         borderLeftWidth: 0.5,
@@ -115,7 +111,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: 'gray',
         textAlign: "right",
-        paddingBottom: 2
+        paddingBottom: 5
     },
 });
 

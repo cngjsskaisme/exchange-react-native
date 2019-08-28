@@ -14,7 +14,8 @@ import { withNavigation } from 'react-navigation'
 
 class BulletinBoardsRepliesInput extends Component{
     static defaultProps = {
-        parentid: 0,
+        boardid: 0,
+        entryid: 0,
         userid: 0,
         username: '',
         profile: '',
@@ -24,7 +25,8 @@ class BulletinBoardsRepliesInput extends Component{
     constructor(props){
         super(props);
         this.state = {
-            parentid: this.props.parentid,
+            boardid: this.props.boardid,
+            entryid: this.props.entryid,
             userid: this.props.userid,
             username: this.props.username,
             profile: this.props.profile,

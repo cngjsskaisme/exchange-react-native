@@ -16,7 +16,8 @@ import BulletinBoardsRepliesInput from './BulletinBoardsRepliesInput';
 
 class BulletinBoardsReplies extends Component{
     static defaultProps = {
-        parentid: 0,
+        entryid: 0,
+        replyid: 0,
         userid: 0,
         username: '',
         profile: ''
@@ -25,7 +26,8 @@ class BulletinBoardsReplies extends Component{
     constructor(props){
         super(props);
         this.state = {
-            parentid: this.props.parentid,
+            entryid: this.props.entryid,
+            replyid: this.props.replyid,
             userid: this.props.userid,
             username: this.props.username,
             profile: this.props.profile
@@ -35,8 +37,9 @@ class BulletinBoardsReplies extends Component{
     _renderItem = ({ item }) => {
         return(
             <BulletinBoardsRepliesEntries
-                key = {item.id}
-                parentid = {item.parentid}
+                key = {item.replyid}
+                boardid = {item.boardid}
+                entryid = {item.entryid}
                 userid = {item.userid}
                 username = {item.username}
                 profile = {item.profile}
@@ -48,20 +51,20 @@ class BulletinBoardsReplies extends Component{
         )
     };
 
-    _keyExtractor = (item, index) => item.id.toString();
+    _keyExtractor = (item, index) => item.replyid.toString();
 
     render(){
         return(
             <View>
                 <Text>===Comments===</Text>
                 <BulletinBoardsRepliesInput
-                    parentid = {this.state.parentid}
+                    entryid = {this.state.entryid}
                     userid = {this.state.userid}
                     username = {this.state.username}
                     profile = {this.state.profile}/>
                     
                 <FlatList 
-                    data = {CommentEntries_Mock}
+                    data = {CommentEntries_Mock} // !!!!<-- 창희야 여기에 json 댓글을 반환해야 돼!!!! //
                     renderItem = {this._renderItem}
                     keyExtractor = {this._keyExtractor}/>
                 <Text>==============</Text>

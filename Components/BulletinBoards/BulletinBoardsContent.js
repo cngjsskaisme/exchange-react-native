@@ -18,7 +18,8 @@ import PostMenu from '../PostMenu';
 
 class BulletinBoardsContent extends Component{
     static defaultProps = {
-        id: 0,
+        boardid: 0,
+        entryid: 0,
         userid: 0,
         username: "",
         profile: "",
@@ -33,7 +34,8 @@ class BulletinBoardsContent extends Component{
     constructor(props){
         super(props)
         this.state = {
-            id: this.props.navigation.getParam('id'),
+            boardid: this.props.navigation.getParam('boardid'),
+            entryid: this.props.navigation.getParam('entryid'),
             userid: this.props.navigation.getParam('userid'),
             username: this.props.navigation.getParam('username'),
             profile: this.props.navigation.getParam('profile'),
