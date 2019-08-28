@@ -8,18 +8,40 @@
 
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableNativeFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 import BulletinBoards from './BulletinBoards';
+import { BulletinBoardsLists_Mock } from '../../Mockup_Datas/UnifiedEntries'
 
 class BulletinBoardsLists extends Component{
     static navigationOptions = {
         title: 'BulletinBoards Lists',
       };
     
+
+    
+      _renderItem = ({ item }) => {
+        return(
+            <TouchableNativeFeedback
+                key={item.boardid}
+                onPress={() => {this.props.navigation.navigate('BulletinBoards', { boardid : item.boardid })}}>
+                <View style={styles.BulletinBoards}>
+                    <Text>
+                        {item.boardname}
+                    </Text>
+                </View>
+            </TouchableNativeFeedback>
+        )
+    };
+
+    _keyExtractor = (item, index) => item.boardid.toString();
+
     render(){
         return(
-            <BulletinBoards/>
+            <FlatList 
+                data = {BulletinBoardsLists_Mock}
+                renderItem = {this._renderItem}
+                keyExtractor = {this._keyExtractor}/>
         );
     }
 }
@@ -27,5 +49,19 @@ class BulletinBoardsLists extends Component{
 BulletinBoardsLists.propTypes = {
     name: PropTypes.string
 };
+
+const styles = StyleSheet.create({
+    BulletinBoards: {
+        flexDirection: "column",
+        width: '100%',
+        height: 90,
+        paddingTop: '2%',
+        paddingLeft: '3%',
+        borderLeftWidth: 0.5,
+        borderRightWidth: 0.5,
+        borderBottomWidth: 0.5,
+        borderColor: '#d4d4d4',
+    },
+});
 
 export default BulletinBoardsLists;

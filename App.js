@@ -8,6 +8,7 @@ import TimeTables from "./Components/TimeTables"
 import BulletinBoards from "./Components/BulletinBoards/BulletinBoards"
 import BulletinBoardsContent from "./Components/BulletinBoards/BulletinBoardsContent"
 import BulletinBoardsEditEntry from "./Components/BulletinBoards/BulletinBoardsEditEntry";
+import BulletinBoardsLists from "./Components/BulletinBoards/BulletinBoardsLists";
 
 const MainStack = createStackNavigator({
   Main: MainScreen,
@@ -18,6 +19,7 @@ const SettingsStack = createStackNavigator({
 });
 
 const BulletinBoardsStack = createStackNavigator({
+  BulletinBoardsLists: BulletinBoardsLists,
   BulletinBoards: BulletinBoards,
   Post: BulletinBoardsContent,
   EntryEdit: BulletinBoardsEditEntry

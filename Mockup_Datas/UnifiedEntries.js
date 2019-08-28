@@ -9,36 +9,18 @@
 //BulletinBoards List
 //boardid : 게시판 id 번호
 //boardname : ""
-export const CourseRatingEntries = [
+export const BulletinBoardsLists_Mock = [
     {
-        id: 132,
-        subject: 'Computer Science',
-        professor: 'Won Young Jun',
-        ratings: '3', // 12345
-        comments: 'Not bad',
-        doestest: '1', // 12345
-        homeworks: '3', // 12345
-        jokbo: 'Array' // Link Component
+        boardid: 0,
+        boardname: 'BulletinBoard 0'
     },
     {
-        id: 414,
-        subject: 'Accountings',
-        professor: 'Ahn...',
-        ratings: '1',
-        comments: 'Sucks as hell',
-        doestest: '5',
-        homeworks: '5',
-        jokbo: 'Array'
+        boardid: 1,
+        boardname: "Announcement Board"
     },
     {
-        id: 777,
-        subject: 'Politics',
-        professor: 'Shin Du Cheol',
-        ratings: '5',
-        comments: 'Nice class',
-        doestest: '2',
-        homeworks: '1',
-        jokbo: 'Array'
+        boardid: 2,
+        boardname: "Free Board"
     },
 ];
 
@@ -230,7 +212,7 @@ export const CommentEntries_Mock = [
     },
 ];
 
-export const TimeTableEntries = [
+export const TimeTableEntries_Mock = [
     {
         id: 1,
         subject: 'Computer Science',
@@ -257,7 +239,7 @@ export const TimeTableEntries = [
     },
 ];
 
-export const CourseRatingEntries = [
+export const CourseRatingEntries_Mock = [
     {
         id: 132,
         subject: 'Computer Science',
@@ -291,6 +273,6 @@ export const CourseRatingEntries = [
 ];
 
 export default {
-    BulletinBoardsEntries_Mock, CommentEntries_Mock, 
-    TimeTableEntries, CourseRatingEntries,
+    BulletinBoardsEntries_Mock, CommentEntries_Mock, BulletinBoardsLists_Mock,
+    TimeTableEntries_Mock, CourseRatingEntries_Mock,
 }

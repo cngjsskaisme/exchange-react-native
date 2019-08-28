@@ -14,6 +14,7 @@ import { FAB } from 'react-native-paper'
 import PropTypes from 'prop-types';
 import BulletinBoardsEntries from './BulletinBoardsEntries';
 import { BulletinBoardsEntries_Mock } from '../../Mockup_Datas/UnifiedEntries'
+import { withNavigation } from 'react-navigation';
 
 
 class BulletinBoards extends Component{
@@ -29,7 +30,7 @@ class BulletinBoards extends Component{
     constructor(props){
         super(props);
         this.state = {
-            boardid: this.props.boardid
+            boardid: this.props.navigation.getParam('boardid')
         }
     }
     
@@ -63,7 +64,7 @@ class BulletinBoards extends Component{
             
             <FAB
                 style={styles.Floating}
-                icon="plus"
+                more-vert="plus"
                 onPress={() => this.props.navigation.navigate('EntryEdit', { 
                     boardid: this.state.boardid,
                     userid: this.state.userid,
@@ -89,5 +90,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export default BulletinBoards;
+export default withNavigation(BulletinBoards);
 

@@ -45,7 +45,6 @@ class BulletinBoardsContent extends Component{
             title: this.props.navigation.getParam('title'),
             contents: this.props.navigation.getParam('contents'),
             pictures: this.props.navigation.getParam('pictures')
-            
         }
     }
 
