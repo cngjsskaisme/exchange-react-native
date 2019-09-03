@@ -12,7 +12,6 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import { CommentEntries_Mock }  from '../../../Mockup_Datas/UnifiedEntries'
 import BulletinBoardsRepliesEntries from './BulletinBoardsRepliesEntries'
-import BulletinBoardsRepliesInput from './BulletinBoardsRepliesInput';
 
 class BulletinBoardsReplies extends Component{
     static defaultProps = {
@@ -55,20 +54,10 @@ class BulletinBoardsReplies extends Component{
 
     render(){
         return(
-            <View>
-                <Text>===Comments===</Text>
-                <BulletinBoardsRepliesInput
-                    entryid = {this.state.entryid}
-                    userid = {this.state.userid}
-                    username = {this.state.username}
-                    profile = {this.state.profile}/>
-                    
-                <FlatList 
-                    data = {CommentEntries_Mock} // !!!!<-- 창희야 여기에 json 댓글을 반환해야 돼!!!! //
-                    renderItem = {this._renderItem}
-                    keyExtractor = {this._keyExtractor}/>
-                <Text>==============</Text>
-            </View>
+            <FlatList 
+                data = {CommentEntries_Mock} // !!!!<-- 창희야 여기에 json 댓글을 반환해야 돼!!!! //
+                renderItem = {this._renderItem}
+                keyExtractor = {this._keyExtractor}/>
         );
     }
 }

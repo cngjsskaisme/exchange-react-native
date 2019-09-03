@@ -11,6 +11,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableNativeFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 import BulletinBoards from './BulletinBoards';
+import {TouchableRipple} from 'react-native-paper'
 import { BulletinBoardsLists_Mock } from '../../Mockup_Datas/UnifiedEntries'
 
 class BulletinBoardsLists extends Component{
@@ -22,7 +23,7 @@ class BulletinBoardsLists extends Component{
     
       _renderItem = ({ item }) => {
         return(
-            <TouchableNativeFeedback
+            <TouchableRipple
                 key={item.boardid}
                 onPress={() => {this.props.navigation.navigate('BulletinBoards', { boardid : item.boardid })}}>
                 <View style={styles.BulletinBoards}>
@@ -30,7 +31,7 @@ class BulletinBoardsLists extends Component{
                         {item.boardname}
                     </Text>
                 </View>
-            </TouchableNativeFeedback>
+            </TouchableRipple>
         )
     };
 

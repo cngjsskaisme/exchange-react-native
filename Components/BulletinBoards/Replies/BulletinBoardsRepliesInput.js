@@ -8,9 +8,9 @@
 
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
-import { withNavigation } from 'react-navigation'
+import { TextInput, IconButton, Colors } from 'react-native-paper'
 
 class BulletinBoardsRepliesInput extends Component{
     static defaultProps = {
@@ -40,14 +40,19 @@ class BulletinBoardsRepliesInput extends Component{
     
     render(){
         return(
-            <View>
+            <View style={styles.Container}>
                 <TextInput
-                    style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+                    style = {styles.TextInput}
+                    label = 'Comment'
                     onChangeText = {(contents) => {this.setState({contents})}}
-                    placeholder = 'Enter to leave a comment.'
-                    value = {this.state.contents}/>
-                <Button onPress = {this._postReply}
-                        title = 'Send'/>
+                    placeholder = 'Enter to leave a comment!'
+                    value = {this.state.contents}/>                
+                <IconButton
+                    icon="arrow-upward"
+                    color={Colors.red500}
+                    size={20}
+                    onPress={() => console.log('Pressed')}
+                />
             </View>
         );
     }
@@ -55,5 +60,25 @@ class BulletinBoardsRepliesInput extends Component{
 
 BulletinBoardsRepliesInput.propTypes = {
 };
+
+
+const styles = StyleSheet.create({
+  PostMenu:{
+      position: 'absolute',
+      margin: 0,
+      right: 0,
+      top: 0,
+  },
+  TextInput: {
+      width: '85%',
+  },
+  Container: {
+      display: 'flex',
+      flexDirection: 'row'
+  },
+  Button: {
+      paddingTop: 8
+  },
+});
 
 export default BulletinBoardsRepliesInput;

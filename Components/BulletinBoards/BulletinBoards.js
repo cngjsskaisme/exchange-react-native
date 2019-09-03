@@ -64,7 +64,7 @@ class BulletinBoards extends Component{
             
             <FAB
                 style={styles.Floating}
-                more-vert="plus"
+                icon='add'
                 onPress={() => this.props.navigation.navigate('EntryEdit', { 
                     boardid: this.state.boardid,
                     userid: this.state.userid,

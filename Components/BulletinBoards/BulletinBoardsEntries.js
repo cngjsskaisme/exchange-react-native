@@ -12,6 +12,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableNativeFeedback, Dimensions, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { NavigationActions, withNavigation } from 'react-navigation';
+import {TouchableRipple} from 'react-native-paper'
 import PostMenu from '../PostMenu';
 
 
@@ -52,7 +53,7 @@ class BulletinBoardsEntries extends Component{
 
     render(){
         return(
-            <TouchableNativeFeedback key={this.state.entryid} 
+            <TouchableRipple key={this.state.entryid} 
                                     onPress={() => this.props.navigation.navigate('Post', { 
                                                                                     boardid: this.state.boardid,
                                                                                     entryid: this.state.entryid,
@@ -66,12 +67,12 @@ class BulletinBoardsEntries extends Component{
                                                                                     contents: this.state.contents,
                                                                                     pictures: this.state.pictures})}>
                 <View style={styles.BulletinBoardsEntries}>
-                    <Text style={styles.BulletinBoardsEntriesTitle}>{this.state.title}</Text>
+                    <Text style={styles.BulletinBoardsEntriesTitle}>{this.state.title}</Text> 
                     <Text style={styles.BulletinBoardsEntriesContents}>  {this.state.contents} </Text>
-                    <PostMenu ismine = {this.state.ismine}/>
                     <Text style={styles.BulletinBoardsEntriesMetadata}> written by {this.state.username} at {this.state.date}, {this.state.likes} Likes</Text>
+                    <PostMenu ismine = {this.state.ismine} style={styles.PostMenu}/>
                 </View>
-            </TouchableNativeFeedback>
+            </TouchableRipple>
         );
     }
 }
@@ -86,7 +87,8 @@ BulletinBoardsEntries.propTypes = {
 
 const styles = StyleSheet.create({
     BulletinBoardsEntries: {
-        flexDirection: "column",
+        display: 'flex',
+        flexDirection: 'column',
         width: '100%',
         height: 90,
         paddingTop: '2%',
@@ -97,6 +99,9 @@ const styles = StyleSheet.create({
         borderColor: '#d4d4d4',
     },
     BulletinBoardsEntriesTitle:{
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
         flex: 3,
         fontSize: 17,
         fontWeight: 'bold',
@@ -113,6 +118,12 @@ const styles = StyleSheet.create({
         textAlign: "right",
         paddingBottom: 5
     },
+    PostMenu:{
+        position: 'absolute',
+        margin: 0,
+        right: 0,
+        top: 0,
+    }
 });
 
 export default withNavigation(BulletinBoardsEntries);

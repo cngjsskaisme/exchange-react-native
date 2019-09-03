@@ -10,6 +10,9 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import PostMenu from '../../PostMenu';
+import TitleBold from '../../Theming/TitleBold';
+import ContentMedium from '../../Theming/ContentMedium';
+import MetaLight from '../../Theming/MetaLight';
 
 class BulletinBoardRepliesEntries extends Component{
     static defaultProps = {
@@ -46,13 +49,11 @@ class BulletinBoardRepliesEntries extends Component{
     render(){
         return(
             <View key={this.state.replyid}>
-                <Text>Name : {this.state.username}</Text>
-                <Text>Profile : {this.state.profile}</Text>
-                <Text>{this.state.likes} Likes</Text>
-                <Text>Written at {this.state.date}</Text>
-                <PostMenu ismine = {this.state.ismine}/>
-                <Text>{this.state.contents}</Text>
-                <Text>{this.state.pictures}</Text>
+                <ContentMedium>{this.state.contents}</ContentMedium>
+                <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
+                <PostMenu
+                    ismine = {this.state.ismine}
+                    style = {styles.PostMenu}/>
             </View>
         );
     }
@@ -61,5 +62,14 @@ class BulletinBoardRepliesEntries extends Component{
 BulletinBoardRepliesEntries.propTypes = {
     name: PropTypes.string
 };
+
+const styles = StyleSheet.create({
+    PostMenu:{
+        position: 'absolute',
+        margin: 0,
+        right: 0,
+        top: 0,
+    },
+});
 
 export default BulletinBoardRepliesEntries;

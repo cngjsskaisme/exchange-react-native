@@ -9,12 +9,16 @@
 
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, ScrollView, Button } from 'react-native';
+import { StyleSheet, ScrollView, KeyboardAvoidingView, Text, View, Dimensions, Keyboard } from 'react-native';
 import PropTypes from 'prop-types';
 import { withNavigation } from 'react-navigation';
 import BulletinBoardsReplies from './Replies/BulletinBoardsReplies';
 import PostMenu from '../PostMenu';
-
+import TitleBold from '../Theming/TitleBold';
+import MetaLight from '../Theming/MetaLight';
+import ContentMedium from '../Theming/ContentMedium';
+import BulletinBoardsRepliesInput from './Replies/BulletinBoardsRepliesInput'
+import BetterKeyboardAvoidingView from '../Tools/BetterKeyboardAvoidingView';
 
 class BulletinBoardsContent extends Component{
     static defaultProps = {
@@ -28,7 +32,11 @@ class BulletinBoardsContent extends Component{
         ismine: false,
         title: "",
         contents: "",
-        pictures: ""
+        pictures: "",
+
+        keyboardHeight:0,
+        normalHeight: 0,
+        shortHeight: 0
     }
     
     constructor(props){
@@ -44,25 +52,60 @@ class BulletinBoardsContent extends Component{
             ismine: this.props.navigation.getParam('ismine'),
             title: this.props.navigation.getParam('title'),
             contents: this.props.navigation.getParam('contents'),
-            pictures: this.props.navigation.getParam('pictures')
+            pictures: this.props.navigation.getParam('pictures'),
+
+            keyboardHeight: 0,
+            normalHeight: 0,
+            shortHeight: 0
         }
+    }
+
+    componentDidMount() {
+        this.keyboardDidShowListener = Keyboard.addListener(
+          'keyboardDidShow',
+          this._keyboardDidShow,
+        );
+        this.keyboardDidHideListener = Keyboard.addListener(
+          'keyboardDidHide',
+          this._keyboardDidHide,
+        );
+      }
+
+    componentWillUnmount() {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+    }
+
+    _keyboardDidShow = (e) => {
+        this.setState({keyboardHeight: e.endCoordinates.height});
     }
 
 
     render(){
         return(
-            <ScrollView>
-                <Text>Username : {this.state.username}</Text>
-                <Text>{this.state.likes} Likes</Text>
-                <Text>Written at {this.state.date}</Text>
-                <Text>{this.state.contents}</Text>
-                <PostMenu ismine = {this.state.ismine}/>
-                <BulletinBoardsReplies
-                    parentid = {this.state.id}
-                    userid = '10'
-                    username = 'testing'
-                    profile = 'hello'/>
-            </ScrollView>
+            <View style={styles.Container}>
+                <ScrollView>
+                    <TitleBold fontSize={25}>{this.state.title}</TitleBold>
+                    <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
+                    <ContentMedium>{this.state.contents}</ContentMedium>
+                    <PostMenu
+                        ismine = {this.state.ismine}
+                        style = {styles.PostMenu}/>
+                    <BulletinBoardsReplies
+                        parentid = {this.state.id}
+                        userid = '10'
+                        username = 'testing'
+                        profile = 'hello'/>
+                </ScrollView>
+                <BetterKeyboardAvoidingView
+                    keyboardHeight={this.state.keyboardHeight}>
+                    <BulletinBoardsRepliesInput
+                            entryid = {this.state.entryid}
+                            userid = {this.state.userid}
+                            username = {this.state.username}
+                            profile = {this.state.profile}/>
+                </BetterKeyboardAvoidingView>
+            </View>
         );
     }
 }
@@ -72,5 +115,29 @@ class BulletinBoardsContent extends Component{
 BulletinBoardsContent.propTypes = {
     
   };
+
+
+  const styles = StyleSheet.create({
+    PostMenu:{
+        position: 'absolute',
+        margin: 0,
+        right: 0,
+        top: 0,
+    },
+    Container:{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+        height: '100%',
+        padding: 10
+    },
+    BottomInput: {
+        position: 'absolute',
+        alignSelf: 'flex-end',
+        margin: 0,
+        bottom: 0,
+    }
+
+});
 
 export default withNavigation(BulletinBoardsContent);

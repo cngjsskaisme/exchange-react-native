@@ -9,7 +9,7 @@
 
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { Button, Menu, Divider } from 'react-native-paper';
+import { Button, Menu, Divider, IconButton, Colors } from 'react-native-paper';
 import { withNavigation } from 'react-navigation'
 import PropTypes from 'prop-types';
 
@@ -18,14 +18,16 @@ class PostMenu extends Component{
     static defaultProps = {
         ismine: false,
         admin: false,
-        visible: false
+        visible: false,
+        style: {}
     }
     constructor(props){
         super(props);
         this.state = {
             ismine: this.props.ismine,
             false: this.props.admin,
-            visible: false
+            visible: false,
+            style: this.props.style,
         }
     }
 
@@ -36,12 +38,17 @@ class PostMenu extends Component{
     render(){
         if(this.state.ismine || this.state.admin){
             return (
-                <View>
+                <View style={this.state.style}>
                 <Menu
                     visible={this.state.visible}
                     onDismiss={this._closeMenu}
                     anchor={
-                    <Button onPress={this._openMenu}>Show menu</Button>
+                    <IconButton
+                    icon='more-vert'
+                    color={Colors.red500}
+                    size={20}
+                    onPress={this._openMenu}
+                    />
                     }
                 >
                     <Menu.Item onPress={() => {}} title="Delete" />
@@ -67,12 +74,17 @@ class PostMenu extends Component{
         }
         else{
             return (
-                <View>
+                <View style={this.state.style}>
                 <Menu
                     visible={this.state.visible}
                     onDismiss={this._closeMenu}
                     anchor={
-                    <Button onPress={this._openMenu}>Show menu</Button>
+                    <IconButton
+                    icon="more-vert"
+                    color={Colors.red500}
+                    size={20}
+                    onPress={this._openMenu}
+                    />
                     }
                 >
                     <Menu.Item onPress={() => {}} title="Report" />
