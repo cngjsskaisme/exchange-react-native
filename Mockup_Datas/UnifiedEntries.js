@@ -158,7 +158,11 @@ export const BulletinBoardsEntries_Mock = [
 ];
 
 //Comment Mock
-//entryid : 부모 게시글의 id
+//boardid: 부모 게시글의 id
+//entryid : 부모 댓글의 id 
+//replyid: 해당 댓글의 id 
+//parentreplyid: 해당 댓글의 부모 id 
+//rootreplyid: 최상위 댓글의 id
 //userid :  해당 유저의 id
 //username : 해당 유저의 이름
 //profile : 해당 유저의 프로필 사진
@@ -167,12 +171,15 @@ export const BulletinBoardsEntries_Mock = [
 //ismine : 본인 글인지 여부
 //contents : 댓글 내용
 //pictures : 삽입된 사진 링크
+  
 
 export const CommentEntries_Mock = [
     {
-        boardid: 0,
+        boardid: 0, 
         entryid: 321,
-        replyid: 132,
+        replyid: 132, 
+        parentreplyid: 51,
+        rootreplyid: 5,
         userid: 1,
         username: 'guide',
         profile: 'IMAGELINK (To be implemented)',
@@ -187,6 +194,8 @@ export const CommentEntries_Mock = [
         boardid: 0,
         entryid: 321,
         replyid: 22,
+        parentreplyid: 41,
+        rootreplyid: 4,
         userid: 342,
         username: 'Div',
         profile: 'IMAGELINK (To be implemented)',
@@ -201,6 +210,8 @@ export const CommentEntries_Mock = [
         boardid: 0,
         entryid: 112,
         replyid: 342,
+        parentreplyid: 31,
+        rootreplyid: 3,
         userid: 422,
         username: 'Probius',
         profile: 'IMAGELINK (To be implemented)',

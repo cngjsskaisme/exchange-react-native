@@ -6,8 +6,6 @@
     일단 안받습니다.
 */
 
-
-
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
 import { FAB } from 'react-native-paper'
