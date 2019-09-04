@@ -6,7 +6,6 @@
     XX - XXX
 */
 
-
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableNativeFeedback } from 'react-native';
 import PropTypes from 'prop-types';
