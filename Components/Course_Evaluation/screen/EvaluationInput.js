@@ -15,9 +15,9 @@ import {
   Picker
 } from 'react-native';
 import propTypes from 'prop-types';
-import { Button, ButtonGroup, Header, Input } from 'react-native-elements';
+import { Button, ButtonGroup, Input } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {createStackNavigator, createAppContainer, createBottomTabNavigator} from 'react-navigation'
+import {createStackNavigator, createAppContainer, createBottomTabNavigator, Header} from 'react-navigation'
 
 import RatingStar from '../components/RatingStar';
 import RatingStar_Without_TextBox from '../components/RatingStar_Without_TextBox';
@@ -28,300 +28,328 @@ export default class EvaluationScreen extends Component {
   constructor () {
     super()
     this.state = {
-      selectedIndex: null,
-      selectedIndex_Assignment: null,
-      selectedIndex_Grade : null,
-      selectedIndex_Again : null,
+      skill : 5,
+      difficulty : 4,
+      assignment : 0,
+      exam : 0,
+      grade : 8,
+      rate : 5
     }
-    this.updateIndex_Exam = this.updateIndex_Exam.bind(this)
-    this.updateIndex_Assignment = this.updateIndex_Assignment.bind(this)
-    this.updateIndex_Grade = this.updateIndex_Grade.bind(this)
-    this.updateIndex_Again = this.updateIndex_Again.bind(this)
+
   }
+
+  static defaultProps = {
+    contents: ''
+}
+
+  onPressMinus_Skill = () => {
+    if(this.state.skill > 0){
+      this.setState({
+        skill: this.state.skill-1
+      })
+    }
+  }
+  onPressPlus_Skill = () => {
+    if(this.state.skill < 5){
+      this.setState({
+        skill: this.state.skill+1
+      })
+    }
+  }
+
+  onPressMinus_Diffculty = () => {
+    if(this.state.difficulty > 0){
+      this.setState({
+        difficulty: this.state.difficulty-1
+      })
+    }
+  }
+  onPressPlus_Diffculty = () => {
+    if(this.state.difficulty < 4){
+      this.setState({
+        difficulty: this.state.difficulty+1
+      })
+    }
+  }
+
+  onPressMinus_Assignment = () => {
+    if(this.state.assignment > 0){
+      this.setState({
+        assignment: this.state.assignment-1
+      })
+    }
+  }
+  onPressPlus_Assignment = () => {
+    if(this.state.assignment < 5){
+      this.setState({
+        assignment: this.state.assignment+1
+      })
+    }
+  }
+
+  onPressMinus_Exam = () => {
+    if(this.state.exam > 0){
+      this.setState({
+        exam: this.state.exam-1
+      })
+    }
+  }
+  onPressPlus_Exam = () => {
+    if(this.state.exam < 5){
+      this.setState({
+        exam: this.state.exam+1
+      })
+    }
+  }
+
+  onPressMinus_Grade = () => {
+    if(this.state.grade > 0){
+      this.setState({
+        grade: this.state.grade-1
+      })
+    }
+  }
+  onPressPlus_Grade = () => {
+    if(this.state.grade < 8){
+      this.setState({
+        grade: this.state.grade+1
+      })
+    }
+  }
+
+  onPressMinus_Rate = () => {
+    if(this.state.rate > 0){
+      this.setState({
+        rate: this.state.rate-1
+      })
+    }
+  }
+  onPressPlus_Rate = () => {
+    if(this.state.rate < 5){
+      this.setState({
+        rate: this.state.rate+1
+      })
+    }
+  }
+
+
+
   
-  updateIndex_Exam (selectedIndex_Exam) {
-    this.setState({selectedIndex_Exam})
-  }
-  updateIndex_Assignment (selectedIndex_Assignment) {
-    this.setState({selectedIndex_Assignment})
-  }
-  updateIndex_Grade (selectedIndex_Grade) {
-    this.setState({selectedIndex_Grade})
-  }
-  updateIndex_Again (selectedIndex_Again) {
-    this.setState({selectedIndex_Again})
-  }
-  Test_Button() {
-    Alert.alert(
-      'You need to...'
-    )
-    }
+  
+  
+   
   render() {
     const ProfessorName = "Punreach RANY"
     const Institution = "Hanyang University"
+    var Difficulty_Array = ['Very Easy', 'Easy', 'Average', 'Hard', 'Very Hard'];
+    var Grade_Array  = ['F', 'E', 'D','C0','C+','B0','B+','A0','A+'];
     
-    const { selectedIndex_Exam,selectedIndex_Assignment, selectedIndex_Grade, selectedIndex_Again } = this.state
+    
     
 
     return (
-      <ScrollView style={styles.container}>
-      
-
-      
-
-          <View style={styles.header}>
-            <View style={styles.headerContent}>
-                <Text style={styles.name}>Write Your Evaluation</Text>
-            </View>
+      <KeyboardAvoidingView behavior='padding' style={styles.container} keyboardVerticalOffset = {Header.HEIGHT + 20}>
+      <ScrollView style={styles.scroll}>
+ 
+          <View style={styles.topBlock}>
+            <Text style={{fontSize:30, fontWeight:'400'}}>Rate your professor.</Text>
+            <Text style={{fontSize:30, fontWeight:'400'}}>See other's ratings</Text>
+            <Text style={{fontSize:15, fontWeight:'200', color : 'red'}}>Rating your professor and see what other people are talking about their professor</Text>
           </View>
 
-
-          <View style={styles.profileDetail}>
-            <View style={styles.detailContent}>
-              <View style={{alignItems : 'center', flex : 1.7}}>
-                <Text style={styles.profileText}>Course </Text> 
-                <Text style={styles.profileText}>Taught by </Text>  
-                <Text style={styles.profileText}>Institution </Text>
-                <Text style={styles.profileText}>Rating</Text>
-                <Text style={styles.profileText}>Difficulty </Text>
-                <Text style={styles.profileText}>Exam </Text>
-                <Text style={styles.profileText}>Assignment </Text>
-                <Text style={styles.profileText}>Grade</Text>
-                
-                <Text style={styles.profileText}>Write your comment </Text>
-                
+          <View style={styles.bottomBlock}>
+            <View style={[styles.cellOne, styles.base]}>
+              <View style={{justifyContent: 'center',alignContent : 'center', alignSelf : 'center'}}>
+                  <Text style={{fontSize:30, fontWeight:'400', textDecorationLine : 'underline',}}>Ahn Mena</Text>
               </View>
-              <View style={{alignItems : 'center', flex : 0.4}}>
-    
-                <Text style={styles.profileText}>:</Text>
-                <Text style={styles.profileText}>:</Text> 
-                <Text style={styles.profileText}>:</Text> 
-                <Text style={styles.profileText}>:</Text> 
-                <Text style={styles.profileText}>:</Text> 
-                <Text style={styles.profileText}>:</Text> 
-                <Text style={styles.profileText}>:</Text> 
-                <Text style={styles.profileText}>:</Text> 
-                <Text style={styles.profileText}>:</Text> 
-                
+              <View style={{justifyContent: 'center',alignContent : 'center',alignSelf : 'center'}}>
+                  <Text style={{borderTopWidth : 5 , borderTopColor : '#e67e22', width  : 100}}></Text>
               </View>
-              <View style={{alignItems : 'center', flex : 3}}>
-                <Text style={styles.profileText}>React Native</Text> 
-                <Text style={styles.profileText}>{ProfessorName}</Text>  
-                <Text style={styles.profileText}>{Institution}</Text>  
-                <RatingStar_Without_TextBox 
-                    ratingSize = {12}
-                    onPress_status = {true}
-                />
-                <RatingStar_Without_TextBox
-                    ratingSize = {12}
-                    onPress_status = {true}
-                />
-                <Picker
-                  selectedValue={this.state.language}
-                  style={{height: 50, width: 100, padding : 30, fontSize : 15,}}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({language: itemValue})}>
-
-                  <Picker.Item label="0" value="None" />
-                  <Picker.Item label="1" value="1" />
-                  <Picker.Item label="2" value="2" />
-                  <Picker.Item label="3" value="3" />
-                  <Picker.Item label="4" value="4" />
-                  <Picker.Item label="More" value="More" />
-
-                </Picker>
-                <Picker
-                  selectedValue={this.state.language}
-                  style={{height: 50, width: 100, padding : 30, fontSize : 15,}}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({language: itemValue})}>
-
-                  <Picker.Item label="0" value="None" />
-                  <Picker.Item label="1" value="1" />
-                  <Picker.Item label="2" value="2" />
-                  <Picker.Item label="3" value="3" />
-                  <Picker.Item label="4" value="4" />
-                  <Picker.Item label="More" value="More" />
-
-
-                </Picker>
-
-                <Picker
-                  selectedValue={this.state.language}
-                  style={{height: 50, width: 100, padding : 30, fontSize : 15,}}
-                  onValueChange={(itemValue, itemIndex) =>
-                    this.setState({language: itemValue})}>
-
-                  <Picker.Item label="A+" value="A+" />
-                  <Picker.Item label="A0" value="A0" />
-                  <Picker.Item label="B+" value="B+" />
-                  <Picker.Item label="B0" value="B0" />
-                  <Picker.Item label="C+" value="C+" />
-                  <Picker.Item label="C0" value="C0" />
-                  <Picker.Item label="D+" value="D+" />
-                  <Picker.Item label="D0" value="D0" />
-                  <Picker.Item label="E+" value="E+" />
-                  <Picker.Item label="E0" value="E+" />
-                  <Picker.Item label="F" value="Failed" />
-
-
-
-                </Picker>
-               
-              
-                <TextInput 
-                    style={{borderBottomColor: 'black', borderBottomWidth : 1, margin : 10, marginTop : 20, paddingBottom : 10, height : 100, width: '97%',alignSelf : 'flex-start', fontSize : 15,}}
-                    multiline = {true}
-                />
-                <View style={{alignSelf : 'flex-end'}}>
-                <Button
-                  buttonStyle={{width : '100%'}}
-                  title="Post"
-                  onPress = {() => this.props.navigation.navigate('EvaluationScreen')}
-                />
-                </View>
-                
-                
+              <View style={{justifyContent: 'center',alignContent : 'center',alignSelf : 'center', paddingTop : 5}}>
+                  <Text style={{fontSize:15, fontWeight:'200', color : '#000000', marginTop : -30}}>IT Project Management</Text>
               </View>
-              
             </View>
-            
-            
+
+            <View style={[styles.cellTwo, styles.base]}>
+              <View style={styles.boxOne}><Text style={styles.boxText}>Teaching Skill</Text></View>
+              <View style={styles.boxTwo}>
+                <TouchableOpacity onPress={this.onPressMinus_Skill}>
+                  <Icon name = 'minus-square' size={25} type='font-awesome' color = '#bdc3c7'/>
+                </TouchableOpacity>
+                <Text style = {[styles.boxText,{width:100, textAlign:'center'}]}>{this.state.skill} Star</Text>
+                <TouchableOpacity onPress={this.onPressPlus_Skill}>
+                  <Icon name = 'plus-square' size={25} type='font-awesome' color = '#bdc3c7'/> 
+                </TouchableOpacity>
+              </View> 
+            </View>
+
+            <View style={[styles.cellTwo, styles.base]}>
+              <View style={styles.boxOne}><Text style={styles.boxText}>Level of difficulty</Text></View>
+              <View style={styles.boxTwo}>
+                <TouchableOpacity onPress={this.onPressMinus_Diffculty} >
+                  <Icon name = 'minus-square' size={25} type='font-awesome' color = '#bdc3c7'/>
+                </TouchableOpacity>
+                <Text style = {[styles.boxText,{width:100, textAlign:'center'}]}>{Difficulty_Array[this.state.difficulty]}</Text>
+                <TouchableOpacity onPress={this.onPressPlus_Diffculty}>
+                  <Icon name = 'plus-square' size={25} type='font-awesome' color = '#bdc3c7'/>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={[styles.cellTwo, styles.base]}>
+              <View style={styles.boxOne}><Text style={styles.boxText}>Assignment</Text></View>
+              <View style={styles.boxTwo}>
+                <TouchableOpacity onPress={this.onPressMinus_Assignment}>
+                  <Icon name = 'minus-square' size={25} type='font-awesome' color = '#bdc3c7'/>
+                </TouchableOpacity>
+                <Text style = {[styles.boxText,{width:100, textAlign:'center'}]}>{this.state.assignment}</Text>
+                <TouchableOpacity onPress={this.onPressPlus_Assignment} >
+                  <Icon name = 'plus-square' size={25} type='font-awesome' color = '#bdc3c7'/>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={[styles.cellTwo, styles.base]}>
+              <View style={styles.boxOne}><Text style={styles.boxText}>Exam</Text></View>
+              <View style={styles.boxTwo}>
+                <TouchableOpacity onPress={this.onPressMinus_Exam}>
+                  <Icon name = 'minus-square' size={25} type='font-awesome' color = '#bdc3c7'/>
+                </TouchableOpacity>
+                <Text style = {[styles.boxText,{width:100, textAlign:'center'}]}>{this.state.exam}</Text>
+                <TouchableOpacity onPress={this.onPressPlus_Exam}>
+                  <Icon name = 'plus-square' size={25} type='font-awesome' color = '#bdc3c7'/>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={[styles.cellTwo, styles.base]}>
+              <View style={styles.boxOne}><Text style={styles.boxText}>Your Grade</Text></View>
+              <View style={styles.boxTwo}>
+                <TouchableOpacity onPress={this.onPressMinus_Grade} >
+                  <Icon name = 'minus-square' size={25} type='font-awesome' color = '#bdc3c7'/>
+                </TouchableOpacity>
+                <Text style = {[styles.boxText,{width:100, textAlign:'center'}]}>{Grade_Array[this.state.grade]}</Text>
+                <TouchableOpacity onPress={this.onPressPlus_Grade}>
+                  <Icon name = 'plus-square' size={25} type='font-awesome' color = '#bdc3c7'/>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={[styles.cellTwo, styles.base]}>
+              <View style={styles.boxOne}><Text style={styles.boxText}>Overall Rate</Text></View>
+              <View style={styles.boxTwo}>
+                <TouchableOpacity onPress={this.onPressMinus_Rate}>
+                  <Icon name = 'minus-square' size={25} type='font-awesome' color = '#bdc3c7'/>
+                </TouchableOpacity>
+                <Text style = {[styles.boxText,{width:100, textAlign:'center'}]}>{this.state.rate} Star</Text>
+                <TouchableOpacity onPress={this.onPressPlus_Rate} >
+                  <Icon name = 'plus-square' size={25} type='font-awesome' color = '#bdc3c7'/>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={[styles.cellTwo, {paddingBottom : 10}]}>
+              <Input
+                label = 'Comment'
+                placeholder='Enter to leave a comment!'
+                //shake={true}
+                multiline
+              />   
+            </View>
+            <View style={[styles.cellTwo, styles.base]}>
+              <Button 
+                title="Post"
+              />
+            </View>
+
           </View>
+
 
       </ScrollView>
+    </KeyboardAvoidingView>
+
     );
   }
 }
 const styles = StyleSheet.create({
   container : {
+    flexDirection : 'column',
     flex : 1,
-    height : '200%',
-    width : '100%'
-},
-bottomPart : { 
-  width : '100%',
-  flexDirection : 'row',
-  padding : 15,      
-},
-profileText : {
-  fontSize : 15,
-  fontWeight : 'bold',
-  paddingBottom : 20,
-  paddingLeft : 10,
-  paddingRight : 10,
-  paddingTop : 20,
-} ,
-header:{
-backgroundColor: "#00CED1",
-height : 150,
-alignContent : 'center',
-alignItems : 'center',
-//zIndex : 2,
-marginBottom : "100%"
-},
-headerContent:{
+    //position : 'absolute',
+  },
+  scroll : {
+    height : '100%',
+    marginBottom : 10, 
+  },
+  keyboard :{
+    height : '10%',
+    borderWidth: 2,
+    borderColor: '#000000',
+  },
+  separate : {
+    height : '2%',
+    backgroundColor : 'green'
+  },
+  topBlock : {
+    alignContent : 'flex-start',
+    alignItems : 'flex-start',
+    padding : 20,
+    alignItems: 'flex-start',
+  },
+  bottomBlock : {
+    flex : 3,
+    borderWidth: 2,
+    borderColor: '#d6d7da',
+    borderRadius : 10,
+    marginLeft : 10,
+    marginRight : 10,
+    alignContent : 'center',
+    justifyContent: 'center',
 
-alignItems: 'center',
-//zIndex : 2,
-},
+  },
+  base : {
+    padding : 10,
+  },
 
-profileDetail:{
-flex : 1,
-width : "95%",
-alignSelf: 'center',
-marginTop: "15%",
+  cellOne : {
+    flex : 12,
+    flexDirection : 'column',
 
-alignItems: 'center',
-flexDirection: 'row',
-position:'absolute',
-backgroundColor: "#ffffff",
-borderWidth: 2,
-borderColor: '#d6d7da',
-borderRadius : 10,
-zIndex : 1,
-alignContent : 'center'
+    justifyContent: 'center',
+  },
+  cellTwo : {
+    flex : 2,
+    flexDirection : 'row',
+    alignContent : 'center'
+  },
+  cellThree : {
+    flex : 12,
+    flexDirection : 'row',
+    alignContent : 'center'
+  },
 
-},
-detailContent:{
-flex : 1,
-justifyContent: 'space-between',
-width : "98%",
-margin: "1%",
-flexDirection : 'row',
-alignItems: 'flex-start',
-alignContent : 'center',
-alignSelf : 'center',
-//borderWidth: 0.5,
-//borderColor: '#d6d7da',
-//borderRadius : 10,
+  boxOne : {
+    flex : 1,
 
-//zIndex : 1,
-},
-body : {
-//zIndex : 1,
-//height : '100%',
-alignItems : 'center'
+    alignContent : 'center'
+  },
+  
+  boxTwo : {
+    flex : 1,
+    flexDirection : 'row',
+    alignContent : 'center',
+    alignItems : 'center',
+    justifyContent: 'center',
+    borderRadius : 10,
 
-},
-bodyContent: {
-width : '95%',
-flex: 1,
-alignItems: 'flex-start',
-//padding:30,
-marginTop : "15%",
-borderWidth: 2,
-borderColor: '#d6d7da',
-borderRadius : 10,
-},
-avatar: {
-width: 130,
-height: 130,
-borderRadius: 63,
-borderWidth: 4,
-borderColor: "white",
-marginBottom:10,
-},
-name:{
-fontSize:20,
-color:"#FFFFFF",
-fontWeight:'600',
-paddingTop:'5%',
-zIndex : 2,
-},
-commentTitle : {
-alignSelf : 'center',
-padding : 15,
-},
-title:{
-fontSize:15,
-color: "#00CED1"
-},
+    
+  },
+  boxText : {
+    fontSize:20, 
+    fontWeight:'400',
+  },
 
-count:{
-fontSize:15,
-},
-
-textInfo:{
-fontSize:15,
-marginTop:20,
-color: "black",
-},
-buttonContainer: {
-marginTop:10,
-height:45,
-flexDirection: 'row',
-justifyContent: 'center',
-alignItems: 'center',
-marginBottom:20,
-width:250,
-borderRadius:30,
-backgroundColor: "#00CED1",
-},
-description:{
-fontSize:15,
-color: "black",
-marginTop:10,
-textAlign: 'center'
-},
+  name:{
+    fontSize:20,
+    fontWeight:'600',
+  },
 });

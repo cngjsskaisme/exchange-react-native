@@ -22,6 +22,7 @@ import Comment from '../components/Comment';
 import TextBox from '../components/TextBox'
 import FixedRatingStar from '../components/fixed_RatingStar'
 
+
 export default class EvaluationScreen extends Component {
 
   Test_Button() {

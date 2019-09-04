@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import EvaluationScreen from './screen/EvaluationScreen';
 import EvaluationInput from './screen/EvaluationInput';
+import EvaluationList from './screen/EvaluationList';
 import {createStackNavigator, createAppContainer, createBottomTabNavigator} from 'react-navigation'
 
 
@@ -14,6 +15,7 @@ class CourseEvaluation extends Component{
 }
 
 const AppStackNavigator = createStackNavigator({
+  EvaluationList : EvaluationList,
   EvaluationScreen :  EvaluationScreen,
   EvaluationInput : EvaluationInput,
 })
