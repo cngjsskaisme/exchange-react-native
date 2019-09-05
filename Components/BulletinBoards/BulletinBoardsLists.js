@@ -10,17 +10,45 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableNativeFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 import BulletinBoards from './BulletinBoards';
-import {TouchableRipple} from 'react-native-paper'
+import {TouchableRipple, Button } from 'react-native-paper'
 import { BulletinBoardsLists_Mock } from '../../Mockup_Datas/UnifiedEntries'
 import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
+import GetBulletinBoardsLists from '../ServerLib/GetBulletinBoardsLists';
+
+import axios from 'axios'; 
+import {server} from '../ServerLib/config';
 
 class BulletinBoardsLists extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            boardslist : null
+        }
+    }
+    
+    componentDidMount(){
+        ReturnValue = BulletinBoardsListsReturned();
+    }
     static navigationOptions = {
         title: 'BulletinBoards Lists',
       };
     
+    async bulletinBoardsLists2(){   
+        var url = server.serverURL + '/process/ShowBulletinBoardsList';
+          await axios.post(url) 
+        .then((response) => {       
+          this.setState({ 
+           boardslist: response.data.boardslist    
+        }) 
+        }) 
+        .catch(function (error) {
+            console.log(error); 
+        });    
+    }
+    async componentDidMount(){
+      await this.bulletinBoardsLists2(); 
+    }
 
-    
       _renderItem = ({ item }) => {
         return(
             <TouchableRipple
@@ -42,10 +70,13 @@ class BulletinBoardsLists extends Component{
 
     render(){
         return(
-            <FlatList 
-                data = {BulletinBoardsLists_Mock}
+            /*<FlatList 
+                data = {BulletinBoardsListsReturned}
                 renderItem = {this._renderItem}
-                keyExtractor = {this._keyExtractor}/>
+                keyExtractor = {this._keyExtractor}/>*/
+            <View>
+            <Text>{[JSON.stringify(this.state.boardslist)]}</Text>
+            </View>
         );
     }
 }

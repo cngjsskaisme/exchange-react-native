@@ -13,7 +13,6 @@ import PropTypes from 'prop-types';
 import BulletinBoardsEntries from './BulletinBoardsEntries';
 import { BulletinBoardsEntries_Mock } from '../../Mockup_Datas/UnifiedEntries'
 import { withNavigation } from 'react-navigation'; 
-import {BulletinBoardsLists} from '../ServerLib/BulletinBoardsLists';
 
 
 class BulletinBoards extends Component{
@@ -55,7 +54,7 @@ class BulletinBoards extends Component{
     render(){
         return([
             <FlatList 
-                data = {BulletinBoardsLists}
+                data = {BulletinBoardsEntries_Mock}
                 renderItem = {this._renderItem}
                 keyExtractor = {this._keyExtractor}
                 onRefresh = {() => {}}
