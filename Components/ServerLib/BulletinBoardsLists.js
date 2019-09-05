@@ -10,11 +10,11 @@ async GetBulletinBoardsLists(){
     var url = server.serverURL + '/process/ShowBulletinBoardsList';
     await axios.post(url) 
     .then((response) => {       
-        this.setState({ 
+        async this.setState({ 
             BulletinBoardsLists: response.data.boardslist    
       }) 
     }) 
     .catch(function (error) {
         console.log(error); 
     });    
-}
+};
