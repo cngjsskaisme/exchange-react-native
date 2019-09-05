@@ -12,7 +12,8 @@ import { FAB } from 'react-native-paper'
 import PropTypes from 'prop-types';
 import BulletinBoardsEntries from './BulletinBoardsEntries';
 import { BulletinBoardsEntries_Mock } from '../../Mockup_Datas/UnifiedEntries'
-import { withNavigation } from 'react-navigation';
+import { withNavigation } from 'react-navigation'; 
+import {BulletinBoardsLists} from '../ServerLib/BulletinBoardsLists';
 
 
 class BulletinBoards extends Component{
@@ -54,7 +55,7 @@ class BulletinBoards extends Component{
     render(){
         return([
             <FlatList 
-                data = {BulletinBoardsEntries_Mock}
+                data = {BulletinBoardsLists}
                 renderItem = {this._renderItem}
                 keyExtractor = {this._keyExtractor}
                 onRefresh = {() => {}}
