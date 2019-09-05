@@ -13,7 +13,7 @@ import { StyleSheet, Text, View, TouchableNativeFeedback, Dimensions, Alert } fr
 import PropTypes from 'prop-types';
 import { NavigationActions, withNavigation } from 'react-navigation';
 import {TouchableRipple} from 'react-native-paper'
-import PostMenu from '../PostMenu';
+import PostMenu from '../Tools/PostMenu';
 
 
 class BulletinBoardsEntries extends Component{
@@ -90,9 +90,8 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         width: '100%',
-        height: 90,
-        paddingTop: '2%',
-        paddingLeft: '3%',
+        paddingTop: 10,
+        paddingLeft: 15,
         borderLeftWidth: 0.5,
         borderRightWidth: 0.5,
         borderBottomWidth: 0.5,
@@ -103,20 +102,23 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         flexDirection: 'row',
         flex: 3,
+        width: '80%',
         fontSize: 17,
         fontWeight: 'bold',
-        paddingBottom: 3
+        paddingBottom: 5
     },
     BulletinBoardsEntriesContents:{
         flex: 5,
         fontSize: 14,
+        width: '75%',
+        paddingBottom: 10
     },
     BulletinBoardsEntriesMetadata:{
         flex: 2,
         fontSize: 12,
         color: 'gray',
         textAlign: "right",
-        paddingBottom: 5
+        paddingBottom: 5,
     },
     PostMenu:{
         position: 'absolute',

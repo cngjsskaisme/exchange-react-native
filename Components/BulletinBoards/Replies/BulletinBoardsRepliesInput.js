@@ -46,7 +46,8 @@ class BulletinBoardsRepliesInput extends Component{
                     label = 'Comment'
                     onChangeText = {(contents) => {this.setState({contents})}}
                     placeholder = 'Enter to leave a comment!'
-                    value = {this.state.contents}/>                
+                    value = {this.state.contents}
+                    multiline = {true}/>                
                 <IconButton
                     icon="arrow-upward"
                     color={Colors.red500}

@@ -3,9 +3,9 @@ import { AppRegistry } from "react-native";
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from "react-navigation";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Provider as PaperProvider } from 'react-native-paper';
-import SettingsScreen from "./Components/Settings"
-import MainScreen from "./Components/Main"
-import TimeTables from "./Components/TimeTables"
+import SettingsScreen from "./Components/Settings/Settings"
+import MainScreen from "./Components/Main/Main"
+import TimeTables from "./Components/TimeTables/TimeTables"
 import BulletinBoards from "./Components/BulletinBoards/BulletinBoards"
 import BulletinBoardsContent from "./Components/BulletinBoards/BulletinBoardsContent"
 import BulletinBoardsEditEntry from "./Components/BulletinBoards/BulletinBoardsEditEntry";

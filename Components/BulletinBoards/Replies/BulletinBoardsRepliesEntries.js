@@ -9,10 +9,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
-import PostMenu from '../../PostMenu';
-import TitleBold from '../../Theming/TitleBold';
-import ContentMedium from '../../Theming/ContentMedium';
-import MetaLight from '../../Theming/MetaLight';
+import PostMenu from '../../Tools/PostMenu';
+import {ContentMedium, MetaLight, TitleBold} from '../../Theming/Theme'
 
 class BulletinBoardRepliesEntries extends Component{
     static defaultProps = {
@@ -48,9 +46,15 @@ class BulletinBoardRepliesEntries extends Component{
 
     render(){
         return(
-            <View key={this.state.replyid}>
-                <ContentMedium>{this.state.contents}</ContentMedium>
-                <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
+            <View 
+                key={this.state.replyid}
+                style={styles.RepliesEntry}>
+                <View style={styles.RepliesEntryContents}>
+                    <ContentMedium>{this.state.contents}</ContentMedium>
+                </View>
+                <View style={styles.RepliesEntryMeta}>
+                    <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
+                </View>
                 <PostMenu
                     ismine = {this.state.ismine}
                     style = {styles.PostMenu}/>
@@ -64,12 +68,21 @@ BulletinBoardRepliesEntries.propTypes = {
 };
 
 const styles = StyleSheet.create({
-    PostMenu:{
+    PostMenu: {
         position: 'absolute',
         margin: 0,
         right: 0,
         top: 0,
     },
+    RepliesEntry: {
+        paddingBottom: 5
+    },
+    RepliesEntryContents: {
+        paddingTop: 5
+    },
+    RepliesEntryMeta: {
+        paddingTop: 1
+    }
 });
 
 export default BulletinBoardRepliesEntries;

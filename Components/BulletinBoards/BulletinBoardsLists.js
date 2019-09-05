@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import BulletinBoards from './BulletinBoards';
 import {TouchableRipple} from 'react-native-paper'
 import { BulletinBoardsLists_Mock } from '../../Mockup_Datas/UnifiedEntries'
+import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
 
 class BulletinBoardsLists extends Component{
     static navigationOptions = {
@@ -27,9 +28,12 @@ class BulletinBoardsLists extends Component{
                 key={item.boardid}
                 onPress={() => {this.props.navigation.navigate('BulletinBoards', { boardid : item.boardid })}}>
                 <View style={styles.BulletinBoards}>
-                    <Text>
-                        {item.boardname}
-                    </Text>
+                    <View style={styles.BulletinBoardsName}>
+                        <TitleBold fontSize={20}>{item.boardname}</TitleBold>
+                    </View>
+                    <View style={styles.BulletinBoardsContents}>
+                        <MetaLight fontSize={14}> {item.contents}</MetaLight>
+                    </View>
                 </View>
             </TouchableRipple>
         )
@@ -56,13 +60,25 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         width: '100%',
         height: 90,
-        paddingTop: '2%',
-        paddingLeft: '3%',
+        paddingTop: 15,
+        paddingLeft: 10,
         borderLeftWidth: 0.5,
         borderRightWidth: 0.5,
         borderBottomWidth: 0.5,
         borderColor: '#d4d4d4',
     },
+    BulletinBoardsName: {
+        flex: 4.5,
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        paddingBottom: 5
+        
+    },
+    BulletinBoardsContents: {
+        flex: 5.5,
+        flexDirection: 'row',
+        alignItems: 'flex-start'
+    }
 });
 
 export default BulletinBoardsLists;

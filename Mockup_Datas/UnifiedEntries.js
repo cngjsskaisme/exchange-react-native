@@ -12,15 +12,18 @@
 export const BulletinBoardsLists_Mock = [
     {
         boardid: 0,
-        boardname: 'BulletinBoard 0'
+        boardname: 'BulletinBoard 0',
+        contents: 'This board is \'Omega and Alpha\'.'
     },
     {
         boardid: 1,
-        boardname: "Announcement Board"
+        boardname: "Notice Board",
+        contents: 'This board is for the notice.'
     },
     {
         boardid: 2,
-        boardname: "Free Board"
+        boardname: "Free Board",
+        contents: 'Boards for you.'
     },
 ];
 

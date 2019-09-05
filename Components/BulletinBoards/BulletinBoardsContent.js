@@ -11,14 +11,13 @@
 import React, { Component } from 'react';
 import { StyleSheet, ScrollView, KeyboardAvoidingView, Text, View, Dimensions, Keyboard } from 'react-native';
 import PropTypes from 'prop-types';
-import { withNavigation } from 'react-navigation';
+import { withNavigation, Header } from 'react-navigation';
 import BulletinBoardsReplies from './Replies/BulletinBoardsReplies';
-import PostMenu from '../PostMenu';
-import TitleBold from '../Theming/TitleBold';
-import MetaLight from '../Theming/MetaLight';
-import ContentMedium from '../Theming/ContentMedium';
+import PostMenu from '../Tools/PostMenu';
+import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
 import BulletinBoardsRepliesInput from './Replies/BulletinBoardsRepliesInput'
 import BetterKeyboardAvoidingView from '../Tools/BetterKeyboardAvoidingView';
+import { Divider } from 'react-native-elements';
 
 class BulletinBoardsContent extends Component{
     static defaultProps = {
@@ -60,51 +59,40 @@ class BulletinBoardsContent extends Component{
         }
     }
 
-    componentDidMount() {
-        this.keyboardDidShowListener = Keyboard.addListener(
-          'keyboardDidShow',
-          this._keyboardDidShow,
-        );
-        this.keyboardDidHideListener = Keyboard.addListener(
-          'keyboardDidHide',
-          this._keyboardDidHide,
-        );
-      }
-
-    componentWillUnmount() {
-    this.keyboardDidShowListener.remove();
-    this.keyboardDidHideListener.remove();
-    }
-
-    _keyboardDidShow = (e) => {
-        this.setState({keyboardHeight: e.endCoordinates.height});
-    }
-
 
     render(){
         return(
             <View style={styles.Container}>
                 <ScrollView>
-                    <TitleBold fontSize={25}>{this.state.title}</TitleBold>
-                    <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
-                    <ContentMedium>{this.state.contents}</ContentMedium>
-                    <PostMenu
-                        ismine = {this.state.ismine}
-                        style = {styles.PostMenu}/>
-                    <BulletinBoardsReplies
-                        parentid = {this.state.id}
-                        userid = '10'
-                        username = 'testing'
-                        profile = 'hello'/>
+                    <View style={styles.EntryTitle}>
+                        <TitleBold fontSize={25}>{this.state.title}</TitleBold>
+                        <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
+                    </View>
+                    <View style={styles.EntryContent}>
+                        <ContentMedium>{this.state.contents}</ContentMedium>                        
+                    </View>
+                    <Divider />
+                        <PostMenu
+                            ismine = {this.state.ismine}
+                            style = {styles.PostMenu}/>
+                    <View style={styles.EntryReplies}>
+                        <BulletinBoardsReplies
+                            parentid = {this.state.id}
+                            userid = '10'
+                            username = 'testing'
+                            profile = 'hello'/>
+                    </View>
                 </ScrollView>
-                <BetterKeyboardAvoidingView
-                    keyboardHeight={this.state.keyboardHeight}>
+                <KeyboardAvoidingView
+                    behavior='padding' 
+                    style={styles.container}
+                    keyboardVerticalOffset = {Header.HEIGHT + 40}>
                     <BulletinBoardsRepliesInput
                             entryid = {this.state.entryid}
                             userid = {this.state.userid}
                             username = {this.state.username}
                             profile = {this.state.profile}/>
-                </BetterKeyboardAvoidingView>
+                </KeyboardAvoidingView>
             </View>
         );
     }
@@ -129,15 +117,23 @@ BulletinBoardsContent.propTypes = {
         flexDirection: 'column',
         flex: 1,
         height: '100%',
-        padding: 10
+        padding: 15
     },
     BottomInput: {
         position: 'absolute',
         alignSelf: 'flex-end',
         margin: 0,
         bottom: 0,
+    },
+    EntryTitle: {
+        paddingBottom: 10,
+    },
+    EntryContent: {
+        paddingBottom: 15,
+    },
+    EntryReplies: {
+        paddingTop: 10,
     }
-
 });
 
 export default withNavigation(BulletinBoardsContent);
