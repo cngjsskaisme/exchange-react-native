@@ -35,14 +35,30 @@ class BulletinBoardsLists extends Component{
     
     async bulletinBoardsLists2(){   
         var url = server.serverURL + '/process/ShowBulletinBoardsList';
-          await axios.post(url) 
+          await axios.post(url,{ timeout: 3000 }) 
         .then((response) => {       
           this.setState({ 
            boardslist: response.data.boardslist    
         }) 
         }) 
-        .catch(function (error) {
-            console.log(error); 
+        .catch(( err ) => {
+            this.setState({
+                boardslist: BulletinBoardsLists_Mock
+            })
+            Alert.alert(
+                'Cannot connect to the server.',
+                'There\'s two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                [
+                  {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+                  {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                  },
+                  {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ],
+                {cancelable: false},
+              );
         });    
     }
     async componentDidMount(){
@@ -70,13 +86,10 @@ class BulletinBoardsLists extends Component{
 
     render(){
         return(
-            /*<FlatList 
-                data = {BulletinBoardsListsReturned}
+            <FlatList 
+                data = {this.state.boardslist}
                 renderItem = {this._renderItem}
-                keyExtractor = {this._keyExtractor}/>*/
-            <View>
-            <Text>{[JSON.stringify(this.state.boardslist)]}</Text>
-            </View>
+                keyExtractor = {this._keyExtractor}/>
         );
     }
 }
