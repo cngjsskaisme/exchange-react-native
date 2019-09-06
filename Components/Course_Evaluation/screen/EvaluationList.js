@@ -129,7 +129,8 @@ export default class EvaluationList extends Component {
                   SubjectName : l.subject,
                   ProfessorName : l.professor,
                   ExamNumber : l.doestest,
-                  Assignment : l.homeworks
+                  Assignment : l.homeworks,
+                  Star : l.ratings,
 
                   //more
                 }

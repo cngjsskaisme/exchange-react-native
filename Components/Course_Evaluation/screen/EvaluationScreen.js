@@ -42,6 +42,7 @@ export default class EvaluationScreen extends Component {
     const Institution = place || "Hanyang University"
     const ExamNumber = navigation.getParam('ExamNumber', 'NO-ID') || exam || 2
     const Assignment = navigation.getParam('Assignment', 'NO-ID') || assignment || 2
+    const Star = navigation.getParam('Star', 5)
     const Grade = grade || 'A+'
     const Again = again ||  'Yes'
     const i = 0
@@ -101,7 +102,7 @@ export default class EvaluationScreen extends Component {
                 <FixedRatingStar 
                     ratingSize = {10}
                     onPress_status = {true}
-                    value = {5}
+                    value = {Star}
 
                 />
                 <FixedRatingStar 
