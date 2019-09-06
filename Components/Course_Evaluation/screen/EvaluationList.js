@@ -21,7 +21,9 @@ import RatingStar from '../components/RatingStar';
 import Comment from '../components/Comment';
 import TextBox from '../components/TextBox'
 import FixedRatingStar from '../components/fixed_RatingStar'
-import EvaluationScreen from './EvaluationScreen'
+import EvaluationScreen from './EvaluationScreen';
+
+import {CourseRatingEntries_Mock} from '../../../Mockup_Datas/UnifiedEntries'
 
 export default class EvaluationList extends Component {
     state = {
@@ -38,6 +40,7 @@ export default class EvaluationList extends Component {
     
   render() {
     const { search } = this.state;
+ 
     const list = [
         {
           name: 'Punreach RANY',
@@ -99,15 +102,43 @@ export default class EvaluationList extends Component {
             />
             <ScrollView>
             {
+              /*
             list.map((l, i) => (
             <ListItem
                 rounded
                 key={i}
                 leftIcon={{ name: 'person' }}
-                title={l.name}
+                title={l.subject}
                 subtitle={l.subtitle}
                 rightIcon={{ name:'chevron-right' }}
                 onPress = {() => this.props.navigation.navigate('EvaluationScreen')}
+            />
+            ))
+*/
+            
+            CourseRatingEntries_Mock.map((l, i) => (
+            <ListItem
+                rounded
+                key={i}
+                leftIcon={{ name: 'person' }}
+                title={l.professor}
+                subtitle={l.subject}
+                rightIcon={{ name:'chevron-right' }}
+                onPress = {() => this.props.navigation.navigate('EvaluationScreen', {
+                  itemID : l.id,
+                  SubjectName : l.subject,
+                  ProfessorName : l.professor,
+                  ExamNumber : l.doestest,
+                  Assignment : l.homeworks
+
+                  //more
+                }
+                
+                )}
+
+                
+            
+          
             />
             ))
             

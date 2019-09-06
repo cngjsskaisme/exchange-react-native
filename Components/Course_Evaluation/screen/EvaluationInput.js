@@ -139,8 +139,12 @@ export default class EvaluationScreen extends Component {
   
    
   render() {
-    const ProfessorName = "Punreach RANY"
+    const {navigation} = this.props
+    const SubjectName = navigation.getParam('SubjectName', 'NO-ID') || 'React Native'
+    const ProfessorName = navigation.getParam('ProfessorName', 'NO-ID') || "Punreach RANY" 
+
     const Institution = "Hanyang University"
+
     var Difficulty_Array = ['Very Easy', 'Easy', 'Average', 'Hard', 'Very Hard'];
     var Grade_Array  = ['F', 'E', 'D','C0','C+','B0','B+','A0','A+'];
     
@@ -160,13 +164,13 @@ export default class EvaluationScreen extends Component {
           <View style={styles.bottomBlock}>
             <View style={[styles.cellOne, styles.base]}>
               <View style={{justifyContent: 'center',alignContent : 'center', alignSelf : 'center'}}>
-                  <Text style={{fontSize:30, fontWeight:'400', textDecorationLine : 'underline',}}>Ahn Mena</Text>
+                  <Text style={{fontSize:30, fontWeight:'400', textDecorationLine : 'underline',}}>{ProfessorName}</Text>
               </View>
               <View style={{justifyContent: 'center',alignContent : 'center',alignSelf : 'center'}}>
                   <Text style={{borderTopWidth : 5 , borderTopColor : '#e67e22', width  : 100}}></Text>
               </View>
               <View style={{justifyContent: 'center',alignContent : 'center',alignSelf : 'center', paddingTop : 5}}>
-                  <Text style={{fontSize:15, fontWeight:'200', color : '#000000', marginTop : -30}}>IT Project Management</Text>
+                  <Text style={{fontSize:15, fontWeight:'200', color : '#000000', marginTop : -30}}>{SubjectName}</Text>
               </View>
             </View>
 
