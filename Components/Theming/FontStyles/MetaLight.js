@@ -16,14 +16,16 @@ import PropTypes from 'prop-types';
 class MetaLight extends Component{
     static defaultProps={
         fontSize: 12,
-        color: 'gray'
+        color: 'gray',
+        style: null
     }
 
     constructor(props){
         super(props);
         this.state={
             fontSize: this.props.fontSize,
-            color: this.props.color
+            color: this.props.color,
+            style: this.props.style
         }
     }
 
@@ -31,7 +33,8 @@ class MetaLight extends Component{
         return(
             <Text style={{
                 fontSize: this.state.fontSize,
-                color: this.state.color}}>{this.props.children}</Text>
+                color: this.state.color,
+                ...this.state.style}}>{this.props.children}</Text>
         );
     }
 }

@@ -19,7 +19,8 @@ class PostMenu extends Component{
         ismine: false,
         admin: false,
         visible: false,
-        style: {}
+        style: {},
+        state: null
     }
     constructor(props){
         super(props);
@@ -28,6 +29,7 @@ class PostMenu extends Component{
             false: this.props.admin,
             visible: false,
             style: this.props.style,
+            state: this.props.state
         }
     }
 
@@ -45,7 +47,6 @@ class PostMenu extends Component{
                     anchor={
                     <IconButton
                     icon='more-vert'
-                    color={Colors.red500}
                     size={20}
                     onPress={this._openMenu}
                     />
@@ -54,18 +55,7 @@ class PostMenu extends Component{
                     <Menu.Item onPress={() => {}} title="Delete" />
                     <Menu.Item onPress={() => {
                                         this._closeMenu();
-                                        this.props.navigation.navigate('EntryEdit', { 
-                                                                                    boardid: this.state.boardid,
-                                                                                    entryid: this.state.entryid,
-                                                                                    userid: this.state.userid,
-                                                                                    username: this.state.username,
-                                                                                    profile: this.state.profile,
-                                                                                    likes: this.state.likes,
-                                                                                    date: this.state.date,
-                                                                                    ismine: this.state.ismine,
-                                                                                    title: this.state.title,
-                                                                                    contents: this.state.contents,
-                                                                                    pictures: this.state.pictures});}} title="Modify" />
+                                        this.props.navigation.navigate('EntryEdit', {...this.state.state});}} title="Modify" />
                     <Menu.Item onPress={() => {}} title="Report" />
                     <Divider />
                     <Menu.Item onPress={() => {}} title="Like this!" />

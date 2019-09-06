@@ -27,8 +27,7 @@ class BulletinBoardsEditEntry extends Component{
         pictures: ""
     }
 
-    constructor(props){
-        super(props);
+    componentDidMount(){
         this.setState({
             boardid: this.props.navigation.getParam('boardid'),
             entryid: this.props.navigation.getParam('entryid'),

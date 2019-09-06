@@ -7,13 +7,12 @@
 */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableNativeFeedback } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableNativeFeedback, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import BulletinBoards from './BulletinBoards';
-import {TouchableRipple, Button } from 'react-native-paper'
+import {TouchableRipple, Button, ActivityIndicator, Colors } from 'react-native-paper'
 import { BulletinBoardsLists_Mock } from '../../Mockup_Datas/UnifiedEntries'
 import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
-import GetBulletinBoardsLists from '../ServerLib/GetBulletinBoardsLists';
 
 import axios from 'axios'; 
 import {server} from '../ServerLib/config';
@@ -22,23 +21,22 @@ class BulletinBoardsLists extends Component{
     constructor(props){
         super(props);
         this.state = {
-            boardslist : null
+            boardslist : null,
+            isLoading: true
         }
     }
     
-    componentDidMount(){
-        ReturnValue = BulletinBoardsListsReturned();
-    }
     static navigationOptions = {
         title: 'BulletinBoards Lists',
       };
     
-    async bulletinBoardsLists2(){   
+    async GetBulletinBoardsLists(){   
         var url = server.serverURL + '/process/ShowBulletinBoardsList';
-          await axios.post(url,{ timeout: 3000 }) 
+          await axios.post(url,{ timeout: 500 }) 
         .then((response) => {       
           this.setState({ 
-           boardslist: response.data.boardslist    
+           boardslist: response.data.boardslist,
+           isLoading: false
         }) 
         }) 
         .catch(( err ) => {
@@ -46,23 +44,14 @@ class BulletinBoardsLists extends Component{
                 boardslist: BulletinBoardsLists_Mock
             })
             Alert.alert(
-                'Cannot connect to the server.',
-                'There\'s two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [
-                  {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-                  {
-                    text: 'Cancel',
-                    onPress: () => console.log('Cancel Pressed'),
-                    style: 'cancel',
-                  },
-                  {text: 'OK', onPress: () => console.log('OK Pressed')},
-                ],
-                {cancelable: false},
+                'Cannot connect to the server. Falling back to default option.',
+                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                [{text: 'OK'}]
               );
         });    
     }
     async componentDidMount(){
-      await this.bulletinBoardsLists2(); 
+      await this.GetBulletinBoardsLists(); 
     }
 
       _renderItem = ({ item }) => {
@@ -86,10 +75,19 @@ class BulletinBoardsLists extends Component{
 
     render(){
         return(
-            <FlatList 
-                data = {this.state.boardslist}
-                renderItem = {this._renderItem}
-                keyExtractor = {this._keyExtractor}/>
+            <View>
+                {this.state.isLoading ? 
+                    <View style={styles.LoadingScreen}>
+                        <View style={styles.LoadingScreen01}>
+                            <ActivityIndicator animating= 'true' color={Colors.red800} size = 'large'/>
+                        </View>
+                        <ContentMedium style={styles.LoadingScreen02}>Lists are loading...{"\n"}Wait Please...</ContentMedium>
+                    </View> :
+                    <FlatList 
+                    data = {this.state.boardslist}
+                    renderItem = {this._renderItem}
+                    keyExtractor = {this._keyExtractor}/>}
+            </View>
         );
     }
 }
@@ -121,6 +119,22 @@ const styles = StyleSheet.create({
         flex: 5.5,
         flexDirection: 'row',
         alignItems: 'flex-start'
+    },
+    LoadingScreen: {
+        display: 'flex',
+        height: '100%',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    LoadingScreen01: {
+        flex: 5,
+        justifyContent: 'flex-end',
+        paddingBottom: 20
+    },
+    LoadingScreen02: {
+        flex: 5,
+        justifyContent: 'flex-start',
+        textAlign: 'center'
     }
 });
 

@@ -74,7 +74,8 @@ class BulletinBoardsContent extends Component{
                     <Divider />
                         <PostMenu
                             ismine = {this.state.ismine}
-                            style = {styles.PostMenu}/>
+                            style = {styles.PostMenu}
+                            state = {...this.state}/>
                     <View style={styles.EntryReplies}>
                         <BulletinBoardsReplies
                             parentid = {this.state.id}

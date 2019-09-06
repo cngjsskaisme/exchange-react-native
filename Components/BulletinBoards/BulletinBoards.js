@@ -8,7 +8,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
-import { FAB } from 'react-native-paper'
+import { FAB, ActivityIndicator, Colors } from 'react-native-paper'
 import PropTypes from 'prop-types';
 import BulletinBoardsEntries from './BulletinBoardsEntries';
 import { BulletinBoardsEntries_Mock } from '../../Mockup_Datas/UnifiedEntries'
@@ -31,7 +31,27 @@ class BulletinBoards extends Component{
             boardid: this.props.navigation.getParam('boardid')
         }
     }
-    
+
+    async GetBulletinBoardsEntries(){   
+        var url = server.serverURL + '/process/ShowBulletinBoardsList';
+          await axios.post(url,{ timeout: 500 }) 
+        .then((response) => {       
+          this.setState({ 
+           boardslist: response.data.boardslist    
+        }) 
+        }) 
+        .catch(( err ) => {
+            this.setState({
+                boardslist: BulletinBoardsLists_Mock
+            })
+            Alert.alert(
+                'Cannot connect to the server. Falling back to default option.',
+                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                [{text: 'OK'}]
+              );
+        });    
+    }
+
     _renderItem = ({ item }) => {
         return(
             <BulletinBoardsEntries
@@ -52,23 +72,23 @@ class BulletinBoards extends Component{
     _keyExtractor = (item, index) => item.entryid.toString();
 
     render(){
-        return([
-            <FlatList 
-                data = {BulletinBoardsEntries_Mock}
-                renderItem = {this._renderItem}
-                keyExtractor = {this._keyExtractor}
-                onRefresh = {() => {}}
-                refreshing = {false}/>, 
-            
-            <FAB
-                style={styles.Floating}
-                icon='add'
-                onPress={() => this.props.navigation.navigate('EntryEdit', { 
-                    boardid: this.state.boardid,
-                    userid: this.state.userid,
-                    username: this.state.username,
-                    profile: this.state.profile})} />
-            ]
+        return(
+            <View>
+                <FlatList 
+                    data = {BulletinBoardsEntries_Mock}
+                    renderItem = {this._renderItem}
+                    keyExtractor = {this._keyExtractor}
+                    onRefresh = {() => {}}
+                    refreshing = {false}/>
+                <FAB
+                    style={styles.Floating}
+                    icon='add'
+                    onPress={() => this.props.navigation.navigate('EntryEdit', { 
+                        boardid: this.state.boardid,
+                        userid: this.state.userid,
+                        username: this.state.username,
+                        profile: this.state.profile})} />
+            </View>
         );
     }
 }

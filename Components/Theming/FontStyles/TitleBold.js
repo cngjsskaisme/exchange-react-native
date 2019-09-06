@@ -15,14 +15,16 @@ import PropTypes from 'prop-types';
 class TitleBold extends Component{
     static defaultProps={
         fontSize: 16,
-        color: '#262626'
+        color: '#262626',
+        style: null
     }
 
     constructor(props){
         super(props);
         this.state={
             fontSize: this.props.fontSize,
-            color: this.props.color
+            color: this.props.color,
+            style: this.props.style
         }
     }
 
@@ -31,7 +33,8 @@ class TitleBold extends Component{
             <Text style={{
                 fontSize: this.state.fontSize,
                 fontWeight: 'bold',
-                color: this.state.color}}>{this.props.children}</Text>
+                color: this.state.color,
+                ...this.state.style}}>{this.props.children}</Text>
         );
     }
 }
