@@ -258,7 +258,7 @@ export const CourseRatingEntries_Mock = [
         id: 132,
         subject: 'Computer Science',
         professor: 'Won Young Jun',
-        ratings: '3', // 12345
+        ratings: 3, // 12345
         comments: 'Not bad',
         doestest: '1', // 12345
         homeworks: '3', // 12345
@@ -268,7 +268,7 @@ export const CourseRatingEntries_Mock = [
         id: 414,
         subject: 'Accountings',
         professor: 'Ahn...',
-        ratings: '1',
+        ratings: 1,
         comments: 'Sucks as hell',
         doestest: '5',
         homeworks: '5',
@@ -278,7 +278,7 @@ export const CourseRatingEntries_Mock = [
         id: 777,
         subject: 'Politics',
         professor: 'Shin Du Cheol',
-        ratings: '5',
+        ratings: 5,
         comments: 'Nice class',
         doestest: '2',
         homeworks: '1',

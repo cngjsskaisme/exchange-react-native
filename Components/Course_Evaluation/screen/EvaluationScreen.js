@@ -22,6 +22,8 @@ import Comment from '../components/Comment';
 import TextBox from '../components/TextBox'
 import FixedRatingStar from '../components/fixed_RatingStar'
 
+import {CourseRatingEntries_Mock} from '../../../Mockup_Datas/UnifiedEntries'
+
 
 export default class EvaluationScreen extends Component {
 
@@ -32,22 +34,27 @@ export default class EvaluationScreen extends Component {
   }
 
   render() {
-    const {professor, place, exam, assignment, grade, again, text} = this.props;
+    const {navigation, subject, professor, place, exam, assignment, grade, again, text} = this.props;
 
-    const ProfessorName = professor || "Punreach RANY" 
+    const itemID = navigation.getParam('itemID', 'NO-ID')
+    const SubjectName = navigation.getParam('SubjectName', 'NO-NAME')|| subject || 'React Native'
+    const ProfessorName = navigation.getParam('ProfessorName', 'NO-NAME') || professor || "Punreach RANY" 
     const Institution = place || "Hanyang University"
-    const ExamNumber = exam || 2
-    const Assignment = assignment || 2
+    const ExamNumber = navigation.getParam('ExamNumber', 'NO-ID') || exam || 2
+    const Assignment = navigation.getParam('Assignment', 'NO-ID') || assignment || 2
+    const Star = navigation.getParam('Star', 5)
     const Grade = grade || 'A+'
     const Again = again ||  'Yes'
+    const i = 0
 
+    
 
     return (
       <ScrollView style={styles.container}>
 
           <View style={styles.header}>
             <View style={styles.headerContent}>
-                <Text style={styles.name}>React Native</Text>
+                <Text style={styles.name}>{SubjectName}</Text>
             </View>
           </View>
 
@@ -71,7 +78,12 @@ export default class EvaluationScreen extends Component {
                     />
                   }
                   title=" Write my evaluation"
-                  onPress = {() => this.props.navigation.navigate('EvaluationInput')}
+                  onPress = {() => this.props.navigation.navigate('EvaluationInput',
+                    {
+                      SubjectName : SubjectName,
+                      ProfessorName : ProfessorName,
+                    }
+                  )}
                 />
               </View>
               <View style={{alignItems : 'center', flex : 0.5}}>
@@ -90,7 +102,7 @@ export default class EvaluationScreen extends Component {
                 <FixedRatingStar 
                     ratingSize = {10}
                     onPress_status = {true}
-                    value = {5}
+                    value = {Star}
 
                 />
                 <FixedRatingStar 
@@ -153,6 +165,8 @@ EvaluationScreen.propTypes = {
   grade : propTypes.string, 
   again : propTypes.string,
   text : propTypes.string,
+  subject : propTypes.string,
+  //navigation : propTypes.
 }
 
 const styles = StyleSheet.create({
