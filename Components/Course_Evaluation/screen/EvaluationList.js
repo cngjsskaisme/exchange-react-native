@@ -40,53 +40,6 @@ export default class EvaluationList extends Component {
     
   render() {
     const { search } = this.state;
- 
-    const list = [
-        {
-          name: 'Punreach RANY',
-          subtitle: 'React Native'
-        },
-        {
-          name: 'Punrong Rany',
-          subtitle: 'Kotlin'
-        },
-        {
-            name: 'Punrong Rany',
-            subtitle: 'Kotlin'
-        },
-        {
-          name: 'Punrong Rany',
-          subtitle: 'Kotlin'
-        },
-        {
-          name: 'Punrong Rany',
-          subtitle: 'Kotlin'
-        },
-        {
-          name: 'Punrong Rany',
-          subtitle: 'Kotlin'
-        },
-        {
-          name: 'Punrong Rany',
-          subtitle: 'Kotlin'
-        },
-        {
-          name: 'Punrong Rany',
-          subtitle: 'Kotlin'
-        },
-        {
-          name: 'Punrong Rany',
-          subtitle: 'Kotlin'
-        },
-        {
-          name: 'Punrong Rany',
-          subtitle: 'Kotlin'
-        },
-        {
-          name: 'Lala',
-          subtitle: 'Java'
-        },
-      ]
     return (
         <View>
             <SearchBar
@@ -102,19 +55,7 @@ export default class EvaluationList extends Component {
             />
             <ScrollView>
             {
-              /*
-            list.map((l, i) => (
-            <ListItem
-                rounded
-                key={i}
-                leftIcon={{ name: 'person' }}
-                title={l.subject}
-                subtitle={l.subtitle}
-                rightIcon={{ name:'chevron-right' }}
-                onPress = {() => this.props.navigation.navigate('EvaluationScreen')}
-            />
-            ))
-*/
+            
             
             CourseRatingEntries_Mock.map((l, i) => (
             <ListItem
