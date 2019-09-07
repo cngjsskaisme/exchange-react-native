@@ -15,17 +15,18 @@ import propTypes from 'prop-types';
 import { Button } from 'react-native-elements';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {createStackNavigator, createAppContainer, createBottomTabNavigator} from 'react-navigation'
+import {createStackNavigator, createAppContainer, createBottomTabNavigator, createSwitchNavigator} from 'react-navigation'
 
 import RatingStar from '../components/RatingStar';
 import Comment from '../components/Comment';
 import TextBox from '../components/TextBox'
 import FixedRatingStar from '../components/fixed_RatingStar'
+import LoadingScreen from './LoadingScreen'
 
 import {CourseRatingEntries_Mock} from '../../../Mockup_Datas/UnifiedEntries'
 
 
-export default class EvaluationScreen extends Component {
+class EvaluationScreen extends Component {
 
   Test_Button() {
     Alert.alert(
@@ -168,6 +169,15 @@ EvaluationScreen.propTypes = {
   subject : propTypes.string,
   //navigation : propTypes.
 }
+
+const RootNavigator = createSwitchNavigator({
+  EvaluationScreen: EvaluationScreen,
+  LoadingScreen: LoadingScreen
+}, {
+  initialRouteName: 'LoadingScreen'
+});
+
+export default createAppContainer(RootNavigator);
 
 const styles = StyleSheet.create({
     container : {
