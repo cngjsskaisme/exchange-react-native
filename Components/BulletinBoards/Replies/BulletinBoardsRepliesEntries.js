@@ -57,7 +57,8 @@ class BulletinBoardRepliesEntries extends Component{
                 </View>
                 <PostMenu
                     ismine = {this.state.ismine}
-                    style = {styles.PostMenu}/>
+                    style = {styles.PostMenu}
+                    props = {this.state}/>
             </View>
         );
     }

@@ -37,7 +37,7 @@ export const BulletinBoardsLists_Mock = [
 //date : 작성 날짜
 //ismine : 본인 글인지 여부
 //title : 게시글 제목
-//contents : 댓글 내용
+//contents : 게시글 내용
 //pictures : 삽입된 사진 링크
 
 export const BulletinBoardsEntries_Mock = [

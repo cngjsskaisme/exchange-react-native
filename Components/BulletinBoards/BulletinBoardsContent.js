@@ -59,7 +59,6 @@ class BulletinBoardsContent extends Component{
         }
     }
 
-
     render(){
         return(
             <View style={styles.Container}>
@@ -75,7 +74,8 @@ class BulletinBoardsContent extends Component{
                         <PostMenu
                             ismine = {this.state.ismine}
                             style = {styles.PostMenu}
-                            state = {...this.state}/>
+                            props = {this.state}
+                            />
                     <View style={styles.EntryReplies}>
                         <BulletinBoardsReplies
                             parentid = {this.state.id}

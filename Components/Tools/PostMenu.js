@@ -29,7 +29,7 @@ class PostMenu extends Component{
             false: this.props.admin,
             visible: false,
             style: this.props.style,
-            state: this.props.state
+            props: this.props.props
         }
     }
 
@@ -71,7 +71,6 @@ class PostMenu extends Component{
                     anchor={
                     <IconButton
                     icon="more-vert"
-                    color={Colors.red500}
                     size={20}
                     onPress={this._openMenu}
                     />

@@ -7,50 +7,64 @@
 */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, FlatList, Alert } from 'react-native';
 import { FAB, ActivityIndicator, Colors } from 'react-native-paper'
 import PropTypes from 'prop-types';
 import BulletinBoardsEntries from './BulletinBoardsEntries';
 import { BulletinBoardsEntries_Mock } from '../../Mockup_Datas/UnifiedEntries'
-import { withNavigation } from 'react-navigation'; 
-
+import { navigation, withNavigation } from 'react-navigation'; 
+import axios from 'axios'; 
+import {server} from '../ServerLib/config';
+import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
 
 class BulletinBoards extends Component{
 
-    static navigationOptions = {
-        title: 'BulletinBoards 0',
-      };
-
+    static navigationOptions = ({ navigation }) => ({
+        title: `${navigation.state.params.boardname}`,
+      });
+    
     static defaultProp = {
-        boardid: 0
+        boardid: 0,
+        boardname: '',
+        entrieslist: null,
+        isLoading: true
     }
 
     constructor(props){
         super(props);
         this.state = {
-            boardid: this.props.navigation.getParam('boardid')
+            boardid: this.props.navigation.getParam('boardid'),
+            boardname: this.props.navigation.getParam('boardname'),
+            isLoading: true
         }
     }
+    
+    async GetBulletinBoard(){   
+        var url = server.serverURL + '/process/ShowBulletinBoard';
+        await axios.post(url,{ boardid: this.state.boardid}) 
+            .then((response) => {       
+              this.setState({ 
+               entrieslist: response.data.boardlist,
+               isLoading: false   
+            })  
+            
+            }) 
+            .catch(( err ) => {
+                Alert.alert(
+                    'Cannot connect to the server. Falling back to default option.',
+                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                    [{text: 'OK'}]
+                  );
+                  this.setState({
+                      entrieslist: BulletinBoardsEntries_Mock
+                  })
+            });    
+        }
 
-    async GetBulletinBoardsEntries(){   
-        var url = server.serverURL + '/process/ShowBulletinBoardsList';
-          await axios.post(url,{ timeout: 500 }) 
-        .then((response) => {       
-          this.setState({ 
-           boardslist: response.data.boardslist    
-        }) 
-        }) 
-        .catch(( err ) => {
-            this.setState({
-                boardslist: BulletinBoardsLists_Mock
-            })
-            Alert.alert(
-                'Cannot connect to the server. Falling back to default option.',
-                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [{text: 'OK'}]
-              );
-        });    
+    async componentDidMount(){
+        await this.GetBulletinBoard()
     }
+
 
     _renderItem = ({ item }) => {
         return(
@@ -71,32 +85,47 @@ class BulletinBoards extends Component{
 
     _keyExtractor = (item, index) => item.entryid.toString();
 
-    render(){
+    render(){ 
+        
         return(
             <View>
-                <FlatList 
-                    data = {BulletinBoardsEntries_Mock}
-                    renderItem = {this._renderItem}
-                    keyExtractor = {this._keyExtractor}
-                    onRefresh = {() => {}}
-                    refreshing = {false}/>
-                <FAB
-                    style={styles.Floating}
-                    icon='add'
-                    onPress={() => this.props.navigation.navigate('EntryEdit', { 
-                        boardid: this.state.boardid,
-                        userid: this.state.userid,
-                        username: this.state.username,
-                        profile: this.state.profile})} />
+                {this.state.isLoading ? 
+                    <View style={styles.LoadingScreen}>
+                        <View style={styles.LoadingScreen01}>
+                            <ActivityIndicator animating= 'true' size = 'large'/>
+                        </View>
+                        <ContentMedium style={styles.LoadingScreen02}>Threads are loading...{"\n"}Wait Please...</ContentMedium>
+                    </View> :
+                    <View style = {styles.Container}>
+                        <FlatList 
+                            data = {this.state.entrieslist}
+                            renderItem = {this._renderItem}
+                            keyExtractor = {this._keyExtractor}
+                            onRefresh = {() => {}}
+                            refreshing = {false}/>
+                        <FAB
+                            style={styles.Floating}
+                            icon='add'
+                            onPress={() => this.props.navigation.navigate('EntryEdit', { 
+                                boardid: this.state.boardid,
+                                userid: this.state.userid,
+                                username: this.state.username,
+                                profile: this.state.profile})} />
+                    </View>}
             </View>
         );
     }
 }
 
+
 BulletinBoards.propTypes = {
   };
 
 const styles = StyleSheet.create({
+    Container: {
+        width: '100%',
+        height: '100%'
+    },
     BulletinBoards: {
         flexDirection: 'column',
     },
@@ -105,8 +134,23 @@ const styles = StyleSheet.create({
         margin: 16,
         right: 0,
         bottom: 0,
+    },
+    LoadingScreen: {
+        display: 'flex',
+        height: '100%',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    LoadingScreen01: {
+        flex: 5,
+        justifyContent: 'flex-end',
+        paddingBottom: 20
+    },
+    LoadingScreen02: {
+        flex: 5,
+        justifyContent: 'flex-start',
+        textAlign: 'center'
     }
 });
 
 export default withNavigation(BulletinBoards);
-

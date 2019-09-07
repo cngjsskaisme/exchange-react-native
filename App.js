@@ -2,7 +2,7 @@ import React from "react";
 import { AppRegistry } from "react-native";
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from "react-navigation";
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import SettingsScreen from "./Components/Settings/Settings"
 import MainScreen from "./Components/Main/Main"
 import TimeTables from "./Components/TimeTables/TimeTables"
@@ -86,6 +86,17 @@ const TabNavigator = createBottomTabNavigator(
 */
 
 const AppContainer = createAppContainer(TabNavigator);
+
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  dark: true,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#3498db',
+    accent: '#f1c40f',
+  }
+};
 
 export default class App extends React.Component {
   render() {

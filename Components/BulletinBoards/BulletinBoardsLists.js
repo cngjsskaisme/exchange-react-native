@@ -40,14 +40,14 @@ class BulletinBoardsLists extends Component{
         }) 
         }) 
         .catch(( err ) => {
-            this.setState({
-                boardslist: BulletinBoardsLists_Mock
-            })
             Alert.alert(
                 'Cannot connect to the server. Falling back to default option.',
                 'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                 [{text: 'OK'}]
               );
+            this.setState({
+                boardslist: BulletinBoardsLists_Mock
+            })
         });    
     }
     async componentDidMount(){
@@ -58,7 +58,7 @@ class BulletinBoardsLists extends Component{
         return(
             <TouchableRipple
                 key={item.boardid}
-                onPress={() => {this.props.navigation.navigate('BulletinBoards', { boardid : item.boardid })}}>
+                onPress={() => {this.props.navigation.navigate('BulletinBoards', { boardid : item.boardid, boardname : item.boardname })}}>
                 <View style={styles.BulletinBoards}>
                     <View style={styles.BulletinBoardsName}>
                         <TitleBold fontSize={20}>{item.boardname}</TitleBold>
@@ -79,7 +79,7 @@ class BulletinBoardsLists extends Component{
                 {this.state.isLoading ? 
                     <View style={styles.LoadingScreen}>
                         <View style={styles.LoadingScreen01}>
-                            <ActivityIndicator animating= 'true' color={Colors.red800} size = 'large'/>
+                            <ActivityIndicator animating= 'true' size = 'large'/>
                         </View>
                         <ContentMedium style={styles.LoadingScreen02}>Lists are loading...{"\n"}Wait Please...</ContentMedium>
                     </View> :
