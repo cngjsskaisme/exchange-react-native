@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import propTypes from 'prop-types';
 import { Button } from 'react-native-elements';
+import { Fab } from 'native-base';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {createStackNavigator, createAppContainer, createBottomTabNavigator, createSwitchNavigator} from 'react-navigation'
@@ -27,6 +28,13 @@ import {CourseRatingEntries_Mock} from '../../../Mockup_Datas/UnifiedEntries'
 
 
 class EvaluationScreen extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      active: false
+    };
+  }
 
   Test_Button() {
     Alert.alert(
@@ -51,6 +59,9 @@ class EvaluationScreen extends Component {
     
 
     return (
+      <View style={styles.container}>
+
+      
       <ScrollView style={styles.container}>
 
           <View style={styles.header}>
@@ -70,22 +81,7 @@ class EvaluationScreen extends Component {
                 <Text style={styles.profileText}>Exam </Text>
                 <Text style={styles.profileText}>Assignment </Text>
                 <Text style={styles.profileText}>Average Grade</Text>
-                <Button
-                  icon={
-                    <Icon
-                      name="pencil"
-                      size={15}
-                      color="white"
-                    />
-                  }
-                  title=" Write my evaluation"
-                  onPress = {() => this.props.navigation.navigate('EvaluationInput',
-                    {
-                      SubjectName : SubjectName,
-                      ProfessorName : ProfessorName,
-                    }
-                  )}
-                />
+                
               </View>
               <View style={{alignItems : 'center', flex : 0.5}}>
                 <Text style={styles.profileText}>:</Text>  
@@ -154,6 +150,25 @@ class EvaluationScreen extends Component {
             </View>
          </View>
       </ScrollView>
+      <Fab
+            active={this.state.active}
+            direction="up"
+            containerStyle={styles.fabStyle }
+            style={{ backgroundColor: '#e74c3c' }}
+            position="bottomRight"
+            //onPress={() => this.setState({ active: !this.state.active })}
+            onPress = {() => this.props.navigation.navigate('EvaluationInput',
+                    {
+                      SubjectName : SubjectName,
+                      ProfessorName : ProfessorName,
+                    }
+                  )}
+            >
+            
+            <Icon name="comments" />
+      </Fab>
+      
+      </View>
     );
   }
 }
@@ -180,6 +195,23 @@ const RootNavigator = createSwitchNavigator({
 export default createAppContainer(RootNavigator);
 
 const styles = StyleSheet.create({
+
+  fabStyle:{
+
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 30,
+    bottom: 15,
+  },
+
+  FloatingButtonStyle: {
+    resizeMode: 'contain',
+    width: 50,
+    height: 50,
+  },
     container : {
         flex : 1,
         height : '100%',
@@ -310,4 +342,9 @@ const styles = StyleSheet.create({
     marginTop:10,
     textAlign: 'center'
   },
+  fab: {
+    position: 'absolute',
+    right: 0,
+    bottom: 0,
+}
 });
