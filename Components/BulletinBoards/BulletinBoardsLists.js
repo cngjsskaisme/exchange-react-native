@@ -47,12 +47,12 @@ class BulletinBoardsLists extends Component{
         this.setState({
             isLoading: true
         })
-          await axios.post(url) 
-        .then((response) => {       
-          this.setState({ 
-           boardslist: response.data.boardslist,
-           isLoading: false
-        }) 
+        await axios.post(url) 
+            .then((response) => {       
+                this.setState({ 
+                boardslist: response.data.boardlist,
+                isLoading: false
+            }) 
         }) 
         .catch(( err ) => {
             Alert.alert(
