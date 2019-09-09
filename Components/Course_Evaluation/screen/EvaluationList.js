@@ -64,7 +64,6 @@ export default class EvaluationList extends Component {
                 rounded
                 key={i}
                 containerStyle = {{borderTopColor : '#ecf0f1', borderTopWidth : 1, borderBottomColor : '#ecf0f1', borderBottomWidth : 1, }}
-                leftIcon={{ name: 'person' }}
                 title={l.subject}
                 rightSubtitle={l.professor}
                 rightSubtitleStyle={{textAlign:'center',alignSelf:'center'}}
