@@ -57,7 +57,8 @@ class BulletinBoardsLists extends Component{
       await this._onGetBulletinBoardsLists(); 
     }
 
-      _renderItem = ({ item }) => {
+      _renderItem = ({ item }) => { 
+          
         return(
             <TouchableRipple
                 key={item.boardid}
@@ -76,7 +77,8 @@ class BulletinBoardsLists extends Component{
 
     _keyExtractor = (item, index) => item.boardid.toString();
 
-    render(){
+    render(){ 
+        
         return(
             <View>
                 {this.state.isLoading ? 
@@ -87,7 +89,7 @@ class BulletinBoardsLists extends Component{
                         <ContentMedium style={styles.LoadingScreen02}>Lists are loading...{"\n"}Wait Please...</ContentMedium>
                     </View> :
                     <FlatList 
-                    data = {this.state.boardslist}
+                    data = {this.state.boardlist}
                     renderItem = {this._renderItem}
                     keyExtractor = {this._keyExtractor}
                     onRefresh = {this._onGetBulletinBoardsLists}

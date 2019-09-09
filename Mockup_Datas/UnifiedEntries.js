@@ -275,6 +275,26 @@ export const CourseRatingEntries_Mock = [
         jokbo: 'Array'
     },
     {
+        id: 4,
+        subject: 'AI',
+        professor: 'Won Young Joon',
+        ratings: 1,
+        comments: 'Sucks as hell',
+        doestest: '5',
+        homeworks: '5',
+        jokbo: 'Array'
+    },
+    {
+        id: 41,
+        subject: 'IT Management',
+        professor: 'Park Mina',
+        ratings: 1,
+        comments: 'Sucks as hell',
+        doestest: '5',
+        homeworks: '5',
+        jokbo: 'Array'
+    },
+    {
         id: 777,
         subject: 'Politics',
         professor: 'Shin Du Cheol',
@@ -284,6 +304,37 @@ export const CourseRatingEntries_Mock = [
         homeworks: '1',
         jokbo: 'Array'
     },
+    {
+        id: 8,
+        subject: 'Techno Business',
+        professor: 'Ahn Gwangil...',
+        ratings: 1,
+        comments: 'Sucks as hell',
+        doestest: '5',
+        homeworks: '5',
+        jokbo: 'Array'
+    },
+    {
+        id: 49,
+        subject: 'Acting',
+        professor: 'Shelly',
+        ratings: 1,
+        comments: 'Sucks as hell',
+        doestest: '5',
+        homeworks: '5',
+        jokbo: 'Array'
+    },
+    {
+        id: 76,
+        subject: 'React Native',
+        professor: 'Punreachs',
+        ratings: 1,
+        comments: 'Sucks as hell',
+        doestest: '5',
+        homeworks: '5',
+        jokbo: 'Array'
+    },
+
 ];
 
 export default {

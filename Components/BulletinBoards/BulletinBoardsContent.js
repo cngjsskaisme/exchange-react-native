@@ -58,7 +58,6 @@ class BulletinBoardsContent extends Component{
         }
     }
 
-    //state = {...this.state}
     render(){
         return(
             <View style={styles.Container}>
