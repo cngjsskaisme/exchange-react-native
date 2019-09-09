@@ -7,7 +7,7 @@
 */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView, FlatList, Alert } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, FlatList, Alert, Image } from 'react-native';
 import { FAB, ActivityIndicator, Colors } from 'react-native-paper'
 import PropTypes from 'prop-types';
 import BulletinBoardsEntries from './BulletinBoardsEntries';
@@ -27,7 +27,8 @@ class BulletinBoards extends Component{
         boardid: 0,
         boardname: '',
         entrieslist: null,
-        isLoading: true
+        isLoading: true,
+        isError: false
     }
 
     constructor(props){
@@ -35,12 +36,16 @@ class BulletinBoards extends Component{
         this.state = {
             boardid: this.props.navigation.getParam('boardid'),
             boardname: this.props.navigation.getParam('boardname'),
-            isLoading: true
+            isLoading: true,
+            isError: false
         }
     }
     
     async GetBulletinBoard(){   
         var url = server.serverURL + '/process/ShowBulletinBoard';
+        this.setState({
+            isLoading: true
+        })
         await axios.post(url,{ boardid: this.state.boardid}) 
             .then((response) => {       
               this.setState({ 
@@ -56,7 +61,8 @@ class BulletinBoards extends Component{
                     [{text: 'OK'}]
                   );
                   this.setState({
-                      entrieslist: BulletinBoardsEntries_Mock
+                      entrieslist: BulletinBoardsEntries_Mock,
+                      isError: true
                   })
             });    
         }
@@ -86,16 +92,28 @@ class BulletinBoards extends Component{
     _keyExtractor = (item, index) => item.entryid.toString();
 
     render(){ 
-        
-        return(
+        if(this.state.isError){
+            return(
             <View>
-                {this.state.isLoading ? 
+                <Text>Cannot conect to the server!</Text>
+                <Text>How about :</Text>
+                <Text>1. Connect to the internet (Wi-Fi).</Text>
+                <Text>2. Wait till the server is available.</Text>
+            </View>)
+        }
+        else{
+            if(this.state.isLoading){
+                return(
                     <View style={styles.LoadingScreen}>
                         <View style={styles.LoadingScreen01}>
                             <ActivityIndicator animating= 'true' size = 'large'/>
                         </View>
-                        <ContentMedium style={styles.LoadingScreen02}>Threads are loading...{"\n"}Wait Please...</ContentMedium>
-                    </View> :
+                        <ContentMedium style={styles.LoadingScreen02}>Threads are loading...{"\n"}Wait Please...</ContentMedium>    
+                    </View>
+                )
+            }
+            else{
+                return(
                     <View style = {styles.Container}>
                         <FlatList 
                             data = {this.state.entrieslist}
@@ -111,9 +129,10 @@ class BulletinBoards extends Component{
                                 userid: this.state.userid,
                                 username: this.state.username,
                                 profile: this.state.profile})} />
-                    </View>}
-            </View>
-        );
+                    </View>
+                )
+            }
+        }
     }
 }
 

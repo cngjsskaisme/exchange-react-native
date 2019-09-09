@@ -16,7 +16,6 @@ import BulletinBoardsReplies from './Replies/BulletinBoardsReplies';
 import PostMenu from '../Tools/PostMenu';
 import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
 import BulletinBoardsRepliesInput from './Replies/BulletinBoardsRepliesInput'
-import BetterKeyboardAvoidingView from '../Tools/BetterKeyboardAvoidingView';
 import { Divider } from 'react-native-elements';
 
 class BulletinBoardsContent extends Component{
@@ -59,10 +58,7 @@ class BulletinBoardsContent extends Component{
         }
     }
 
-<<<<<<< HEAD
-=======
     //state = {...this.state}
->>>>>>> c83b7db3192e6d3f5744edff700be28081aed4ac
     render(){
         return(
             <View style={styles.Container}>

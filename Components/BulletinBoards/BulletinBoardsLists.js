@@ -22,7 +22,7 @@ class BulletinBoardsLists extends Component{
         super(props);
         this.state = {
             boardslist : null,
-            isLoading: true
+            isLoading: false
         }
     }
     
@@ -30,8 +30,11 @@ class BulletinBoardsLists extends Component{
         title: 'BulletinBoards Lists',
       };
     
-    async GetBulletinBoardsLists(){   
+    async _onGetBulletinBoardsLists(){   
         var url = server.serverURL + '/process/ShowBulletinBoardsList';
+        this.setState({
+            isLoading: true
+        })
           await axios.post(url,{ timeout: 500 }) 
         .then((response) => {       
           this.setState({ 
@@ -51,7 +54,7 @@ class BulletinBoardsLists extends Component{
         });    
     }
     async componentDidMount(){
-      await this.GetBulletinBoardsLists(); 
+      await this._onGetBulletinBoardsLists(); 
     }
 
       _renderItem = ({ item }) => {
@@ -86,7 +89,9 @@ class BulletinBoardsLists extends Component{
                     <FlatList 
                     data = {this.state.boardslist}
                     renderItem = {this._renderItem}
-                    keyExtractor = {this._keyExtractor}/>}
+                    keyExtractor = {this._keyExtractor}
+                    onRefresh = {this._onGetBulletinBoardsLists}
+                    refreshing = {this.state.isLoading}/>}
             </View>
         );
     }
