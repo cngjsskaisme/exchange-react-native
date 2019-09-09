@@ -39,12 +39,12 @@ export default class FixedRatingStar extends Component{
 
         for(let i = 0 ; i < numberStar ; i++){
             star.push(
-                <TouchableOpacity style={{paddingTop : 22, paddingBottom : 21, paddingRight : size/2, zIndex: 1,}} key={i}><Animated.Image source={this.state.STAR_SELECTED_IMAGE_State} style={{width : size*1.5, height : size*1.5}}/></TouchableOpacity>
+                <TouchableOpacity style={{ paddingRight : size/2, zIndex: 1,}} key={i}><Animated.Image source={this.state.STAR_SELECTED_IMAGE_State} style={{width : size*1.5, height : size*1.5}}/></TouchableOpacity>
             )
         }
         for(let j = 5; j>numberStar ; j--){
             star.push(
-                <TouchableOpacity style={{paddingTop : 22, paddingBottom : 21, paddingRight : size/2, zIndex: 1,}} key={j}><Animated.Image source={this.state.STAR_IMAGE_State} style={{width : size*1.5, height : size*1.5}}/></TouchableOpacity>
+                <TouchableOpacity style={{paddingRight : size/2, zIndex: 1,}} key={j}><Animated.Image source={this.state.STAR_IMAGE_State} style={{width : size*1.5, height : size*1.5}}/></TouchableOpacity>
             )
         }
 
