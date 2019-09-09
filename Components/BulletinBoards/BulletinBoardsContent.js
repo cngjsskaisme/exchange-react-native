@@ -59,10 +59,6 @@ class BulletinBoardsContent extends Component{
         }
     }
 
-<<<<<<< HEAD
-=======
-    //state = {...this.state}
->>>>>>> c83b7db3192e6d3f5744edff700be28081aed4ac
     render(){
         return(
             <View style={styles.Container}>

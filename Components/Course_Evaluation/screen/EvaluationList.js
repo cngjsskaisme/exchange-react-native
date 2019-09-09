@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import propTypes from 'prop-types';
 import { Button,ListItem,SearchBar } from 'react-native-elements';
+import { Container, Header, Item, Input } from 'native-base';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {createStackNavigator, createAppContainer, createBottomTabNavigator} from 'react-navigation'
@@ -20,6 +21,7 @@ import {createStackNavigator, createAppContainer, createBottomTabNavigator} from
 import RatingStar from '../components/RatingStar';
 import Comment from '../components/Comment';
 import TextBox from '../components/TextBox'
+import NoPaddingRate from '../components/NoPaddingRate'
 import FixedRatingStar from '../components/fixed_RatingStar'
 import EvaluationScreen from './EvaluationScreen';
 
@@ -42,11 +44,12 @@ export default class EvaluationList extends Component {
     const { search } = this.state;
     return (
         <View>
+          
             <SearchBar
-                lightTheme
-                round
-
-                inputContainerStyle = {{backgroundColor : '#bdc3c7'}}
+                lightTheme round
+                platform = "ios"
+                containerStyle = {{backgroundColor : '#ffffff', borderColor : '#ffffff'}}
+                inputContainerStyle = {{backgroundColor : '#ecf0f1'}}
                 placeholderTextColor = 'black'
                 inputStyle = {{color : 'black'}}
                 placeholder="Search Here..."
@@ -61,9 +64,15 @@ export default class EvaluationList extends Component {
             <ListItem
                 rounded
                 key={i}
+                containerStyle = {{borderTopColor : '#ecf0f1', borderTopWidth : 1, borderBottomColor : '#ecf0f1', borderBottomWidth : 1, }}
                 leftIcon={{ name: 'person' }}
-                title={l.professor}
-                subtitle={l.subject}
+                title={l.subject}
+                rightSubtitle={l.professor}
+                subtitle = {<NoPaddingRate 
+                    ratingSize = {10}
+                    onPress_status = {true}
+                    value = {l.ratings}
+                />}
                 rightIcon={{ name:'chevron-right' }}
                 onPress = {() => this.props.navigation.navigate('EvaluationScreen', {
                   itemID : l.id,
