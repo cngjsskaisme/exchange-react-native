@@ -23,38 +23,39 @@ class BulletinBoardsLists extends Component{
         this.state = {
             boardslist : null,
             isLoading: true
-        }
+        }  
     }
     
     static navigationOptions = {
         title: 'BulletinBoards Lists',
       };
     
-    async GetBulletinBoardsLists(){   
+      async GetBulletinBoardsLists(){
         var url = server.serverURL + '/process/ShowBulletinBoardsList';
-          await axios.post(url,{ timeout: 500 }) 
-        .then((response) => {       
-          this.setState({ 
-           boardslist: response.data.boardslist,
-           isLoading: false
-        }) 
-        }) 
-        .catch(( err ) => {
-            Alert.alert(
-                'Cannot connect to the server. Falling back to default option.',
-                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [{text: 'OK'}]
-              );
-            this.setState({
-                boardslist: BulletinBoardsLists_Mock
-            })
-        });    
-    }
+            await axios.post(url) 
+          .then((response) => {       
+            this.setState({ 
+                boardlist: response.data.boardlist
+            })   
+          }) 
+          .catch(( err ) => {
+              Alert.alert(
+                  'Cannot connect to the server. Falling back to default option.',
+                  'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                  [{text: 'OK'}]
+                );
+              this.setState({
+                  boardslist: BulletinBoardsLists_Mock
+              })
+          });        
+    } 
+    
     async componentDidMount(){
-      await this.GetBulletinBoardsLists(); 
+      await this.GetBulletinBoardsLists();  
     }
 
-      _renderItem = ({ item }) => {
+      _renderItem = ({ item }) => { 
+          
         return(
             <TouchableRipple
                 key={item.boardid}
@@ -73,7 +74,8 @@ class BulletinBoardsLists extends Component{
 
     _keyExtractor = (item, index) => item.boardid.toString();
 
-    render(){
+    render(){ 
+        
         return(
             <View>
                 {this.state.isLoading ? 
@@ -84,7 +86,7 @@ class BulletinBoardsLists extends Component{
                         <ContentMedium style={styles.LoadingScreen02}>Lists are loading...{"\n"}Wait Please...</ContentMedium>
                     </View> :
                     <FlatList 
-                    data = {this.state.boardslist}
+                    data = {this.state.boardlist}
                     renderItem = {this._renderItem}
                     keyExtractor = {this._keyExtractor}/>}
             </View>
