@@ -42,41 +42,43 @@ class BulletinBoards extends Component{
             boardname: this.props.navigation.getParam('boardname'),
             isLoading: false,
             isError: false,
-            isDev: false
+            isDev: false, 
+            //데이터 관련. 불러올 첫/마지막 게시물의 index 번호 
+            postStartIndex: 0, 
+            postEndIndex: 0
         }
     }
     
-    async GetBulletinBoard(){   
+    //데이터 받아오기 시작
+    _onGetPostsLists = async () => {   
         var url = server.serverURL + '/process/ShowBulletinBoard';
         this.setState({
             isLoading: true
         })
-        await axios.post(url,{ boardid: this.state.boardid}) 
+        await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: this.state.boardid, 
+            postStartIndex: this.state.postStartIndex, postEndIndex: this.state.postEndIndex})
             .then((response) => {       
-              this.setState({ 
-               entrieslist: response.data.boardlist,
-               isLoading: false   
-            })  
-            
+                this.setState({ 
+                boardslist: response.data.boardlist,
+                isLoading: false
             }) 
-            .catch(( err ) => {
-                Alert.alert(
-                    'Cannot connect to the server. Falling back to default option.',
-                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                    [{text: 'OK'}]
-                  );
-                  this.setState({
-                      entrieslist: BulletinBoardsEntries_Mock,
-                      isError: true
-                  })
-            });    
-        }
-
-    async componentDidMount(){
-        await this.GetBulletinBoard()
+        }) 
+        .catch(( err ) => {
+            Alert.alert(
+                'Cannot connect to the server. Falling back to default option.',
+                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                [{text: 'OK'}]
+              );
+            this.setState({
+                boardslist: BulletinBoardsLists_Mock,
+                isError: true
+            })
+        });    
     }
-
-
+    async componentDidMount(){
+      await this._onGetPostsLists(); 
+    }
+    //데이터 받아오기 끝
     _renderItem = ({ item }) => {
         return(
             <BulletinBoardsEntries

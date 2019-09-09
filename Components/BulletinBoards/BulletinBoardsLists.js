@@ -41,7 +41,8 @@ class BulletinBoardsLists extends Component{
     static navigationOptions = {
         title: 'BulletinBoards Lists',
       };
-    
+
+    //데이터 불러오기 시작   
     _onGetBulletinBoardsLists = async () => {   
         var url = server.serverURL + '/process/ShowBulletinBoardsList';
         this.setState({
@@ -50,10 +51,10 @@ class BulletinBoardsLists extends Component{
         await axios.post(url) 
             .then((response) => {       
                 this.setState({ 
-                boardslist: response.data.boardlist,
+                boardslist: response.data.boardslist,
                 isLoading: false
+                }) 
             }) 
-        }) 
         .catch(( err ) => {
             Alert.alert(
                 'Cannot connect to the server. Falling back to default option.',
@@ -61,7 +62,7 @@ class BulletinBoardsLists extends Component{
                 [{text: 'OK'}]
               );
             this.setState({
-                boardslist: BulletinBoardsLists_Mock,
+                postslist: BulletinBoardsLists_Mock,
                 isError: true
             })
         });    
@@ -69,7 +70,7 @@ class BulletinBoardsLists extends Component{
     async componentDidMount(){
       await this._onGetBulletinBoardsLists(); 
     }
-
+    //데이터 불러오기 끝 
       _renderItem = ({ item }) => { 
         return(
             <TouchableRipple
@@ -92,7 +93,7 @@ class BulletinBoardsLists extends Component{
     render(){ 
         if(this.state.isDev){
             return(<FlatList 
-                data = {BulletinBoardsLists_Mock}
+                data = {this.state.boardslist}
                 renderItem = {this._renderItem}
                 keyExtractor = {this._keyExtractor}
                 onRefresh = {this._onGetBulletinBoardsLists}
