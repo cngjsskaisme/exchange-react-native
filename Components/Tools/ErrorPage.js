@@ -28,10 +28,10 @@ class ErrorPage extends Component{
                     <MetaLight style={{fontSize:17}}>
                     1. Connect to the internet (Wi-Fi).
                     </MetaLight>
-                    <MetaLight style={{fontSize:17}}>
+                    <MetaLight style={{fontSize:17, paddingBottom: 10}}>
                     2. Wait till the server is available.
                     </MetaLight>
-                    <Button onPress={() => this.forceUpdate}></Button>
+                    <Button onPress={() => this.forceUpdate}>Refresh</Button>
                 </View>
             </View>
         );
