@@ -8,7 +8,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, FlatList, Alert, Image } from 'react-native';
-import { FAB, ActivityIndicator, Colors } from 'react-native-paper'
+import { FAB, ActivityIndicator, Colors, Button } from 'react-native-paper'
 import PropTypes from 'prop-types';
 import BulletinBoardsEntries from './BulletinBoardsEntries';
 import { BulletinBoardsEntries_Mock } from '../../Mockup_Datas/UnifiedEntries'
@@ -17,6 +17,7 @@ import axios from 'axios';
 import {server} from '../ServerLib/config';
 import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
 import ErrorPage from '../Tools/ErrorPage';
+import LoadingPage from '../Tools/LoadingPage'
 
 axios.defaults.timeout = 5000;
 
@@ -62,7 +63,7 @@ class BulletinBoards extends Component{
             postStartIndex: this.state.postStartIndex, postEndIndex: this.state.postEndIndex})
             .then((response) => {       
                 this.setState({ 
-                postslist: response.data.boardlist,
+                entrieslist: response.data.postslist,
                 isLoading: false
             }) 
         }) 
@@ -73,7 +74,7 @@ class BulletinBoards extends Component{
                 [{text: 'OK'}]
               );
             this.setState({
-                postslist: Bulletinpostslists_Mock,
+                postslist: BulletinBoardsEntries_Mock,
                 isError: true
             })
         });    
@@ -123,7 +124,7 @@ class BulletinBoards extends Component{
                 // 로딩중일 때
                     <LoadingPage/>:
                 // 게시판 목록을 보여줄 때
-                <View>
+                <View style={{width: '100%', height: '100%'}}>
                     <FlatList 
                             data = {this.state.entrieslist}
                             renderItem = {this._renderItem}
