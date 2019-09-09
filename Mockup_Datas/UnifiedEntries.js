@@ -255,85 +255,116 @@ export const TimeTableEntries_Mock = [
 
 export const CourseRatingEntries_Mock = [
     {
-        id: 132,
+        courseID : 1,
+        personID : 1,
         subject: 'Computer Science',
         professor: 'Won Young Jun',
-        ratings: 3, // 12345
-        comments: 'Not bad',
-        doestest: '1', // 12345
-        homeworks: '3', // 12345
-        jokbo: 'Array' // Link Component
+        overalRating : 4,
+        exam : 'More than 4',
+        assignment : '2',
+        difficulty : 'Hard',
+        grade : 'B+'
     },
     {
-        id: 414,
-        subject: 'Accountings',
-        professor: 'Ahn...',
-        ratings: 1,
-        comments: 'Sucks as hell',
-        doestest: '5',
-        homeworks: '5',
-        jokbo: 'Array'
-    },
-    {
-        id: 4,
-        subject: 'AI',
-        professor: 'Won Young Joon',
-        ratings: 1,
-        comments: 'Sucks as hell',
-        doestest: '5',
-        homeworks: '5',
-        jokbo: 'Array'
-    },
-    {
-        id: 41,
-        subject: 'IT Management',
-        professor: 'Park Mina',
-        ratings: 1,
-        comments: 'Sucks as hell',
-        doestest: '5',
-        homeworks: '5',
-        jokbo: 'Array'
-    },
-    {
-        id: 777,
-        subject: 'Politics',
-        professor: 'Shin Du Cheol',
-        ratings: 5,
-        comments: 'Nice class',
-        doestest: '2',
-        homeworks: '1',
-        jokbo: 'Array'
-    },
-    {
-        id: 8,
+        courseID : 2,
+        personID : 2,
         subject: 'Techno Business',
-        professor: 'Ahn Gwangil...',
-        ratings: 1,
-        comments: 'Sucks as hell',
-        doestest: '5',
-        homeworks: '5',
-        jokbo: 'Array'
+        professor: 'Anh Gwangil',
+        overalRating : 3,
+        exam : '2',
+        assignment : '3',
+        difficulty : 'Average',
+        grade : 'A+'
     },
     {
-        id: 49,
-        subject: 'Acting',
-        professor: 'Shelly',
-        ratings: 1,
-        comments: 'Sucks as hell',
-        doestest: '5',
-        homeworks: '5',
-        jokbo: 'Array'
+        courseID : 3,
+        personID : 3,
+        subject: 'Introduction to Acting',
+        professor: 'Shelly L. Collins',
+        overalRating : 5,
+        exam : '0',
+        assignment : '2',
+        difficulty : 'Easy',
+        grade : 'A+'
     },
     {
-        id: 76,
+        courseID : 4,
+        personID : 4,
+        subject: 'IT Project Management',
+        professor: 'Park Mina',
+        overalRating : 5,
+        exam : '2',
+        assignment : '2',
+        difficulty : 'Very Easy',
+        grade : 'A+'
+    },
+    {
+        courseID : 5,
+        personID : 5,
+        subject: 'Social Venture',
+        professor: 'Zahin Haissan',
+        overalRating : 5,
+        exam : '0',
+        assignment : 'More than 4',
+        difficulty : 'Hard',
+        grade : 'P'
+    },
+    {
+        courseID : 6,
+        personID : 6,
         subject: 'React Native',
-        professor: 'Punreachs',
-        ratings: 1,
-        comments: 'Sucks as hell',
-        doestest: '5',
-        homeworks: '5',
-        jokbo: 'Array'
+        professor: 'Punreach Rany',
+        overalRating : 1,
+        exam : '0',
+        assignment : 'More than 4',
+        difficulty : 'Hard',
+        grade : 'A0'
     },
+    {
+        courseID : 7,
+        personID : 7,
+        subject: 'Hanyang 7 Heart',
+        professor: 'Daniel Android',
+        overalRating : 1,
+        exam : '0',
+        assignment : '3',
+        difficulty : 'Very Hard',
+        grade : 'C0'
+    },
+    {
+        courseID : 8,
+        personID : 8,
+        subject: 'Sleeping Therapy',
+        professor: 'Won Young Jun',
+        overalRating : 4,
+        exam : '0',
+        assignment : '0',
+        difficulty : 'Very Easy',
+        grade : 'P'
+    },
+    {
+        courseID : 9,
+        personID : 1,
+        subject: 'Artificial Intelligence',
+        professor: 'Won Young Jun',
+        overalRating : 2,
+        exam : '0',
+        assignment : '2',
+        difficulty : 'Hard',
+        grade : 'B+'
+    },
+    {
+        courseID : 10,
+        personID : 1,
+        subject: 'Software Engineering',
+        professor: 'Won Young Jun',
+        overalRating : 3,
+        exam : '3',
+        assignment : '2',
+        difficulty : 'Very Hard',
+        grade : 'C+'
+    },
+    
 
 ];
 

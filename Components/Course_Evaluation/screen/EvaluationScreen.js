@@ -53,7 +53,7 @@ class EvaluationScreen extends Component {
     const Assignment = navigation.getParam('Assignment', 'NO-ID') || assignment || 2
     const Star = navigation.getParam('Star', 5)
     const Difficulty = navigation.getParam('Difficulty', 'Easy')
-    const Grade = grade || 'A+'
+    const Grade = navigation.getParam('Grade', 'A+')
     const Again = again ||  'Yes'
     const i = 0
 

@@ -71,15 +71,17 @@ export default class EvaluationList extends Component {
                 subtitle = {<FixedRatingStar 
                     ratingSize = {10}
                     onPress_status = {true}
-                    value = {l.ratings}
+                    value = {l.overalRating}
                 />}
                 onPress = {() => this.props.navigation.navigate('EvaluationScreen', {
-                  itemID : l.id,
+                  itemID : l.courseID,
                   SubjectName : l.subject,
                   ProfessorName : l.professor,
-                  ExamNumber : l.doestest,
-                  Assignment : l.homeworks,
-                  Star : l.ratings,
+                  ExamNumber : l.exam,
+                  Assignment : l.assignment,
+                  Star : l.overalRating,
+                  Difficulty : l.difficulty,
+                  Grade : l.grade,
 
                   //more
                 }
