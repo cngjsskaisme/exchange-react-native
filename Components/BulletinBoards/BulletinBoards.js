@@ -32,7 +32,9 @@ class BulletinBoards extends Component{
         entrieslist: null,
         isLoading: false,
         isError: false,
-        isDev: false
+        isDev: false,
+        postStartIndex: 0,
+        postEndIndex: 0
     }
 
     constructor(props){
@@ -53,13 +55,14 @@ class BulletinBoards extends Component{
     _onGetPostsLists = async () => {   
         var url = server.serverURL + '/process/ShowBulletinBoard';
         this.setState({
-            isLoading: true
+            isLoading: true,
+            isError: false
         })
         await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: this.state.boardid, 
             postStartIndex: this.state.postStartIndex, postEndIndex: this.state.postEndIndex})
             .then((response) => {       
                 this.setState({ 
-                boardslist: response.data.boardlist,
+                postslist: response.data.boardlist,
                 isLoading: false
             }) 
         }) 
@@ -70,7 +73,7 @@ class BulletinBoards extends Component{
                 [{text: 'OK'}]
               );
             this.setState({
-                boardslist: BulletinBoardsLists_Mock,
+                postslist: Bulletinpostslists_Mock,
                 isError: true
             })
         });    
@@ -98,43 +101,46 @@ class BulletinBoards extends Component{
 
     _keyExtractor = (item, index) => item.entryid.toString();
 
+
     render(){ 
-        if(this.state.isError){
-            return(
-            <ErrorPage/>)
-        }
-        else{
-            if(this.state.isLoading){
-                return(
-                    <View style={styles.LoadingScreen}>
-                        <View style={styles.LoadingScreen01}>
-                            <ActivityIndicator animating= 'true' size = 'large'/>
-                        </View>
-                        <ContentMedium style={styles.LoadingScreen02}>Threads are loading...{"\n"}Wait Please...</ContentMedium>    
-                    </View>
-                )
-            }
-            else{
-                return(
-                    <View style = {styles.Container}>
-                        <FlatList 
+        return(
+            <View>{
+                this.state.isDev ? 
+                // 개발자 모드일 때
+                    <FlatList 
+                        data = {BulletinBoardsEntries_Mock}
+                        renderItem = {this._renderItem}
+                        keyExtractor = {this._keyExtractor}
+                        onRefresh = {() => {}}
+                        refreshing = {this.state.isLoading}/> :
+                this.state.isError ?
+                // 에러발생 했을 때
+                    <View>
+                        <ErrorPage/>
+                        <Button onPress={this._onGetPostsLists}>Refresh</Button> 
+                    </View> :
+                this.state.isLoading ?
+                // 로딩중일 때
+                    <LoadingPage/>:
+                // 게시판 목록을 보여줄 때
+                <View>
+                    <FlatList 
                             data = {this.state.entrieslist}
                             renderItem = {this._renderItem}
                             keyExtractor = {this._keyExtractor}
-                            onRefresh = {() => {}}
-                            refreshing = {false}/>
-                        <FAB
+                            onRefresh = {this._onGetPostsLists}
+                            refreshing = {this.state.isLoading}/>
+                    <FAB
                             style={styles.Floating}
                             icon='add'
                             onPress={() => this.props.navigation.navigate('EntryEdit', { 
                                 boardid: this.state.boardid,
                                 userid: this.state.userid,
                                 username: this.state.username,
-                                profile: this.state.profile})} />
-                    </View>
-                )
-            }
-        }
+                                profile: this.state.profile})} />        
+                </View>
+
+            }</View>)
     }
 }
 
