@@ -21,7 +21,6 @@ import {createStackNavigator, createAppContainer, createBottomTabNavigator} from
 import RatingStar from '../components/RatingStar';
 import Comment from '../components/Comment';
 import TextBox from '../components/TextBox'
-import NoPaddingRate from '../components/NoPaddingRate'
 import FixedRatingStar from '../components/fixed_RatingStar'
 import EvaluationScreen from './EvaluationScreen';
 
@@ -68,7 +67,8 @@ export default class EvaluationList extends Component {
                 leftIcon={{ name: 'person' }}
                 title={l.subject}
                 rightSubtitle={l.professor}
-                subtitle = {<NoPaddingRate 
+                rightSubtitleStyle={{textAlign:'center',alignSelf:'center'}}
+                subtitle = {<FixedRatingStar 
                     ratingSize = {10}
                     onPress_status = {true}
                     value = {l.ratings}

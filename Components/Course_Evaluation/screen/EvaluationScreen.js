@@ -43,7 +43,7 @@ class EvaluationScreen extends Component {
   }
 
   render() {
-    const {navigation, subject, professor, place, exam, assignment, grade, again, text} = this.props;
+    const {navigation, subject, professor, place, exam, assignment, grade, again, text, difficulty} = this.props;
 
     const itemID = navigation.getParam('itemID', 'NO-ID')
     const SubjectName = navigation.getParam('SubjectName', 'NO-NAME')|| subject || 'React Native'
@@ -52,6 +52,7 @@ class EvaluationScreen extends Component {
     const ExamNumber = navigation.getParam('ExamNumber', 'NO-ID') || exam || 2
     const Assignment = navigation.getParam('Assignment', 'NO-ID') || assignment || 2
     const Star = navigation.getParam('Star', 5)
+    const Difficulty = navigation.getParam('Difficulty', 'Easy')
     const Grade = grade || 'A+'
     const Again = again ||  'Yes'
     const i = 0
@@ -73,49 +74,60 @@ class EvaluationScreen extends Component {
 
           <View style={styles.profileDetail}>
             <View style={styles.detailContent}>
-              <View style={{alignItems : 'center', flex : 2}}>
-                <Text style={styles.profileText}>Taught by </Text>  
-                <Text style={styles.profileText}>Institution </Text>
-                <Text style={styles.profileText}>Rating</Text>
-                <Text style={styles.profileText}>Difficulty </Text>
-                <Text style={styles.profileText}>Exam </Text>
-                <Text style={styles.profileText}>Assignment </Text>
-                <Text style={styles.profileText}>Average Grade</Text>
-                
-              </View>
-              <View style={{alignItems : 'center', flex : 0.5}}>
-                <Text style={styles.profileText}>:</Text>  
-                <Text style={styles.profileText}>:</Text> 
-                <Text style={styles.profileText}>:</Text> 
-                <Text style={styles.profileText}>:</Text> 
-                <Text style={styles.profileText}>:</Text> 
-                <Text style={styles.profileText}>:</Text> 
-                <Text style={styles.profileText}>:</Text>  
-                
-              </View>
-              <View style={{alignItems : 'center', flex : 3}}>
-                <Text style={styles.profileText}>{ProfessorName}</Text>  
-                <Text style={styles.profileText}>{Institution}</Text>  
-                <FixedRatingStar 
-                    ratingSize = {10}
-                    onPress_status = {true}
-                    value = {Star}
 
-                />
-                <FixedRatingStar 
-                    ratingSize = {10}
-                    onPress_status = {true}
-                    value = {5}
-                    starText = {["Easy", "Okay", "Average", "Hard","Crazy"]}
-                    color = {["#2ecc71", "#3498db","#f1c40f","#e67e22","red"]}
-
-                />
-                <Text style={styles.profileText}>{ExamNumber}</Text>
-                <Text style={styles.profileText}>{Assignment}</Text>
-                <Text style={styles.profileText}>{Grade}</Text>
-                
+              <View style={[styles.cellTwo, styles.base]}>
+                <View style={styles.boxOne}><Text style={[styles.boxText, {color : '#7f8c8d'}]}>Taught by</Text></View>
+                <View style={styles.boxTwo}>
+                  <Text style = {[styles.boxText,{textAlign:'center'}]}>{ProfessorName}</Text>
+                </View> 
               </View>
-              
+
+              <View style={[styles.cellTwo, styles.base]}>
+                <View style={styles.boxOne}><Text style={[styles.boxText, {color : '#7f8c8d'}]}>Institution</Text></View>
+                <View style={styles.boxTwo}>
+                  <Text style = {[styles.boxText,{textAlign:'center'}]}>{Institution}</Text>
+                </View> 
+              </View>
+
+              <View style={[styles.cellTwo, styles.base]}>
+                <View style={styles.boxOne}><Text style={[styles.boxText, {color : '#7f8c8d'}]}>Rating</Text></View>
+                <View style={styles.boxTwo}>
+                  <View style = {{paddingLeft : 10, paddingRight : 10, paddingTop : 20,alignItems : 'center'}}>
+                    <FixedRatingStar 
+                        ratingSize = {10}
+                        onPress_status = {true}
+                        value = {Star}
+
+                    />
+                  </View>
+                </View> 
+              </View>
+
+              <View style={[styles.cellTwo, styles.base]}>
+                <View style={styles.boxOne}><Text style={[styles.boxText, {color : '#7f8c8d'}]}>Difficulty</Text></View>
+                <View style={styles.boxTwo}>
+                  <Text style = {[styles.boxText,{textAlign:'center'}]}>{Difficulty}</Text>
+                </View> 
+              </View>
+
+              <View style={[styles.cellTwo, styles.base]}>
+                <View style={styles.boxOne}><Text style={[styles.boxText, {color : '#7f8c8d'}]}>Exam</Text></View>
+                <View style={styles.boxTwo}>
+                  <Text style = {[styles.boxText, {textAlign:'center'}]}>{ExamNumber}</Text>
+                </View> 
+              </View>
+              <View style={[styles.cellTwo, styles.base]}>
+                <View style={styles.boxOne}><Text style={[styles.boxText, {color : '#7f8c8d'}]}>Assignment</Text></View>
+                <View style={styles.boxTwo}>
+                  <Text style = {[styles.boxText,{textAlign:'center'}]}>{Assignment}</Text>
+                </View> 
+              </View>
+              <View style={[styles.cellTwo, styles.base]}>
+                <View style={styles.boxOne}><Text style={[styles.boxText, {color : '#7f8c8d'}]}>Average Grade</Text></View>
+                <View style={styles.boxTwo}>
+                  <Text style = {[styles.boxText,{textAlign:'center'}]}>{Grade}</Text>
+                </View> 
+              </View>  
             </View>
             
             
@@ -178,6 +190,7 @@ EvaluationScreen.propTypes = {
   place :  propTypes.string, 
   exam : propTypes.number, 
   assignment : propTypes.number, 
+  difficulty : propTypes.string,
   grade : propTypes.string, 
   again : propTypes.string,
   text : propTypes.string,
@@ -195,6 +208,44 @@ const RootNavigator = createSwitchNavigator({
 export default createAppContainer(RootNavigator);
 
 const styles = StyleSheet.create({
+  base : {
+    padding : 10,
+  },
+  cellTwo : {
+    flex : 1,
+    flexDirection : 'row',
+    alignContent : 'center'
+  },
+
+  boxOne : {
+    flex : 2,
+
+    alignContent : 'center'
+  },
+  
+  boxTwo : {
+    flex : 3,
+    //flexDirection : 'row',
+    alignContent : 'center',
+    //alignItems : 'center',
+    //justifyContent: 'center',
+
+
+    
+  },
+  boxText : {
+    fontSize : 15,
+    fontWeight : 'bold',
+    //paddingBottom : 20,
+    paddingLeft : 10,
+    paddingRight : 10,
+    paddingTop : 20,
+  },
+
+  name:{
+    fontSize:20,
+    fontWeight:'600',
+  },
 
   fabStyle:{
 
@@ -263,10 +314,10 @@ const styles = StyleSheet.create({
   },
   detailContent:{
     flex : 1,
+    flexDirection : 'column',
     justifyContent: 'space-between',
     width : "98%",
     margin: "1%",
-    flexDirection : 'row',
     alignItems: 'flex-start',
     alignContent : 'center',
     alignSelf : 'center',
@@ -287,7 +338,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     //padding:30,
-    marginTop : "15%",
+    //marginTop : "3%",
     borderWidth: 2,
     borderColor: '#d6d7da',
     borderRadius : 10,
