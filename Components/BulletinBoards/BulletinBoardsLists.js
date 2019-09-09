@@ -22,7 +22,9 @@ class BulletinBoardsLists extends Component{
         super(props);
         this.state = {
             boardslist : null,
-            isLoading: false
+            isLoading: false,
+            isError: false,
+            isDev: true
         }
     }
     
@@ -58,7 +60,6 @@ class BulletinBoardsLists extends Component{
     }
 
       _renderItem = ({ item }) => { 
-          
         return(
             <TouchableRipple
                 key={item.boardid}
@@ -78,24 +79,48 @@ class BulletinBoardsLists extends Component{
     _keyExtractor = (item, index) => item.boardid.toString();
 
     render(){ 
-        
-        return(
+        if(this.state.isDev){
+            return(<FlatList 
+                data = {BulletinBoardsLists_Mock}
+                renderItem = {this._renderItem}
+                keyExtractor = {this._keyExtractor}
+                onRefresh = {this._onGetBulletinBoardsLists}
+                refreshing = {this.state.isLoading}/>)
+        }
+
+        if(this.state.isError){
+            return(
             <View>
-                {this.state.isLoading ? 
-                    <View style={styles.LoadingScreen}>
-                        <View style={styles.LoadingScreen01}>
-                            <ActivityIndicator animating= 'true' size = 'large'/>
-                        </View>
-                        <ContentMedium style={styles.LoadingScreen02}>Lists are loading...{"\n"}Wait Please...</ContentMedium>
-                    </View> :
-                    <FlatList 
+                <Text>An error occured.
+                How about :
+                1. Connect to the internet (Wi-Fi).
+                2. Wait till the server is available.
+                </Text>
+            </View>);
+        }
+        
+        if(this.state.isLoading){
+            return(
+                <View style={styles.LoadingScreen}>
+                    <View style={styles.LoadingScreen01}>
+                        <ActivityIndicator animating= 'true' size = 'large'/>
+                    </View>
+                    <ContentMedium style={styles.LoadingScreen02}>Lists are loading...{"\n"}Wait Please...</ContentMedium>
+                </View>);
+        }
+
+        else{
+            return(
+            <View>
+                <Text>{JSON.stringify(this.state.boardslist)}</Text>
+                <FlatList 
                     data = {this.state.boardlist}
                     renderItem = {this._renderItem}
                     keyExtractor = {this._keyExtractor}
                     onRefresh = {this._onGetBulletinBoardsLists}
-                    refreshing = {this.state.isLoading}/>}
-            </View>
-        );
+                    refreshing = {this.state.isLoading}/>
+            </View>);
+        }
     }
 }
 
