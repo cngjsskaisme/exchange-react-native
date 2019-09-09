@@ -23,15 +23,14 @@ class ErrorPage extends Component{
                     <Icon name="exclamation-circle" size={70} color="#a1a1a1" />
                     <TitleBold style={{fontSize:30}}>An error has occured.</TitleBold>
                 </View>
-                <View style={styles.Body}>
+                <View>
                     <ContentMedium style={{fontSize:20}}>How about :</ContentMedium>
                     <MetaLight style={{fontSize:17}}>
                     1. Connect to the internet (Wi-Fi).
                     </MetaLight>
-                    <MetaLight style={{fontSize:17, paddingBottom: 10}}>
+                    <MetaLight style={{fontSize:17, paddingBottom: 15}}>
                     2. Wait till the server is available.
                     </MetaLight>
-                    <Button onPress={() => this.forceUpdate}>Refresh</Button>
                 </View>
             </View>
         );
@@ -41,17 +40,15 @@ class ErrorPage extends Component{
 const styles = StyleSheet.create({
     ErrorView: {
         display: 'flex',
-        height:'100%',
-        width:'100%',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingTop: '45%'
     },
     Header: {
-        flex: 4.5,
         justifyContent: 'flex-end',
         paddingBottom: 15
     },
     Body: {
-        flex: 5.5
+        
     }
 })
 

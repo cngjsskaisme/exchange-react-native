@@ -17,12 +17,13 @@ import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
 import axios from 'axios'; 
 import {server} from '../ServerLib/config';
 import ErrorPage from '../Tools/ErrorPage';
+import LoadingPage from '../Tools/LoadingPage';
 
 axios.defaults.timeout = 5000;
 
 class BulletinBoardsLists extends Component{
     static defaultProp = {
-        boardlist: null,
+        boardslist: null,
         isLoading: false,
         isError: false,
         isDev: false
@@ -45,12 +46,13 @@ class BulletinBoardsLists extends Component{
     _onGetBulletinBoardsLists = async () => {   
         var url = server.serverURL + '/process/ShowBulletinBoardsList';
         this.setState({
-            isLoading: true
+            isLoading: true,
+            isError: false
         })
         await axios.post(url) 
             .then((response) => {       
                 this.setState({ 
-                boardslist: response.data.boardlist,
+                boardslist: response.data.boardslist,
                 isLoading: false
             }) 
         }) 
@@ -90,42 +92,34 @@ class BulletinBoardsLists extends Component{
     _keyExtractor = (item, index) => item.boardid.toString();
 
     render(){ 
-        if(this.state.isDev){
-            return(<FlatList 
-                data = {BulletinBoardsLists_Mock}
-                renderItem = {this._renderItem}
-                keyExtractor = {this._keyExtractor}
-                onRefresh = {this._onGetBulletinBoardsLists}
-                refreshing = {this.state.isLoading}/>)
-        }
+        return(
+            <View>{
+                this.state.isDev ? 
+                // 개발자 모드일 때
+                    <FlatList 
+                        data = {BulletinBoardsLists_Mock}
+                        renderItem = {this._renderItem}
+                        keyExtractor = {this._keyExtractor}
+                        onRefresh = {this._onGetBulletinBoardsLists}
+                        refreshing = {this.state.isLoading}/> :
+                this.state.isError ?
+                // 에러발생 했을 때
+                    <View>
+                        <ErrorPage/>
+                        <Button onPress={this._onGetBulletinBoardsLists}>Refresh</Button> 
+                    </View> :
+                this.state.isLoading ?
+                // 로딩중일 때
+                    <LoadingPage/>:
+                // 게시판 목록을 보여줄 때
+                    <FlatList 
+                            data = {this.state.boardslist}
+                            renderItem = {this._renderItem}
+                            keyExtractor = {this._keyExtractor}
+                            onRefresh = {this._onGetBulletinBoardsLists}
+                            refreshing = {this.state.isLoading}/>
 
-        if(this.state.isError){
-            return(
-            <ErrorPage/>);
-        }
-        
-        if(this.state.isLoading){
-            return(
-                <View style={styles.LoadingScreen}>
-                    <View style={styles.LoadingScreen01}>
-                        <ActivityIndicator animating= 'true' size = 'large'/>
-                    </View>
-                    <ContentMedium style={styles.LoadingScreen02}>Lists are loading...{"\n"}Wait Please...</ContentMedium>
-                </View>);
-        }
-
-        else{
-            return(
-            <View>
-                <Text>{JSON.stringify(this.state.boardslist)}</Text>
-                <FlatList 
-                    data = {this.state.boardlist}
-                    renderItem = {this._renderItem}
-                    keyExtractor = {this._keyExtractor}
-                    onRefresh = {this._onGetBulletinBoardsLists}
-                    refreshing = {this.state.isLoading}/>
-            </View>);
-        }
+            }</View>)
     }
 }
 
