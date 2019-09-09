@@ -73,7 +73,6 @@ export default class EvaluationList extends Component {
                     onPress_status = {true}
                     value = {l.ratings}
                 />}
-                rightIcon={{ name:'chevron-right' }}
                 onPress = {() => this.props.navigation.navigate('EvaluationScreen', {
                   itemID : l.id,
                   SubjectName : l.subject,
