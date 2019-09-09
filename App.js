@@ -11,6 +11,7 @@ import BulletinBoardsContent from "./Components/BulletinBoards/BulletinBoardsCon
 import BulletinBoardsEditEntry from "./Components/BulletinBoards/BulletinBoardsEditEntry";
 import BulletinBoardsLists from "./Components/BulletinBoards/BulletinBoardsLists";
 import CourseEvaluation from './Components/Course_Evaluation/CourseEvaluation';
+import CalendarScreen from './Components/EventCalendar/EventCalendar'
 
 
 const MainStack = createStackNavigator({
@@ -49,10 +50,10 @@ const TabNavigator = createBottomTabNavigator(
         tabBarIcon : ({tintColor}) => (<Icon name="list" color={tintColor} size = {20}/>)
       }
     },
-    TimeTables : {
-      screen : TimeTablesStack,
+    CalendarScreen : {
+      screen : CalendarScreen,
       navigationOptions : {
-        tabBarLabel : 'TimeTables',
+        tabBarLabel : 'CalendarScreen',
         tabBarIcon : ({tintColor}) => (<Icon name="calendar" color={tintColor} size = {20}/>)
       }
     },
