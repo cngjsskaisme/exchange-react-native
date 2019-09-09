@@ -16,15 +16,25 @@ import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
 
 import axios from 'axios'; 
 import {server} from '../ServerLib/config';
+import ErrorPage from '../Tools/ErrorPage';
+
+axios.defaults.timeout = 5000;
 
 class BulletinBoardsLists extends Component{
+    static defaultProp = {
+        boardlist: null,
+        isLoading: false,
+        isError: false,
+        isDev: false
+    }
+
     constructor(props){
         super(props);
         this.state = {
             boardslist : null,
             isLoading: false,
             isError: false,
-            isDev: true
+            isDev: false
         }
     }
     
@@ -32,12 +42,12 @@ class BulletinBoardsLists extends Component{
         title: 'BulletinBoards Lists',
       };
     
-    async _onGetBulletinBoardsLists(){   
+    _onGetBulletinBoardsLists = async () => {   
         var url = server.serverURL + '/process/ShowBulletinBoardsList';
         this.setState({
             isLoading: true
         })
-          await axios.post(url,{ timeout: 500 }) 
+          await axios.post(url) 
         .then((response) => {       
           this.setState({ 
            boardslist: response.data.boardslist,
@@ -51,7 +61,8 @@ class BulletinBoardsLists extends Component{
                 [{text: 'OK'}]
               );
             this.setState({
-                boardslist: BulletinBoardsLists_Mock
+                boardslist: BulletinBoardsLists_Mock,
+                isError: true
             })
         });    
     }
@@ -69,7 +80,7 @@ class BulletinBoardsLists extends Component{
                         <TitleBold fontSize={20}>{item.boardname}</TitleBold>
                     </View>
                     <View style={styles.BulletinBoardsContents}>
-                        <MetaLight fontSize={14}> {item.contents}</MetaLight>
+                        <MetaLight fontSize={14}>{item.contents}</MetaLight>
                     </View>
                 </View>
             </TouchableRipple>
@@ -90,13 +101,7 @@ class BulletinBoardsLists extends Component{
 
         if(this.state.isError){
             return(
-            <View>
-                <Text>An error occured.
-                How about :
-                1. Connect to the internet (Wi-Fi).
-                2. Wait till the server is available.
-                </Text>
-            </View>);
+            <ErrorPage/>);
         }
         
         if(this.state.isLoading){

@@ -11,16 +11,48 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
+import { ContentMedium, TitleBold, MetaLight } from '../Theming/Theme';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Button } from 'react-native-paper';
 
 class ErrorPage extends Component{
     render(){
         return(
-            <View>
-                
+            <View style={styles.ErrorView}>
+                <View style={styles.Header}>
+                    <Icon name="exclamation-circle" size={70} color="#a1a1a1" />
+                    <TitleBold style={{fontSize:30}}>An error has occured.</TitleBold>
+                </View>
+                <View style={styles.Body}>
+                    <ContentMedium style={{fontSize:20}}>How about :</ContentMedium>
+                    <MetaLight style={{fontSize:17}}>
+                    1. Connect to the internet (Wi-Fi).
+                    </MetaLight>
+                    <MetaLight style={{fontSize:17}}>
+                    2. Wait till the server is available.
+                    </MetaLight>
+                    <Button onPress={() => this.forceUpdate}></Button>
+                </View>
             </View>
         );
     }
 }
 
+const styles = StyleSheet.create({
+    ErrorView: {
+        display: 'flex',
+        height:'100%',
+        width:'100%',
+        alignItems: 'center'
+    },
+    Header: {
+        flex: 4.5,
+        justifyContent: 'flex-end',
+        paddingBottom: 15
+    },
+    Body: {
+        flex: 5.5
+    }
+})
 
 export default ErrorPage;

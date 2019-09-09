@@ -16,6 +16,9 @@ import { navigation, withNavigation } from 'react-navigation';
 import axios from 'axios'; 
 import {server} from '../ServerLib/config';
 import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
+import ErrorPage from '../Tools/ErrorPage';
+
+axios.defaults.timeout = 5000;
 
 class BulletinBoards extends Component{
 
@@ -27,8 +30,9 @@ class BulletinBoards extends Component{
         boardid: 0,
         boardname: '',
         entrieslist: null,
-        isLoading: true,
-        isError: false
+        isLoading: false,
+        isError: false,
+        isDev: false
     }
 
     constructor(props){
@@ -36,8 +40,9 @@ class BulletinBoards extends Component{
         this.state = {
             boardid: this.props.navigation.getParam('boardid'),
             boardname: this.props.navigation.getParam('boardname'),
-            isLoading: true,
-            isError: false
+            isLoading: false,
+            isError: false,
+            isDev: false
         }
     }
     
@@ -94,12 +99,7 @@ class BulletinBoards extends Component{
     render(){ 
         if(this.state.isError){
             return(
-            <View>
-                <Text>Cannot conect to the server!</Text>
-                <Text>How about :</Text>
-                <Text>1. Connect to the internet (Wi-Fi).</Text>
-                <Text>2. Wait till the server is available.</Text>
-            </View>)
+            <ErrorPage/>)
         }
         else{
             if(this.state.isLoading){
