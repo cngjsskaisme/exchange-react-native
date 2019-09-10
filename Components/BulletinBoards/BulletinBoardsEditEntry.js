@@ -40,7 +40,7 @@ class BulletinBoardsEditEntry extends Component{
             isError: false
         }) 
         await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
-            entryid: "5d7712357fc8e726d002fd99", title: this.state.title, contents: this.state.contents}) 
+            entryid: null, title: this.state.title, contents: this.state.contents}) 
             .then((response) => {       
                 this.setState({
                 isLoading: false
@@ -53,7 +53,7 @@ class BulletinBoardsEditEntry extends Component{
                 [{text: 'OK'}]
               );
         });    
-    }
+    } 
 //데이터 처리 끝
     render(){
         return(

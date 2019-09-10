@@ -86,13 +86,14 @@ class PostMenu extends Component{
     }    
 
     //게시물 신고
-    _handleIncreLikeEntry = async() => {
-        var url = server.serverURL + '/process/IncreLikeEntry';
+    _handleAddReport = async() => {
+        var url = server.serverURL + '/process/AddReport';
         this.setState({
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {boardid: "board1", entryid: "5d75a757d47cdf78a5ce79d1"}) 
+        await axios.post(url, {title: "report title1", contents: "report contents1", userid: "5d5373177443381df03f3040", boardid: "board1", 
+            entryid: "5d75a757d47cdf78a5ce79d1", commentid: null }) 
             .then((response) => {       
                 this.setState({
                 isLoading: false
@@ -129,7 +130,7 @@ class PostMenu extends Component{
                     <Menu.Item onPress={() => {
                                         this._closeMenu();
                                         this.props.navigation.navigate('EntryEdit', {...this.state.state});}} title="Modify" />
-                    <Menu.Item onPress={() => {}} title="Report" />
+                    <Menu.Item onPress={this._handleAddReport.bind(this)} title="Report" />
                     <Divider />
                     <Menu.Item onPress={this._handleIncreLikeEntry.bind(this)} title="Like this!" />
                 </Menu>
@@ -149,7 +150,7 @@ class PostMenu extends Component{
                     />
                     }
                 >
-                    <Menu.Item onPress={() => {}} title="Report" />
+                    <Menu.Item onPress={this._handleAddReport.bind(this)} title="Report" />
                     <Divider />
                     <Menu.Item onPress={this._handleIncreLikeEntry.bind(this)} title="Like this!" />
                 </Menu>
