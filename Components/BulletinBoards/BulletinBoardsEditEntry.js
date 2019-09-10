@@ -32,7 +32,8 @@ class BulletinBoardsEditEntry extends Component{
         contents: "",
         pictures: ""
     }
-//데이터 처리 시작
+//데이터 처리 시작  
+//게시글을 추가 or 수정하는 함수
     _handleSubmit = async() => {
         var url = server.serverURL + '/process/AddEditEntry';
         this.setState({
@@ -40,7 +41,31 @@ class BulletinBoardsEditEntry extends Component{
             isError: false
         }) 
         await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
-            entryid: null, title: this.state.title, contents: this.state.contents}) 
+            entryid: "5d75a757d47cdf78a5ce79d1", title: this.state.title, contents: this.state.contents}) 
+            .then((response) => {       
+                this.setState({
+                isLoading: false
+                }) 
+            }) 
+        .catch(( err ) => {
+            Alert.alert(
+                'Cannot connect to the server. Falling back to default option.',
+                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                [{text: 'OK'}]
+              );
+        });    
+    }  
+
+    //댓글을 추가하는 함수 
+    //onPress={this._onAddComment.bind(this)} 
+    _onAddComment = async() => {
+        var url = server.serverURL + '/process/AddComment';
+        this.setState({
+            isLoading: true,
+            isError: false
+        }) 
+        await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
+            entryid: "5d75a757d47cdf78a5ce79d1", contents: this.state.contents}) 
             .then((response) => {       
                 this.setState({
                 isLoading: false
@@ -54,6 +79,8 @@ class BulletinBoardsEditEntry extends Component{
               );
         });    
     } 
+
+
 //데이터 처리 끝
     render(){
         return(
