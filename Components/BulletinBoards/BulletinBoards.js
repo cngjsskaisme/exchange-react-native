@@ -102,7 +102,7 @@ class BulletinBoards extends Component{
 
     _keyExtractor = (item, index) => item.entryid.toString();
 
-
+    
     render(){ 
         return(
             <View>{
