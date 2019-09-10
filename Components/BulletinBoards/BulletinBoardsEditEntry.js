@@ -3,16 +3,20 @@
 최초작성일 : 2019/08/22
 설명 : 게시글을 수정하거나 새로운 게시글을 업로드할 수 있는 컴포넌트입니다.
 다음을 Prop으로 받겠습니다 (받는 타입은 PropTypes에서 기술) :
-    아직 안받음
+    아직 안받음 
+
+추: BulletinBoards.js의 boardid와 entryid를 constructor에서 받기 바람.
 */
 
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { Button, TextInput } from 'react-native-paper';
 import { Input } from 'react-native-elements';
-import { withNavigation, NavigationEvents } from 'react-navigation';
+import { withNavigation, NavigationEvents } from 'react-navigation'; 
+import axios from 'axios'; 
+import {server} from '../ServerLib/config';
 
 class BulletinBoardsEditEntry extends Component{
     static defaultProps = {
@@ -29,7 +33,29 @@ class BulletinBoardsEditEntry extends Component{
         pictures: ""
     }
 
-    _handleSubmit = () => {} 
+    _handleSubmit = async() => {
+        var url = server.serverURL + '/process/AddEntry';
+        this.setState({
+            isLoading: true,
+            isError: false
+        }) 
+        await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
+            entryid: "5d7712357fc8e726d002fd99", title: this.state.title, contents: this.state.contents}) 
+            .then((response) => {       
+                this.setState({ 
+                boardslist: response.data.boardslist,
+                isLoading: false
+                }) 
+            }) 
+        .catch(( err ) => {
+            Alert.alert(
+                'Cannot connect to the server. Falling back to default option.',
+                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                [{text: 'OK'}]
+              );
+        });    
+    }
+     
 
     render(){
         return(
@@ -60,7 +86,7 @@ class BulletinBoardsEditEntry extends Component{
                     placeholder='Cool text for post (Optional)'
                     value= {this.props.navigation.getParam('contents')}
                     onChangeText={contents => this.setState({ contents })}/>
-                <Button onPress={this._handleSubmit}>Submit</Button>
+                <Button onPress={this._handleSubmit.bind(this)}>Submit</Button>
             </View>
         );
     }

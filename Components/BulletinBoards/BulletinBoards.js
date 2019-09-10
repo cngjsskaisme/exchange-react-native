@@ -58,7 +58,7 @@ class BulletinBoards extends Component{
         this.setState({
             isLoading: true,
             isError: false
-        })
+        }) 
         await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: this.state.boardid, 
             postStartIndex: this.state.postStartIndex, postEndIndex: this.state.postEndIndex})
             .then((response) => {       
