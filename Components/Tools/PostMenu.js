@@ -8,11 +8,12 @@
 
 
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Alert } from 'react-native';
 import { Button, Menu, Divider, IconButton, Colors } from 'react-native-paper';
 import { withNavigation } from 'react-navigation'
-import PropTypes from 'prop-types';
-
+import PropTypes from 'prop-types'; 
+import axios from 'axios';
+import {server} from '../ServerLib/config';
 
 class PostMenu extends Component{
     static defaultProps = {
@@ -35,9 +36,81 @@ class PostMenu extends Component{
 
     _openMenu = () => this.setState({ visible: true });
 
-    _closeMenu = () => this.setState({ visible: false });
+    _closeMenu = () => this.setState({ visible: false }); 
 
-    render(){
+    //데이터 처리 시작  
+
+    //하나의 게시글 삭제 
+    _handleDeleteEntry = async() => {
+        var url = server.serverURL + '/process/DeleteEntry';
+        this.setState({
+            isLoading: true,
+            isError: false
+        }) 
+        await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1",
+            entryid: "5d770b973d1ef85d049dd9a4", title: this.state.title, contents: this.state.contents}) 
+            .then((response) => {       
+                this.setState({
+                isLoading: false
+                }) 
+            
+            }) 
+            .catch(( err ) => {
+                Alert.alert(
+                    'Cannot connect to the server. Falling back to default option.',
+                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                    [{text: 'OK'}]
+                );
+            });    
+    }  
+    //좋아요 1 증가
+    _handleIncreLikeEntry = async() => {
+        var url = server.serverURL + '/process/IncreLikeEntry';
+        this.setState({
+            isLoading: true,
+            isError: false
+        }) 
+        await axios.post(url, {boardid: "board1", entryid: "5d75a757d47cdf78a5ce79d1"}) 
+            .then((response) => {       
+                this.setState({
+                isLoading: false
+                }) 
+            }) 
+            .catch(( err ) => {
+                Alert.alert(
+                    'Cannot connect to the server. Falling back to default option.',
+                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                    [{text: 'OK'}]
+                );
+            });    
+    }    
+
+    //게시물 신고
+    _handleIncreLikeEntry = async() => {
+        var url = server.serverURL + '/process/IncreLikeEntry';
+        this.setState({
+            isLoading: true,
+            isError: false
+        }) 
+        await axios.post(url, {boardid: "board1", entryid: "5d75a757d47cdf78a5ce79d1"}) 
+            .then((response) => {       
+                this.setState({
+                isLoading: false
+                }) 
+            }) 
+            .catch(( err ) => {
+                Alert.alert(
+                    'Cannot connect to the server. Falling back to default option.',
+                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                    [{text: 'OK'}]
+                );
+            });    
+    }
+
+
+    //데이터 처리 끝
+
+    render(){ 
         if(this.state.ismine || this.state.admin){
             return (
                 <View style={this.state.style}>
@@ -52,17 +125,17 @@ class PostMenu extends Component{
                     />
                     }
                 >
-                    <Menu.Item onPress={() => {}} title="Delete" />
+                    <Menu.Item onPress={this._handleDeleteEntry.bind(this)} title="Delete" />
                     <Menu.Item onPress={() => {
                                         this._closeMenu();
                                         this.props.navigation.navigate('EntryEdit', {...this.state.state});}} title="Modify" />
                     <Menu.Item onPress={() => {}} title="Report" />
                     <Divider />
-                    <Menu.Item onPress={() => {}} title="Like this!" />
+                    <Menu.Item onPress={this._handleIncreLikeEntry.bind(this)} title="Like this!" />
                 </Menu>
             </View>);
         }
-        else{
+        else{ 
             return (
                 <View style={this.state.style}>
                 <Menu
@@ -78,7 +151,7 @@ class PostMenu extends Component{
                 >
                     <Menu.Item onPress={() => {}} title="Report" />
                     <Divider />
-                    <Menu.Item onPress={() => {}} title="Like this!" />
+                    <Menu.Item onPress={this._handleIncreLikeEntry.bind(this)} title="Like this!" />
                 </Menu>
             </View>);
         }
