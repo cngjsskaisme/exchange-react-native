@@ -32,9 +32,9 @@ class BulletinBoardsEditEntry extends Component{
         contents: "",
         pictures: ""
     }
-
+//데이터 처리 시작
     _handleSubmit = async() => {
-        var url = server.serverURL + '/process/AddEntry';
+        var url = server.serverURL + '/process/AddEditEntry';
         this.setState({
             isLoading: true,
             isError: false
@@ -42,8 +42,7 @@ class BulletinBoardsEditEntry extends Component{
         await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
             entryid: "5d7712357fc8e726d002fd99", title: this.state.title, contents: this.state.contents}) 
             .then((response) => {       
-                this.setState({ 
-                boardslist: response.data.boardslist,
+                this.setState({
                 isLoading: false
                 }) 
             }) 
@@ -55,8 +54,7 @@ class BulletinBoardsEditEntry extends Component{
               );
         });    
     }
-     
-
+//데이터 처리 끝
     render(){
         return(
             <View>
