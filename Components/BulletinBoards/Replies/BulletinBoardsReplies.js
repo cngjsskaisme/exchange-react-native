@@ -14,6 +14,7 @@ import { CommentEntries_Mock }  from '../../../Mockup_Datas/UnifiedEntries';
 import BulletinBoardsRepliesEntries from './BulletinBoardsRepliesEntries'; 
 import axios from 'axios'; 
 import {server} from '../../ServerLib/config';
+import ErrorPage from '../../Tools/ErrorPage';
 
 
 class BulletinBoardsReplies extends Component{
@@ -23,6 +24,7 @@ class BulletinBoardsReplies extends Component{
         userid: 0,
         username: '',
         profile: '', 
+        isDev: false,
         //가져올 댓글의 시작, 끝 인덱스 번호 
         commentstartindex: 0, 
         commentendindex: 19,
@@ -36,13 +38,14 @@ class BulletinBoardsReplies extends Component{
             userid: this.props.userid,
             username: this.props.username,
             profile: this.props.profile,
+            isDev: this.props.isDev,
             //가져올 댓글의 시작, 끝 인덱스 번호 
             commentstartindex: this.props.commentstartindex, 
             commentendindex: this.props.commentendindex,             
         }
     }
 
-    //데이터 받아오기 시작 
+    //데이터 요청 시 함수
     _onGetComments = async () => {   
         var url = server.serverURL + '/process/ShowComments';
         this.setState({
@@ -66,18 +69,25 @@ class BulletinBoardsReplies extends Component{
                     [{text: 'OK'}]
                 );
             this.setState({
-                commentslist: CommentEntries_Mock,
                 isError: true
             })
         });    
     }
+
+    //컴포넌트 마운트 시
     async componentDidMount(){
-      await this. _onGetComments(); 
+        // 일반 사용자 모드일 때
+        if (!this.state.isDev)
+            await this. _onGetComments();
+        // 개발자 모드일 떄
+        else{
+            this.setState({commentslist : CommentEntries_Mock})
+        }
     }
-    //데이터 받아오기 끝 
+   
 
 
-
+    // Flatlist RenderItem 함수
     _renderItem = ({ item }) => {
         return(
             <BulletinBoardsRepliesEntries
@@ -95,14 +105,24 @@ class BulletinBoardsReplies extends Component{
         )
     };
 
+    // Flatlist keyExtractor 함수
     _keyExtractor = (item, index) => item.replyid.toString();
 
+    // 페이지 렌더 함수
     render(){
         return(
-            <FlatList 
+            <View>
+            {this.state.isError ? 
+                //오류 발생 시
+                <ErrorPage/> :
+                //댓글 정상 출력
+                <FlatList 
                 data = {this.state.commentslist} 
                 renderItem = {this._renderItem}
                 keyExtractor = {this._keyExtractor}/>
+            }
+
+            </View>
         );
     }
 }

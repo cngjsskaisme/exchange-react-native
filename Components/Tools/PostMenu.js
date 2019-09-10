@@ -17,6 +17,9 @@ import {server} from '../ServerLib/config';
 
 class PostMenu extends Component{
     static defaultProps = {
+        boardid: 0,
+        entryid: 0,
+        userid: 0,
         ismine: false,
         admin: false,
         visible: false,
@@ -26,6 +29,9 @@ class PostMenu extends Component{
     constructor(props){
         super(props);
         this.state = {
+            boardid: this.props.boardid,
+            entryid: this.props.entryid,
+            userid: this.props.userid,
             ismine: this.props.ismine,
             false: this.props.admin,
             visible: false,
@@ -47,8 +53,8 @@ class PostMenu extends Component{
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1",
-            entryid: "5d770b973d1ef85d049dd9a4", title: this.state.title, contents: this.state.contents}) 
+        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid,
+            entryid: this.state.entryid, title: this.state.title, contents: this.state.contents}) 
             .then((response) => {       
                 this.setState({
                 isLoading: false
@@ -70,7 +76,7 @@ class PostMenu extends Component{
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {boardid: "board1", entryid: "5d75a757d47cdf78a5ce79d1"}) 
+        await axios.post(url, {boardid: this.state.boardid, entryid: this.state.entryid}) 
             .then((response) => {       
                 this.setState({
                 isLoading: false
@@ -112,6 +118,7 @@ class PostMenu extends Component{
     //데이터 처리 끝
 
     render(){ 
+        //내 글이거나 관리자 모드일 때
         if(this.state.ismine || this.state.admin){
             return (
                 <View style={this.state.style}>
@@ -137,6 +144,7 @@ class PostMenu extends Component{
             </View>);
         }
         else{ 
+            //내 글이 아닐 때
             return (
                 <View style={this.state.style}>
                 <Menu

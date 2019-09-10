@@ -11,6 +11,8 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { TextInput, IconButton, Colors } from 'react-native-paper'
+import axios from 'axios'; 
+import {server} from '../../ServerLib/config';
 
 class BulletinBoardsRepliesInput extends Component{
     static defaultProps = {
@@ -34,12 +36,36 @@ class BulletinBoardsRepliesInput extends Component{
         }
     }
 
-    _postReply = () => {
-        //여기에 창희의 API를 넣어 자료를 보낸다... (보낼 정보들은 위에 정의되어 있는 것들)
-    }
-    
+
+    //데이터 요청 시 함수
+    // 1. 댓글을 추가하는 함수 
+    //onPress={this._onAddComment.bind(this)} 
+    _onAddComment = async() => {
+        var url = server.serverURL + '/process/AddComment';
+        this.setState({
+            isLoading: true,
+            isError: false
+        }) 
+        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
+            entryid: this.state.entryid, contents: this.state.contents}) 
+            .then((response) => {       
+                this.setState({
+                isLoading: false
+                }) 
+            }) 
+        .catch(( err ) => {
+            Alert.alert(
+                'Cannot connect to the server. Falling back to default option.',
+                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                [{text: 'OK'}]
+              );
+        });    
+    } 
+
+    //렌더 함수
     render(){
         return(
+            // Text 입력을 위한 TextInput 컴포넌트와 아이콘 버튼으로 구성
             <View style={styles.Container}>
                 <TextInput
                     style = {styles.TextInput}
@@ -52,7 +78,7 @@ class BulletinBoardsRepliesInput extends Component{
                     icon="arrow-upward"
                     color={Colors.red500}
                     size={20}
-                    onPress={() => console.log('Pressed')}
+                    onPress={this._onAddComment}
                 />
             </View>
         );

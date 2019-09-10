@@ -1,7 +1,7 @@
 /*
 작성자 : 추헌남
 최초작성일 : 2019/08/20
-설명 : 게시판 게시글 목록 엔트리 컴포넌트입니다.
+설명 : 게시판 게시글 목록 엔트리 컴포넌트입니다. (게시판 목록의 한 칸 한 칸들)
 다음을 Prop으로 받겠습니다 (받는 타입은 PropTypes에서 기술) :
     아직 안받음
 */
@@ -28,7 +28,7 @@ class BulletinBoardsEntries extends Component{
         date: '2019-01-01',
         ismine: false,
         title: '',
-        contents: ''
+        contents: '',
     }
 
     constructor(props){
@@ -43,14 +43,13 @@ class BulletinBoardsEntries extends Component{
             date: props.date,
             ismine: props.ismine,
             title: props.title,
-            contents: props.contents
+            contents: props.contents,
+            isDev: props.isDev
         }
     }
 
-    _handlePress = () => {
-        
-    };
 
+    // 렌더 함수
     render(){
         return(
             <TouchableRipple key={this.state.entryid} 
@@ -65,12 +64,18 @@ class BulletinBoardsEntries extends Component{
                                                                                     ismine: this.state.ismine,
                                                                                     title: this.state.title,
                                                                                     contents: this.state.contents,
-                                                                                    pictures: this.state.pictures})}>
+                                                                                    pictures: this.state.pictures,
+                                                                                    isDev: this.state.isDev})}>
                 <View style={styles.BulletinBoardsEntries}>
                     <Text style={styles.BulletinBoardsEntriesTitle}>{this.state.title}</Text> 
                     <Text style={styles.BulletinBoardsEntriesContents}>  {this.state.contents} </Text>
                     <Text style={styles.BulletinBoardsEntriesMetadata}> written by {this.state.username} at {this.state.date}, {this.state.likes} Likes</Text>
-                    <PostMenu ismine = {this.state.ismine} style={styles.PostMenu}/>
+                    <PostMenu 
+                        ismine = {this.state.ismine}
+                        boardid = {this.state.boardid}
+                        entryid = {this.state.entryid}
+                        userid = {this.state.userid}
+                        style = {styles.PostMenu}/>
                 </View>
             </TouchableRipple>
         );

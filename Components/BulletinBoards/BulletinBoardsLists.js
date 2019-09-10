@@ -35,7 +35,7 @@ class BulletinBoardsLists extends Component{
             boardslist : null,
             isLoading: false,
             isError: false,
-            isDev: false
+            isDev: true
         }
     }
     
@@ -43,7 +43,8 @@ class BulletinBoardsLists extends Component{
         title: 'BulletinBoards Lists',
       };
 
-    //데이터 불러오기 시작   
+    // 데이터 요청 함수
+    // 1. 게시글 목록 불러오는 함수
     _onGetBulletinBoardsLists = async () => {   
         var url = server.serverURL + '/process/ShowBulletinBoardsList';
         this.setState({
@@ -69,15 +70,20 @@ class BulletinBoardsLists extends Component{
             })
         });    
     }
+
+    // 컴포넌트 마운트 시
     async componentDidMount(){
-      await this._onGetBulletinBoardsLists(); 
+        // 일반 사용자 모드일 때
+        if (!this.state.isDev)
+            await this._onGetBulletinBoardsLists(); 
     }
-    //데이터 불러오기 끝 
+
+    // FlatList의 RenderItem 함수
       _renderItem = ({ item }) => { 
         return(
             <TouchableRipple
                 key={item.boardid}
-                onPress={() => {this.props.navigation.navigate('BulletinBoards', { boardid : item.boardid, boardname : item.boardname })}}>
+                onPress={() => {this.props.navigation.navigate('BulletinBoards', { boardid : item.boardid, boardname : item.boardname, isDev : this.state.isDev })}}>
                 <View style={styles.BulletinBoards}>
                     <View style={styles.BulletinBoardsName}>
                         <TitleBold fontSize={20}>{item.boardname}</TitleBold>
@@ -90,8 +96,10 @@ class BulletinBoardsLists extends Component{
         )
     };
 
+    // FlatList의 KeyExtractor 함수
     _keyExtractor = (item, index) => item.boardid.toString();
 
+    // 렌더 함수
     render(){ 
         return(
             <View>{
@@ -101,7 +109,7 @@ class BulletinBoardsLists extends Component{
                         data = {BulletinBoardsLists_Mock}
                         renderItem = {this._renderItem}
                         keyExtractor = {this._keyExtractor}
-                        onRefresh = {this._onGetBulletinBoardsLists}
+                        onRefresh = {() => {}}
                         refreshing = {this.state.isLoading}/> :
                 this.state.isError ?
                 // 에러발생 했을 때
