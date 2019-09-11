@@ -35,7 +35,8 @@ class BulletinBoardsContent extends Component{
 
         keyboardHeight:0,
         normalHeight: 0,
-        shortHeight: 0
+        shortHeight: 0,
+        isDev: false
     }
     
     constructor(props){
@@ -57,7 +58,7 @@ class BulletinBoardsContent extends Component{
             keyboardHeight: 0,
             normalHeight: 0,
             shortHeight: 0,
-            isdev: this.props.navigation.getParam('isDev')
+            isDev: this.props.navigation.getParam('isDev')
         }
     }
 
@@ -82,12 +83,14 @@ class BulletinBoardsContent extends Component{
                             />
                     <View style={styles.EntryReplies}>
                         <BulletinBoardsReplies
+                            refhandover = {this.refs.RepliesInput} //참조함수 전달
+
                             boardid = {this.state.boardid}
                             entryid = {this.state.entryid}
                             userid = {this.state.userid}
                             username = {this.state.username}
                             profile = {this.state.profile}
-                            isDev = {this.state.isdev}/>
+                            isDev = {this.state.isDev}/>
                     </View>
                 </ScrollView>
                 <KeyboardAvoidingView
@@ -95,12 +98,14 @@ class BulletinBoardsContent extends Component{
                     style={styles.container}
                     keyboardVerticalOffset = {Header.HEIGHT + 40}>
                     <BulletinBoardsRepliesInput
-                            boardid = {this.state.boardid}
-                            entryid = {this.state.entryid}
-                            userid = {this.state.userid}
-                            currentuserid = {this.state.currentuserid}
-                            username = {this.state.username}
-                            profile = {this.state.profile}/>
+                        ref = "RepliesInput" //참조 함수
+
+                        boardid = {this.state.boardid}
+                        entryid = {this.state.entryid}
+                        userid = {this.state.userid}
+                        currentuserid = {this.state.currentuserid}
+                        username = {this.state.username}
+                        profile = {this.state.profile}/>
                 </KeyboardAvoidingView>
             </View>
         );

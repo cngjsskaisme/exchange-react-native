@@ -25,10 +25,12 @@ class BulletinBoardsReplies extends Component{
         userid: 0,
         username: '',
         profile: '', 
-        isDev: false,
+
         //가져올 댓글의 시작, 끝 인덱스 번호 
         commentstartindex: 0, 
         commentendindex: 19,
+
+        isDev: false,
     }
 
     constructor(props){
@@ -40,10 +42,12 @@ class BulletinBoardsReplies extends Component{
             userid: this.props.userid,
             username: this.props.username,
             profile: this.props.profile,
-            isDev: this.props.isDev,
+            
             //가져올 댓글의 시작, 끝 인덱스 번호 
             commentstartindex: this.props.commentstartindex, 
             commentendindex: this.props.commentendindex,             
+
+            isDev: this.props.isDev,
         }
     }
 
@@ -79,7 +83,6 @@ class BulletinBoardsReplies extends Component{
 
     //컴포넌트 마운트 시
     async componentDidMount(){
-      await this._onGetComments(); 
         // 일반 사용자 모드일 때
         if (!this.state.isDev)
             await this. _onGetComments();
@@ -104,6 +107,7 @@ class BulletinBoardsReplies extends Component{
                 likes = {item.likes}
                 date = {item.date}
                 ismine = {item.ismine}
+                title = {''}
                 contents = {item.contents}
                 pictures = {item.pictures}/>
         )
@@ -118,12 +122,14 @@ class BulletinBoardsReplies extends Component{
             <View>
                 {this.state.isError ? 
                     //오류 발생 시
-                    <ErrorPage/> :
+                    <View>
+                    <ErrorPage/>
+                    </View> :
                     //댓글 정상 출력
                     <FlatList 
-                    data = {this.state.commentslist} 
-                    renderItem = {this._renderItem}
-                    keyExtractor = {this._keyExtractor}/>
+                        data = {this.state.commentslist} 
+                        renderItem = {this._renderItem}
+                        keyExtractor = {this._keyExtractor}/>
                 }
             </View>
         );

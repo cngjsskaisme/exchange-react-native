@@ -23,6 +23,7 @@ class BulletinBoardRepliesEntries extends Component{
         likes: 0,
         date: "2019-01-01",
         ismine: false,
+        title: '',
         contents: "",
         pictures: ""
     }
@@ -39,6 +40,7 @@ class BulletinBoardRepliesEntries extends Component{
             likes: this.props.likes,
             date: this.props.date,
             ismine: this.props.ismine,
+            title: this.props.title,
             contents: this.props.contents,
             pictures: this.props.pictures
         }
@@ -52,6 +54,7 @@ class BulletinBoardRepliesEntries extends Component{
             <View 
                 key={this.state.replyid}
                 style={styles.RepliesEntry}>
+                <ConsoleLog>{this.state}</ConsoleLog>
                 <View style={styles.RepliesEntryContents}>
                     <ContentMedium>{this.state.contents}</ContentMedium>
                 </View>
@@ -61,7 +64,18 @@ class BulletinBoardRepliesEntries extends Component{
                 <PostMenu
                     ismine = {this.state.ismine}
                     style = {styles.PostMenu}
-                    props = {this.state}/>
+                    boardid = {this.state.boardid}
+                    entryid = {this.state.entryid}
+                    replyid = {this.state.replyid}
+                    userid = {this.state.userid}
+                    username = {this.state.username}
+                    profile = {this.state.profile}
+                    likes = {this.state.likes}
+                    date = {this.state.date}
+                    ismine = {this.state.ismine}
+                    title = {this.state.title}
+                    contents = {this.state.contents}
+                    pictures = {this.state.pictures}/>
             </View>
         );
     }

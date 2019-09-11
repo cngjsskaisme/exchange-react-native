@@ -14,6 +14,7 @@ import PropTypes from 'prop-types';
 import { NavigationActions, withNavigation } from 'react-navigation';
 import {TouchableRipple} from 'react-native-paper'
 import PostMenu from '../Tools/PostMenu';
+import ConsoleLog from '../Tools/ConsoleLog';
 
 
 class BulletinBoardsEntries extends Component{
@@ -52,7 +53,7 @@ class BulletinBoardsEntries extends Component{
 
 
     // 렌더 함수
-    render(){
+    render(){        
         return(
             <TouchableRipple key={this.state.entryid} 
                                     onPress={() => this.props.navigation.navigate('Post', { 
@@ -82,6 +83,7 @@ class BulletinBoardsEntries extends Component{
                 </View>
             </TouchableRipple>
         );
+        console.log(this.state.title)
     }
 }
 
