@@ -24,7 +24,7 @@ import RatingStar_Without_TextBox from '../components/RatingStar_Without_TextBox
 import Comment from '../components/Comment';
 import TextBox from '../components/TextBox'
 
-export default class EvaluationScreen extends Component {
+export default class EvaluationInput extends Component {
   constructor () {
     super()
     this.state = {
