@@ -26,6 +26,8 @@ commenterAssignment : commenter가 입력한 과제수. String
 commenterGrade : commenter가 입력한 학점. String
 commenterDifficulty : commenter가 입력한 수준. String
 rating : commenter가 입력한 rating. number (0-5)
+
+위 comment 데이터들이 아직 없음
 */
 
 
