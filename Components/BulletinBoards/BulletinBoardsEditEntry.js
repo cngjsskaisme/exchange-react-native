@@ -61,16 +61,10 @@ class BulletinBoardsEditEntry extends Component{
             isLoading: true,
             isError: false
         }) 
-<<<<<<< HEAD
          await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
             entryid: "5d75a757d47cdf78a5ce79d1", title: this.state.title, contents: this.state.contents}) 
-||||||| merged common ancestors
-        await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
-            entryid: "5d75a757d47cdf78a5ce79d1", title: this.state.title, contents: this.state.contents}) 
-=======
         await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
             entryid: this.state.entryid, title: this.state.title, contents: this.state.contents}) 
->>>>>>> 1181f5bf447b684692a4e07094d9f3fea3fee99e
             .then((response) => {       
                 this.setState({
                     isLoading: false
@@ -86,8 +80,8 @@ class BulletinBoardsEditEntry extends Component{
 }  
 
     //2. 댓글을 추가하는 함수 
-    //onPress={this._onAddComment.bind(this)} 
-    _onAddComment = async() => {
+    //onPress={this._handleAddComment.bind(this)} 
+    _handleAddComment = async() => {
         var url = server.serverURL + '/process/AddComment';
         this.setState({
             isLoading: true,
@@ -108,8 +102,8 @@ class BulletinBoardsEditEntry extends Component{
               );
         });    
     } 
-    //댓글을 수정하는 댓글
-    _onEditComment = async() => {
+    //댓글을 수정하는 함수
+    _handleEditComment = async() => {
         var url = server.serverURL + '/process/EditComment';
         this.setState({
             isLoading: true,

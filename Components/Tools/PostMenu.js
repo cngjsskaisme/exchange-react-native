@@ -53,8 +53,7 @@ class PostMenu extends Component{
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid,
-            entryid: this.state.entryid, title: this.state.title, contents: this.state.contents}) 
+        await axios.post(url, {boardid: this.state.boardid, entryid: this.state.entryid}) 
             .then((response) => {       
                 this.setState({
                 isLoading: false
@@ -112,9 +111,29 @@ class PostMenu extends Component{
                     [{text: 'OK'}]
                 );
             });    
-    }
+    } 
 
-
+    //댓글 1개 삭제
+    _handleDeleteComment = async() => {
+        var url = server.serverURL + '/process/DeleteComment';
+        this.setState({
+            isLoading: true,
+            isError: false
+        }) 
+        await axios.post(url, { boardid: this.state.boardid, entryid: this.state.entryid, replyid: "5d783833ebecb9af8be1c309"}) 
+            .then((response) => {       
+                this.setState({
+                isLoading: false
+                }) 
+            }) 
+            .catch(( err ) => {
+                Alert.alert(
+                    'Cannot connect to the server. Falling back to default option.',
+                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                    [{text: 'OK'}]
+                );
+            });    
+    }  
     //데이터 처리 끝
 
     render(){ 
@@ -133,7 +152,7 @@ class PostMenu extends Component{
                     />
                     }
                 >
-                    <Menu.Item onPress={this._handleDeleteEntry.bind(this)} title="Delete" />
+                    <Menu.Item onPress={this._handleDeleteComment.bind(this)} title="Delete" />
                     <Menu.Item onPress={() => {
                                         this._closeMenu();
                                         this.props.navigation.navigate('EntryEdit', {...this.state.state});}} title="Modify" />
