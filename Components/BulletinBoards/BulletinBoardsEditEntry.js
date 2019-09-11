@@ -32,6 +32,9 @@ class BulletinBoardsEditEntry extends Component{
         contents: "",
         pictures: ""
     }
+//데이터 처리 시작   
+
+//게시글을 추가 or 수정하는 함수
 
     constructor(props){
         super(props);
@@ -58,11 +61,19 @@ class BulletinBoardsEditEntry extends Component{
             isLoading: true,
             isError: false
         }) 
+<<<<<<< HEAD
+         await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
+            entryid: "5d75a757d47cdf78a5ce79d1", title: this.state.title, contents: this.state.contents}) 
+||||||| merged common ancestors
+        await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
+            entryid: "5d75a757d47cdf78a5ce79d1", title: this.state.title, contents: this.state.contents}) 
+=======
         await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
             entryid: this.state.entryid, title: this.state.title, contents: this.state.contents}) 
+>>>>>>> 1181f5bf447b684692a4e07094d9f3fea3fee99e
             .then((response) => {       
                 this.setState({
-                isLoading: false
+                    isLoading: false
                 }) 
             }) 
         .catch(( err ) => {
@@ -70,9 +81,9 @@ class BulletinBoardsEditEntry extends Component{
                 'Cannot connect to the server. Falling back to default option.',
                 'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                 [{text: 'OK'}]
-              );
+            );
         });    
-    }  
+}  
 
     //2. 댓글을 추가하는 함수 
     //onPress={this._onAddComment.bind(this)} 
@@ -97,6 +108,29 @@ class BulletinBoardsEditEntry extends Component{
               );
         });    
     } 
+    //댓글을 수정하는 댓글
+    _onEditComment = async() => {
+        var url = server.serverURL + '/process/EditComment';
+        this.setState({
+            isLoading: true,
+            isError: false
+        }) 
+        await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
+            entryid: "5d75a757d47cdf78a5ce79d1", replyid: "5d783833ebecb9af8be1c309", 
+            contents: this.state.contents}) 
+            .then((response) => {       
+                this.setState({
+                isLoading: false
+                }) 
+            }) 
+        .catch(( err ) => {
+            Alert.alert(
+                'Cannot connect to the server. Falling back to default option.',
+                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                [{text: 'OK'}]
+              );
+        });    
+    }  
 
 
     // 렌더 함수

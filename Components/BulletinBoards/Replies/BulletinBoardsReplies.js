@@ -79,6 +79,7 @@ class BulletinBoardsReplies extends Component{
 
     //컴포넌트 마운트 시
     async componentDidMount(){
+      await this._onGetComments(); 
         // 일반 사용자 모드일 때
         if (!this.state.isDev)
             await this. _onGetComments();
