@@ -72,7 +72,7 @@ class BulletinBoardsReplies extends Component{
         });    
     }
     async componentDidMount(){
-      await this. _onGetComments(); 
+      await this._onGetComments(); 
     }
     //데이터 받아오기 끝 
 
