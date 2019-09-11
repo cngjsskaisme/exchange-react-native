@@ -135,7 +135,7 @@ class PostMenu extends Component{
     }  
     //데이터 처리 끝
 
-    }
+    
 
     // 렌더 함수 시작
     render(){ 
@@ -187,6 +187,7 @@ class PostMenu extends Component{
         }
     }
 }
+
 
 PostMenu.propTypes = {
 };

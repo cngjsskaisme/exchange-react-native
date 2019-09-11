@@ -4,7 +4,7 @@ professorID : Foreign Key. 각각 교수님을 식별하는 id. 강의평가 데
               EvaluationInput, EvaluationList, EvaluationScreen 파일에 필요함. integer,
 subject : 강의 이름. string,
 professor : 교수님 이름 string,
-overalRating : 여러 평가를 모아서 평균 rating를 계산하는 변수. integer (0-5)
+overallRating : 여러 평가를 모아서 평균 rating를 계산하는 변수. integer (0-5)
 exam : 여러 시험수를 모아서 제일 많이 나타나는 number를 선택. 
         (예시 : 0,1,2,3,more 4 중에 3가 많이 나오면 3 선택) string,
 assignment : 여러 과제수를 모아서 제일 많이 나타나는 number를 선택. 
@@ -49,17 +49,19 @@ import { Button,ListItem,SearchBar } from 'react-native-elements';
 import { Container, Header, Item, Input } from 'native-base';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {createStackNavigator, createAppContainer, createBottomTabNavigator} from 'react-navigation'
+import {createStackNavigator, createAppContainer, createBottomTabNavigator, createSwitchNavigator} from 'react-navigation'
 
 import RatingStar from '../components/RatingStar';
 import Comment from '../components/Comment';
 import TextBox from '../components/TextBox'
 import FixedRatingStar from '../components/fixed_RatingStar'
 import EvaluationScreen from './EvaluationScreen';
+import LoadingScreen from './LoadingScreen'
+
 
 import {CourseRatingEntries_Mock} from '../../../Mockup_Datas/UnifiedEntries'
 
-export default class EvaluationList extends Component {
+class EvaluationList extends Component {
     state = {
         search: '',
       };
@@ -138,6 +140,15 @@ export default class EvaluationList extends Component {
     );
   }
 }
+
+const RootNavigator = createSwitchNavigator({
+  EvaluationList: EvaluationList,
+  LoadingScreen: LoadingScreen
+}, {
+  initialRouteName: 'LoadingScreen'
+});
+
+export default createAppContainer(RootNavigator);
 
 EvaluationList.propTypes = {
 
