@@ -44,9 +44,8 @@ class PostMenu extends Component{
 
     _closeMenu = () => this.setState({ visible: false }); 
 
-    //데이터 처리 시작  
-
-    //하나의 게시글 삭제 
+    // 데이터 요청 함수
+    // 1. 하나의 게시글 삭제 
     _handleDeleteEntry = async() => {
         var url = server.serverURL + '/process/DeleteEntry';
         this.setState({
@@ -69,7 +68,7 @@ class PostMenu extends Component{
                 );
             });    
     }  
-    //좋아요 1 증가
+    // 2. 좋아요 1 증가
     _handleIncreLikeEntry = async() => {
         var url = server.serverURL + '/process/IncreLikeEntry';
         this.setState({
@@ -91,7 +90,7 @@ class PostMenu extends Component{
             });    
     }    
 
-    //게시물 신고
+    // 3. 게시물 신고
     _handleAddReport = async() => {
         var url = server.serverURL + '/process/AddReport';
         this.setState({
@@ -114,9 +113,7 @@ class PostMenu extends Component{
             });    
     }
 
-
-    //데이터 처리 끝
-
+    // 렌더 함수 시작
     render(){ 
         //내 글이거나 관리자 모드일 때
         if(this.state.ismine || this.state.admin){

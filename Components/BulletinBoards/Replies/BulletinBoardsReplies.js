@@ -19,6 +19,7 @@ import ErrorPage from '../../Tools/ErrorPage';
 
 class BulletinBoardsReplies extends Component{
     static defaultProps = {
+        boardid: 0,
         entryid: 0,
         replyid: 0,
         userid: 0,
@@ -33,6 +34,7 @@ class BulletinBoardsReplies extends Component{
     constructor(props){
         super(props);
         this.state = {
+            boardid: this.props.boardid,
             entryid: this.props.entryid,
             replyid: this.props.replyid,
             userid: this.props.userid,
@@ -46,14 +48,15 @@ class BulletinBoardsReplies extends Component{
     }
 
     //데이터 요청 시 함수
+    // 1. 댓글 목록 얻기 요청
     _onGetComments = async () => {   
         var url = server.serverURL + '/process/ShowComments';
         this.setState({
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
-            entryid: "5d75a757d47cdf78a5ce79d1", 
+        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
+            entryid: this.state.entryid, 
             commentstartindex: this.state.commentstartindex, commentendindex: this.state.commentendindex}) 
 
             .then((response) => {       
@@ -112,16 +115,15 @@ class BulletinBoardsReplies extends Component{
     render(){
         return(
             <View>
-            {this.state.isError ? 
-                //오류 발생 시
-                <ErrorPage/> :
-                //댓글 정상 출력
-                <FlatList 
-                data = {this.state.commentslist} 
-                renderItem = {this._renderItem}
-                keyExtractor = {this._keyExtractor}/>
-            }
-
+                {this.state.isError ? 
+                    //오류 발생 시
+                    <ErrorPage/> :
+                    //댓글 정상 출력
+                    <FlatList 
+                    data = {this.state.commentslist} 
+                    renderItem = {this._renderItem}
+                    keyExtractor = {this._keyExtractor}/>
+                }
             </View>
         );
     }

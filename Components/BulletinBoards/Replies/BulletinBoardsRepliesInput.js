@@ -18,7 +18,7 @@ class BulletinBoardsRepliesInput extends Component{
     static defaultProps = {
         boardid: 0,
         entryid: 0,
-        userid: 0,
+        currentuserid: 0,
         username: '',
         profile: '',
         contents: ''
@@ -29,7 +29,7 @@ class BulletinBoardsRepliesInput extends Component{
         this.state = {
             boardid: this.props.boardid,
             entryid: this.props.entryid,
-            userid: this.props.userid,
+            currentuserid: this.props.currentuserid,
             username: this.props.username,
             profile: this.props.profile,
             contents: ''
@@ -46,7 +46,7 @@ class BulletinBoardsRepliesInput extends Component{
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
+        await axios.post(url, {userid: this.state.currentuserid, boardid: this.state.boardid, 
             entryid: this.state.entryid, contents: this.state.contents}) 
             .then((response) => {       
                 this.setState({
