@@ -252,7 +252,8 @@ export const TimeTableEntries_Mock = [
         place: 'Paiknam Library'
     },
 ];
-
+ 
+//courseID, professorId: objectId, overallRating: average
 export const CourseRatingEntries_Mock = [
     {
         courseID : 1,

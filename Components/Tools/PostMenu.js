@@ -52,7 +52,8 @@ class PostMenu extends Component{
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {boardid: this.state.boardid, entryid: this.state.entryid}) 
+        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid,
+            entryid: this.state.entryid, title: this.state.title, contents: this.state.contents}) 
             .then((response) => {       
                 this.setState({
                 isLoading: false
@@ -110,9 +111,9 @@ class PostMenu extends Component{
                     [{text: 'OK'}]
                 );
             });    
-    } 
+    }
 
-    //댓글 1개 삭제
+    // 4. 댓글 삭제
     _handleDeleteComment = async() => {
         var url = server.serverURL + '/process/DeleteComment';
         this.setState({
@@ -133,9 +134,7 @@ class PostMenu extends Component{
                 );
             });    
     }  
-    //데이터 처리 끝
 
-    }
 
     // 렌더 함수 시작
     render(){ 
@@ -154,7 +153,7 @@ class PostMenu extends Component{
                     />
                     }
                 >
-                    <Menu.Item onPress={this._handleDeleteComment.bind(this)} title="Delete" />
+                    <Menu.Item onPress={this._handleDeleteComment()} title="Delete" />
                     <Menu.Item onPress={() => {
                                         this._closeMenu();
                                         this.props.navigation.navigate('EntryEdit', {...this.state.state});}} title="Modify" />
