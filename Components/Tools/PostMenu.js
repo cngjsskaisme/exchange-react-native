@@ -135,7 +135,6 @@ class PostMenu extends Component{
             });    
     }  
 
-
     // 렌더 함수 시작
     render(){ 
         //내 글이거나 관리자 모드일 때
@@ -186,6 +185,7 @@ class PostMenu extends Component{
         }
     }
 }
+
 
 PostMenu.propTypes = {
 };

@@ -2,14 +2,14 @@ import React from 'react';
 import { View, Text, Image, ActivityIndicator} from 'react-native';
 
 
-const FIVE_SECONDS = 1000;
+const FIVE_SECONDS = 100;
 
 export default class LoadingScreen extends React.Component {
   componentDidMount() {
     // When mounted, wait one second, then navigate to App
     setTimeout(() => {
       this.props.navigation.navigate('EvaluationScreen');
-    }, FIVE_SECONDS);
+    }, 1000);
   }
 
   render() {
