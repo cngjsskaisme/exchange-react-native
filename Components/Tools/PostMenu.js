@@ -130,6 +130,28 @@ class PostMenu extends Component{
             });    
     }
 
+    // 4. 댓글 삭제
+    _handleDeleteComment = async() => {
+        var url = server.serverURL + '/process/DeleteComment';
+        this.setState({
+            isLoading: true,
+            isError: false
+        }) 
+        await axios.post(url, { boardid: this.state.boardid, entryid: this.state.entryid, replyid: "5d783833ebecb9af8be1c309"}) 
+            .then((response) => {       
+                this.setState({
+                isLoading: false
+                }) 
+            }) 
+            .catch(( err ) => {
+                Alert.alert(
+                    'Cannot connect to the server. Falling back to default option.',
+                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                    [{text: 'OK'}]
+                );
+            });    
+    }  
+
     // 렌더 함수 시작
     render(){ 
         //내 글이거나 관리자 모드일 때
@@ -147,7 +169,7 @@ class PostMenu extends Component{
                     />
                     }
                 >
-                    <Menu.Item onPress={this._handleDeleteEntry.bind(this)} title="Delete" />
+                    <Menu.Item onPress={this._handleDeleteComment()} title="Delete" />
                     <Menu.Item onPress={() => {
                                         this._closeMenu();
                                         //{this.state.replyid == 0 ? }//게시글 편집모드와 댓글 편집모드가 다르게 렌더링됨.
@@ -194,6 +216,7 @@ class PostMenu extends Component{
         }
     }
 }
+
 
 PostMenu.propTypes = {
 };
