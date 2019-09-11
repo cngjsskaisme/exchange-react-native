@@ -29,6 +29,8 @@ class BulletinBoards extends Component{
     
     static defaultProp = {
         boardid: 0,
+        userid: 0,
+        currentuserid: 0,
         boardname: '',
         entrieslist: null,
         isLoading: false,
@@ -42,6 +44,8 @@ class BulletinBoards extends Component{
         super(props);
         this.state = {
             boardid: this.props.navigation.getParam('boardid'),
+            userid: this.props.navigation.getParam('userid'),
+            currentuserid: this.props.navigation.getParam('currentuserid'),
             boardname: this.props.navigation.getParam('boardname'),
             isLoading: false,
             isError: false,
@@ -60,7 +64,7 @@ class BulletinBoards extends Component{
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: this.state.boardid, 
+        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
             postStartIndex: this.state.postStartIndex, postEndIndex: this.state.postEndIndex})
             .then((response) => {       
                 this.setState({ 
@@ -95,6 +99,7 @@ class BulletinBoards extends Component{
                 key = {item.entryid}
                 boardid = {item.boardid}
                 userid = {item.userid}
+                entryid = {item.entryid}
                 username = {item.username}
                 profile = {item.profile}
                 likes = {item.likes}

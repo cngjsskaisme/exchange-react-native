@@ -22,6 +22,7 @@ class BulletinBoardsEntries extends Component{
         boardid: 0,
         entryid: 0,
         userid: 0,
+        currentuserid: 0,
         username: '',
         profile: '',
         likes: 0,
@@ -35,8 +36,9 @@ class BulletinBoardsEntries extends Component{
         super(props)
         this.state = {
             boardid: props.boardid,
-            entryid: props.key, 
+            entryid: props.entryid, 
             userid: props.userid,
+            currentuserid: props.currentuserid,
             username: props.username,
             profile: props.profile,
             likes: props.likes,
@@ -57,6 +59,7 @@ class BulletinBoardsEntries extends Component{
                                                                                     boardid: this.state.boardid,
                                                                                     entryid: this.state.entryid,
                                                                                     userid: this.state.userid,
+                                                                                    currentuserid: this.state.currentuserid,
                                                                                     username: this.state.username,
                                                                                     profile: this.state.profile,
                                                                                     likes: this.state.likes,

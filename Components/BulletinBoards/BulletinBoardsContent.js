@@ -23,6 +23,7 @@ class BulletinBoardsContent extends Component{
         boardid: 0,
         entryid: 0,
         userid: 0,
+        currentuserid: 0,
         username: "",
         profile: "",
         likes: 0,
@@ -43,6 +44,7 @@ class BulletinBoardsContent extends Component{
             boardid: this.props.navigation.getParam('boardid'),
             entryid: this.props.navigation.getParam('entryid'),
             userid: this.props.navigation.getParam('userid'),
+            currentuserid: this.props.navigation.getParam('currentuserid'),
             username: this.props.navigation.getParam('username'),
             profile: this.props.navigation.getParam('profile'),
             likes: this.props.navigation.getParam('likes'),
@@ -80,10 +82,11 @@ class BulletinBoardsContent extends Component{
                             />
                     <View style={styles.EntryReplies}>
                         <BulletinBoardsReplies
-                            parentid = {this.state.id}
-                            userid = '10'
-                            username = 'testing'
-                            profile = 'hello'
+                            boardid = {this.state.boardid}
+                            entryid = {this.state.entryid}
+                            userid = {this.state.userid}
+                            username = {this.state.username}
+                            profile = {this.state.profile}
                             isDev = {this.state.isdev}/>
                     </View>
                 </ScrollView>
@@ -92,8 +95,10 @@ class BulletinBoardsContent extends Component{
                     style={styles.container}
                     keyboardVerticalOffset = {Header.HEIGHT + 40}>
                     <BulletinBoardsRepliesInput
+                            boardid = {this.state.boardid}
                             entryid = {this.state.entryid}
                             userid = {this.state.userid}
+                            currentuserid = {this.state.currentuserid}
                             username = {this.state.username}
                             profile = {this.state.profile}/>
                 </KeyboardAvoidingView>
