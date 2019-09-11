@@ -256,7 +256,7 @@ export const TimeTableEntries_Mock = [
 export const CourseRatingEntries_Mock = [
     {
         courseID : 1,
-        personID : 1,
+        professorID : 1,
         subject: 'Computer Science',
         professor: 'Won Young Jun',
         overalRating : 4,
@@ -267,7 +267,7 @@ export const CourseRatingEntries_Mock = [
     },
     {
         courseID : 2,
-        personID : 2,
+        professorID : 2,
         subject: 'Techno Business',
         professor: 'Anh Gwangil',
         overalRating : 3,
@@ -278,7 +278,7 @@ export const CourseRatingEntries_Mock = [
     },
     {
         courseID : 3,
-        personID : 3,
+        professorID : 3,
         subject: 'Introduction to Acting',
         professor: 'Shelly L. Collins',
         overalRating : 5,
@@ -289,7 +289,7 @@ export const CourseRatingEntries_Mock = [
     },
     {
         courseID : 4,
-        personID : 4,
+        professorID : 4,
         subject: 'IT Project Management',
         professor: 'Park Mina',
         overalRating : 5,
@@ -300,7 +300,7 @@ export const CourseRatingEntries_Mock = [
     },
     {
         courseID : 5,
-        personID : 5,
+        professorID : 5,
         subject: 'Social Venture',
         professor: 'Zahin Haissan',
         overalRating : 5,
@@ -311,7 +311,7 @@ export const CourseRatingEntries_Mock = [
     },
     {
         courseID : 6,
-        personID : 6,
+        professorID : 6,
         subject: 'React Native',
         professor: 'Punreach Rany',
         overalRating : 1,
@@ -322,7 +322,7 @@ export const CourseRatingEntries_Mock = [
     },
     {
         courseID : 7,
-        personID : 7,
+        professorID : 7,
         subject: 'Hanyang 7 Heart',
         professor: 'Daniel Android',
         overalRating : 1,
@@ -333,7 +333,7 @@ export const CourseRatingEntries_Mock = [
     },
     {
         courseID : 8,
-        personID : 8,
+        professorID : 8,
         subject: 'Sleeping Therapy',
         professor: 'Won Young Jun',
         overalRating : 4,
@@ -344,7 +344,7 @@ export const CourseRatingEntries_Mock = [
     },
     {
         courseID : 9,
-        personID : 1,
+        professorID : 1,
         subject: 'Artificial Intelligence',
         professor: 'Won Young Jun',
         overalRating : 2,
@@ -355,7 +355,7 @@ export const CourseRatingEntries_Mock = [
     },
     {
         courseID : 10,
-        personID : 1,
+        professorID : 1,
         subject: 'Software Engineering',
         professor: 'Won Young Jun',
         overalRating : 3,

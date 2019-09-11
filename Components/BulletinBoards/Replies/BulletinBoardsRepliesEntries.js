@@ -44,8 +44,11 @@ class BulletinBoardRepliesEntries extends Component{
         }
     }
 
+    // 렌더 함수 시작
     render(){
         return(
+            // BulletinBoardsContent에서 보여지는 각 댓글 칸의 디자인을 구현
+            // 댓글의 내용과 PostMenu 컴포넌트로 구성됨
             <View 
                 key={this.state.replyid}
                 style={styles.RepliesEntry}>

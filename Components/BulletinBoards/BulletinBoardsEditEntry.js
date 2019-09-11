@@ -35,14 +35,42 @@ class BulletinBoardsEditEntry extends Component{
 //데이터 처리 시작   
 
 //게시글을 추가 or 수정하는 함수
+
+    constructor(props){
+        super(props);
+        this.setState({
+            boardid: this.props.navigation.getParam('boardid'),
+            entryid: this.props.navigation.getParam('entryid'),
+            userid: this.props.navigation.getParam('userid'),
+            username: this.props.navigation.getParam('username'),
+            profile: this.props.navigation.getParam('profile'),
+            likes: this.props.navigation.getParam('likes'),
+            date: this.props.navigation.getParam('date'),
+            ismine: this.props.navigation.getParam('ismine'),
+            title: this.props.navigation.getParam('title'),
+            contents: this.props.navigation.getParam('contents'),
+            pictures: this.props.navigation.getParam('pictures')
+        })
+    }
+
+    //데이터 요청 시 함수
+    // 1. 게시글을 추가 or 수정하는 함수
     _handleSubmit = async() => {
         var url = server.serverURL + '/process/AddEditEntry';
         this.setState({
             isLoading: true,
             isError: false
         }) 
+<<<<<<< HEAD
          await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
             entryid: "5d75a757d47cdf78a5ce79d1", title: this.state.title, contents: this.state.contents}) 
+||||||| merged common ancestors
+        await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
+            entryid: "5d75a757d47cdf78a5ce79d1", title: this.state.title, contents: this.state.contents}) 
+=======
+        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
+            entryid: this.state.entryid, title: this.state.title, contents: this.state.contents}) 
+>>>>>>> 1181f5bf447b684692a4e07094d9f3fea3fee99e
             .then((response) => {       
                 this.setState({
                     isLoading: false
@@ -57,7 +85,7 @@ class BulletinBoardsEditEntry extends Component{
         });    
 }  
 
-    //댓글을 추가하는 함수 
+    //2. 댓글을 추가하는 함수 
     //onPress={this._onAddComment.bind(this)} 
     _onAddComment = async() => {
         var url = server.serverURL + '/process/AddComment';
@@ -65,8 +93,8 @@ class BulletinBoardsEditEntry extends Component{
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
-            entryid: "5d75a757d47cdf78a5ce79d1", contents: this.state.contents}) 
+        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
+            entryid: this.state.entryid, contents: this.state.contents}) 
             .then((response) => {       
                 this.setState({
                 isLoading: false
@@ -105,7 +133,7 @@ class BulletinBoardsEditEntry extends Component{
     }  
 
 
-//데이터 처리 끝
+    // 렌더 함수
     render(){
         return(
             <View>

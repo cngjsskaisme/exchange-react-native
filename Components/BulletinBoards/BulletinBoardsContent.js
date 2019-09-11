@@ -54,12 +54,15 @@ class BulletinBoardsContent extends Component{
 
             keyboardHeight: 0,
             normalHeight: 0,
-            shortHeight: 0
+            shortHeight: 0,
+            isdev: this.props.navigation.getParam('isDev')
         }
     }
 
+    // 렌더 함수
     render(){
         return(
+            // 게시글의 상세 내용과 댓글들을 보여주는 컴포넌트. 각 내용의 컴포넌트, BulletinBoardsReplies 컴포넌트, KeyboardAvoidingView 속 댓글 입력 컴포넌트로 구성됨
             <View style={styles.Container}>
                 <ScrollView>
                     <View style={styles.EntryTitle}>
@@ -80,7 +83,8 @@ class BulletinBoardsContent extends Component{
                             parentid = {this.state.id}
                             userid = '10'
                             username = 'testing'
-                            profile = 'hello'/>
+                            profile = 'hello'
+                            isDev = {this.state.isdev}/>
                     </View>
                 </ScrollView>
                 <KeyboardAvoidingView
@@ -98,7 +102,6 @@ class BulletinBoardsContent extends Component{
     }
 }
 
-//<BulletinBoardsReplies parentid = {this.state.id} />
 
 BulletinBoardsContent.propTypes = {
     

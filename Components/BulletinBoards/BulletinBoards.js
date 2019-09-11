@@ -22,7 +22,7 @@ import LoadingPage from '../Tools/LoadingPage'
 axios.defaults.timeout = 5000;
 
 class BulletinBoards extends Component{
-
+    // 네비게이션 옵션
     static navigationOptions = ({ navigation }) => ({
         title: `${navigation.state.params.boardname}`,
       });
@@ -45,14 +45,15 @@ class BulletinBoards extends Component{
             boardname: this.props.navigation.getParam('boardname'),
             isLoading: false,
             isError: false,
-            isDev: false, 
+            isDev: this.props.navigation.getParam('isDev'), 
             //데이터 관련. 불러올 첫/마지막 게시물의 index 번호 
             postStartIndex: 0, 
             postEndIndex: 0
         }
     }
     
-    //데이터 받아오기 시작
+    // 데이터 요청 함수
+    // 1. 게시글 목록 불러오는 함수
     _onGetPostsLists = async () => {   
         var url = server.serverURL + '/process/ShowBulletinBoard';
         this.setState({
@@ -79,10 +80,15 @@ class BulletinBoards extends Component{
             })
         });    
     }
+
+    //컴포넌트 마운트 시
     async componentDidMount(){
-      await this._onGetPostsLists(); 
+        // 일반 사용자 모드일 때 게시글 목록 불러오기
+        if(!this.state.isDev)
+            await this._onGetPostsLists(); 
     }
-    //데이터 받아오기 끝
+
+    // Flatlist RenderItem 함수
     _renderItem = ({ item }) => {
         return(
             <BulletinBoardsEntries
@@ -96,15 +102,19 @@ class BulletinBoards extends Component{
                 ismine = {item.ismine}
                 title = {item.title}
                 contents = {item.contents}
+                isDev = {this.state.isDev}
                 style = {styles.BulletinBoardsEntries}/>
         )
     };
 
+    // Flatlist keyExtractor 함수
     _keyExtractor = (item, index) => item.entryid.toString();
 
     
+    // 렌더 함수
     render(){ 
         return(
+            // 게시판의 게시글들을 목록으로 보여주는 함수임.
             <View>{
                 this.state.isDev ? 
                 // 개발자 모드일 때
@@ -123,7 +133,7 @@ class BulletinBoards extends Component{
                 this.state.isLoading ?
                 // 로딩중일 때
                     <LoadingPage/>:
-                // 게시판 목록을 보여줄 때
+                // 게시판 목록을 보여줄 때, FlatList와 FAB 컴포넌트로 구성되어 있음
                 <View style={{width: '100%', height: '100%'}}>
                     <FlatList 
                             data = {this.state.entrieslist}
