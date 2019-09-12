@@ -1,7 +1,7 @@
 /*
 작성자 : 추헌남
 최초작성일 : 2019/08/22
-설명 : 게시글을 수정하거나 새로운 게시글을 업로드할 수 있는 컴포넌트입니다.
+설명 : 게시글, 댓글을 수정하거나 새로운 글을 업로드할 수 있는 컴포넌트입니다.
 다음을 Prop으로 받겠습니다 (받는 타입은 PropTypes에서 기술) :
     아직 안받음 
 
@@ -32,15 +32,16 @@ class BulletinBoardsEditEntry extends Component{
         contents: "",
         pictures: ""
     }
+
 //데이터 처리 시작   
 
 //게시글을 추가 or 수정하는 함수
-
     constructor(props){
         super(props);
         this.setState({
             boardid: this.props.navigation.getParam('boardid'),
             entryid: this.props.navigation.getParam('entryid'),
+            replyid: this.props.navigation.getParam('entryid'),
             userid: this.props.navigation.getParam('userid'),
             username: this.props.navigation.getParam('username'),
             profile: this.props.navigation.getParam('profile'),
@@ -50,19 +51,17 @@ class BulletinBoardsEditEntry extends Component{
             title: this.props.navigation.getParam('title'),
             contents: this.props.navigation.getParam('contents'),
             pictures: this.props.navigation.getParam('pictures')
-        })
+        });
     }
 
     //데이터 요청 시 함수
     // 1. 게시글을 추가 or 수정하는 함수
-    _handleSubmit = async() => {
+    _handleSubmit = async () => {
         var url = server.serverURL + '/process/AddEditEntry';
         this.setState({
             isLoading: true,
             isError: false
         }) 
-         await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
-            entryid: "5d75a757d47cdf78a5ce79d1", title: this.state.title, contents: this.state.contents}) 
         await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
             entryid: this.state.entryid, title: this.state.title, contents: this.state.contents}) 
             .then((response) => {       
@@ -81,7 +80,7 @@ class BulletinBoardsEditEntry extends Component{
 
     //2. 댓글을 추가하는 함수 
     //onPress={this._handleAddComment.bind(this)} 
-    _handleAddComment = async() => {
+    _handleAddComment = async () => {
         var url = server.serverURL + '/process/AddComment';
         this.setState({
             isLoading: true,
@@ -102,15 +101,15 @@ class BulletinBoardsEditEntry extends Component{
               );
         });    
     } 
-    //댓글을 수정하는 함수
-    _handleEditComment = async() => {
+    //3. 댓글을 수정하는 함수
+    _handleEditComment = async () => {
         var url = server.serverURL + '/process/EditComment';
         this.setState({
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {userid: "5d5373177443381df03f3040", boardid: "board1", 
-            entryid: "5d75a757d47cdf78a5ce79d1", replyid: "5d783833ebecb9af8be1c309", 
+        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
+            entryid: this.state.entryid, replyid: this.state.replyid, 
             contents: this.state.contents}) 
             .then((response) => {       
                 this.setState({
@@ -146,6 +145,7 @@ class BulletinBoardsEditEntry extends Component{
                         pictures: this.props.navigation.getParam('pictures')
                     })
                 }} />
+                <Text>{this.state.title} {this.state.contents}</Text>
                 <Input
                     placeholder='An awesome Title'
                 />

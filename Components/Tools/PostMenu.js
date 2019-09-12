@@ -19,8 +19,17 @@ class PostMenu extends Component{
     static defaultProps = {
         boardid: 0,
         entryid: 0,
+        replyid: 0,
         userid: 0,
+        username: '',
+        profile: '',
+        likes: 0,
+        date: '2019-01-01',
         ismine: false,
+        title: '',
+        contents: '',
+        pictures: '',
+
         admin: false,
         visible: false,
         style: {},
@@ -31,12 +40,20 @@ class PostMenu extends Component{
         this.state = {
             boardid: this.props.boardid,
             entryid: this.props.entryid,
+            replyid: this.props.replyid,
             userid: this.props.userid,
+            username: this.props.username,
+            profile: this.props.profile,
+            likes: this.props.likes,
+            date: this.props.date,
             ismine: this.props.ismine,
-            false: this.props.admin,
+            title: this.props.title,
+            contents: this.props.contents,
+            pictures: this.props.pictures,
+
+            admin: this.props.admin,
             visible: false,
             style: this.props.style,
-            props: this.props.props
         }
     }
 
@@ -169,16 +186,30 @@ class PostMenu extends Component{
                     onDismiss={this._closeMenu}
                     anchor={
                     <IconButton
-                    icon='more-vert'
-                    size={20}
-                    onPress={this._openMenu}
+                        icon='more-vert'
+                        size={20}
+                        onPress={this._openMenu}
                     />
                     }
                 >
                     <Menu.Item onPress={this._handleDeleteComment()} title="Delete" />
                     <Menu.Item onPress={() => {
                                         this._closeMenu();
-                                        this.props.navigation.navigate('EntryEdit', {...this.state.state});}} title="Modify" />
+                                        //{this.state.replyid == 0 ? }//게시글 편집모드와 댓글 편집모드가 다르게 렌더링됨.
+                                            this.props.navigation.navigate('EntryEdit', {
+                                                boardid: this.state.boardid,
+                                                entryid: this.state.entryid,
+                                                replyid: this.state.replyid,
+                                                userid: this.state.userid,
+                                                username: this.state.username,
+                                                profile: this.state.profile,
+                                                likes: this.state.likes,
+                                                date: this.state.date,
+                                                ismine: this.state.ismine,
+                                                title: this.state.title,
+                                                contents: this.state.contents,
+                                                pictures: this.state.pictures
+                                            })}} title="Modify" />
                     <Menu.Item onPress={this._handleAddReport.bind(this)} title="Report" />
                     <Divider />
                     <Menu.Item onPress={this._handleIncreLikeEntry.bind(this)} title="Like this!" />

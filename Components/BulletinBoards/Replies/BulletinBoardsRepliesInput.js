@@ -16,6 +16,8 @@ import {server} from '../../ServerLib/config';
 
 class BulletinBoardsRepliesInput extends Component{
     static defaultProps = {
+        refhandover: null,
+
         boardid: 0,
         entryid: 0,
         currentuserid: 0,
@@ -27,6 +29,8 @@ class BulletinBoardsRepliesInput extends Component{
     constructor(props){
         super(props);
         this.state = {
+            refhandover: this.props.refhandover,
+
             boardid: this.props.boardid,
             entryid: this.props.entryid,
             currentuserid: this.props.currentuserid,
@@ -51,7 +55,8 @@ class BulletinBoardsRepliesInput extends Component{
             .then((response) => {       
                 this.setState({
                 isLoading: false
-                }) 
+                });
+                this.props.refhandover._onGetComments
             }) 
         .catch(( err ) => {
             Alert.alert(
