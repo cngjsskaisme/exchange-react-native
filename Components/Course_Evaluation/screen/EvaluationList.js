@@ -4,7 +4,7 @@ professorID : Foreign Key. 각각 교수님을 식별하는 id. 강의평가 데
               EvaluationInput, EvaluationList, EvaluationScreen 파일에 필요함. integer,
 subject : 강의 이름. string,
 professor : 교수님 이름 string,
-overallRating : 여러 평가를 모아서 평균 rating를 계산하는 변수. integer (0-5)
+overallRating : 여러 평가를 모아서 평균 rating를 계산하는 변수. integer (0-5). 반올림
 exam : 여러 시험수를 모아서 제일 많이 나타나는 number를 선택. 
         (예시 : 0,1,2,3,more 4 중에 3가 많이 나오면 3 선택) string,
 assignment : 여러 과제수를 모아서 제일 많이 나타나는 number를 선택. 
@@ -15,6 +15,19 @@ grade : 여러 학점을 모아서 제일 많이 나타나는 학점을 선택.
         (예시 : A0이 많이 입력되면 difficulty = 'Average' : string,
 
 위 데이터들이 다 UnifiedEntries.js의 CourseRatingEntries_Mock에 있음
+
+rating,difficulty, exam: 최빈값 
+user가 이미 comment를 썼다면 입력하지 않도록 
+
+teaching skill은 무시. 
+
+과목 리스트는 입력 안 되게. 
+댓글들은 수정, 삭제 되게끔. 내용 없이 입력하면 no comment 넣기 
+
+same class name & different professor: 다른 수업. 
+profile: 교수명, 과목 리스트(courseid, coursebane, school 이름) 
+
+
 
 *** Comment Part ***
 commenterID : 각각 댓글 넘긴 사람의 ID. Foreign Key. integer
@@ -27,7 +40,7 @@ commenterGrade : commenter가 입력한 학점. String
 commenterDifficulty : commenter가 입력한 수준. String
 rating : commenter가 입력한 rating. number (0-5)
 
-위 comment 데이터들이 아직 없음
+위 comment 데이터들이 아직 없음 
 */
 
 
