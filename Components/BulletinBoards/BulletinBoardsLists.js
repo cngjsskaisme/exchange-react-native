@@ -37,7 +37,7 @@ class BulletinBoardsLists extends Component{
             currentuserid: "5d5373177443381df03f3040", //userid 반환 여기서 하게끔 boardslist에서 불러오기 (onget)
             isLoading: false,
             isError: false,
-            isDev: true
+            isDev: false
         }
     }
     
@@ -107,7 +107,8 @@ class BulletinBoardsLists extends Component{
     _keyExtractor = (item, index) => item.boardid.toString();
 
     // 렌더 함수
-    render(){ 
+    render(){  
+        
         return(
             <View>{
                 this.state.isDev ? 
