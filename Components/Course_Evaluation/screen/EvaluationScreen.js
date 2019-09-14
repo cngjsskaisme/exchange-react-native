@@ -26,13 +26,30 @@ import LoadingScreen from './LoadingScreen'
 
 import {CourseRatingEntries_Mock} from '../../../Mockup_Datas/UnifiedEntries'
 
+//related to data transfer - start
+import axios from 'axios'; 
+import {server} from '../../ServerLib/config'; 
+axios.defaults.timeout = 5000;
+//related to data transfer - end
+
+//loading page from 헌남 
+import LoadingPage from '../../Tools/LoadingPage'
 
 class EvaluationScreen extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      active: false
+      active: false, 
+      // To indicate the start/end index of array that includes commentslist.  
+      // CommentslistAmount: Amount of comments that will be shown in one screen 
+      // At first, the server is requested to send 20 comments that written most recent time.
+      CommentslistStartIndex: 0, 
+      CommentslistEndIndex: 19,
+      CommentslistAmount: 20, 
+      courseid: this.props.navigation.getParam('itemID', 'NO-ID'),
+      commentslist: null,   
+      isLoading: true
     };
   }
 
@@ -40,7 +57,51 @@ class EvaluationScreen extends Component {
     Alert.alert(
       'You need to...'
    )
-  }
+  } 
+
+  //data request function - start
+  // 1. Get 20 elements from 'courseslist' array whoose start/end indexes are courseliststartindex/courselistendindex
+  _handleGetCommentsList = async () => {
+    var url = server.serverURL + '/process/ShowCommentsList';  
+    
+    await this.setState({
+      isLoading: true
+    });
+    await axios.post(url, {courseid: this.state.courseid, 
+      commentsliststartindex: this.state.CommentslistStartIndex, 
+      commentslistendindex: this.state.CommentslistEndIndex}) 
+        .then((response) => {       
+            this.setState({
+              commentslist: response.data.commentslist, 
+              isLoading: false
+            });  
+        }) 
+        .catch(( err ) => {
+            Alert.alert(
+                'Cannot connect to the server. Falling back to default option.',
+                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                [{text: 'OK'}]
+            ); 
+        });    
+    }
+
+  // 2. Get Next 20 elements from courseslist 
+    _handleGetNextCommentsList = async() => {
+      await this.setState({
+        CommentslistStartIndex: this.state.CommentslistEndIndex + 1, 
+        CommentslistEndIndex: this.state.CommentslistEndIndex + this.state.CommentslistAmount
+      }) 
+      await this._handleGetCommentsList();
+    }
+
+  // It is necessary to execute '_handleGetCommentsList' 
+  async componentDidMount(){  
+    await this._handleGetCommentsList(); 
+  }  
+
+//data request function - end
+
+
 
   render() {
     const {navigation, subject, professor, place, exam, assignment, grade, again, text, difficulty} = this.props;
@@ -56,9 +117,7 @@ class EvaluationScreen extends Component {
     const Grade = navigation.getParam('Grade', 'A+')
     const Again = again ||  'Yes'
     const i = 0
-
     
-
     return (
       <View style={styles.container}>
 
@@ -137,25 +196,22 @@ class EvaluationScreen extends Component {
             
             <View style={styles.bodyContent}>
               <View style={styles.commentTitle}><Text style={{fontSize : 15, fontWeight:'bold'}}>Comments</Text></View>
-              <Comment />
-              <Comment 
-                person = "Kevin lala"
-                cmtText = "If you prefer to exclude prop-types from your application and use it globally via window.PropTypes, the prop-types package provides single-file distributions, which are hosted on the following CDNs:"
-              />
-              <Comment 
-                person = "Hellay Cool"
-              />
-              <Comment />
-              <Comment />
-              <Comment />
-              <View style={styles.bottomPart}>
-                
-              <Button
-                  title="More comments"
-                  onPress = {() => this.Test_Button()}
-                />
-                
-                
+              { 
+                //Since 'commentslist' is also array, I changed this part into a 'map'. 
+                this.state.isLoading ? <LoadingPage/>:
+                  this.state.commentslist.map( (l) => (
+                  <Comment 
+                    person = {l.username}
+                    cmtText = {l.contents} 
+                    key = {l.userid}
+                  /> 
+                  ))
+              }
+              <View style={styles.bottomPart}>  
+                <Button
+                    title="More comments"
+                    onPress = {this._handleGetNextCommentsList.bind(this)}
+                  /> 
               </View>
               
               

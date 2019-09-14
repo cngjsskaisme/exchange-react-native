@@ -28,10 +28,10 @@ export default class Comment extends Component{
                         ratingSize = {15}
                         onPress_status = {false}
                     />
-                    <Text style={{paddingRight : 15}}></Text>
+                    <Text style={{paddingRight : 15}}>CommentText</Text>
                 </View>
 
-                <View style={styles.CommentView}><Text>You can provide the styling as per your design and change this style class. If you want to use my version of styling, I would share the code at the end of this article and you can get it from there. Now The key extractor method is basically for the unique id for the items and it’s better to use the exact code above to handle any warnings. </Text></View>
+                <View style={styles.CommentView}><Text>{CommentText}</Text></View>
             </View>    
         )
     }

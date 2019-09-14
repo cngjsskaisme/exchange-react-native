@@ -13,7 +13,6 @@ import BulletinBoards from './BulletinBoards';
 import {TouchableRipple, Button, ActivityIndicator, Colors } from 'react-native-paper'
 import { BulletinBoardsLists_Mock } from '../../Mockup_Datas/UnifiedEntries'
 import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
-
 import axios from 'axios'; 
 import {server} from '../ServerLib/config';
 import ErrorPage from '../Tools/ErrorPage';
@@ -41,10 +40,6 @@ class BulletinBoardsLists extends Component{
             isDev: true
         }
     }
-    
-    static navigationOptions = {
-        title: 'BulletinBoards Lists',
-      };
 
     // 데이터 요청 함수
     // 1. 게시글 목록 불러오는 함수
@@ -63,7 +58,7 @@ class BulletinBoardsLists extends Component{
             }) 
         .catch(( err ) => {
             Alert.alert(
-                'Cannot connect to the server. Falling back to default option.',
+                'Cannot connect to the server.',
                 'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                 [{text: 'OK'}]
               );
@@ -108,7 +103,8 @@ class BulletinBoardsLists extends Component{
     _keyExtractor = (item, index) => item.boardid.toString();
 
     // 렌더 함수
-    render(){ 
+    render(){  
+        
         return(
             <View>{
                 this.state.isDev ? 
@@ -186,4 +182,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default BulletinBoardsLists;
+export default withNavigation(BulletinBoardsLists);

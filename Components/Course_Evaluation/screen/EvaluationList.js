@@ -4,7 +4,7 @@ professorID : Foreign Key. 각각 교수님을 식별하는 id. 강의평가 데
               EvaluationInput, EvaluationList, EvaluationScreen 파일에 필요함. integer,
 subject : 강의 이름. string,
 professor : 교수님 이름 string,
-overallRating : 여러 평가를 모아서 평균 rating를 계산하는 변수. integer (0-5)
+overallRating : 여러 평가를 모아서 평균 rating를 계산하는 변수. integer (0-5). 반올림
 exam : 여러 시험수를 모아서 제일 많이 나타나는 number를 선택. 
         (예시 : 0,1,2,3,more 4 중에 3가 많이 나오면 3 선택) string,
 assignment : 여러 과제수를 모아서 제일 많이 나타나는 number를 선택. 
@@ -15,6 +15,19 @@ grade : 여러 학점을 모아서 제일 많이 나타나는 학점을 선택.
         (예시 : A0이 많이 입력되면 difficulty = 'Average' : string,
 
 위 데이터들이 다 UnifiedEntries.js의 CourseRatingEntries_Mock에 있음
+
+rating,difficulty, exam: 최빈값 
+user가 이미 comment를 썼다면 입력하지 않도록 
+
+teaching skill은 무시. 
+
+과목 리스트는 입력 안 되게. 
+댓글들은 수정, 삭제 되게끔. 내용 없이 입력하면 no comment 넣기 
+
+same class name & different professor: 다른 수업. 
+profile: 교수명, 과목 리스트(courseid, coursebane, school 이름) 
+
+
 
 *** Comment Part ***
 commenterID : 각각 댓글 넘긴 사람의 ID. Foreign Key. integer
@@ -27,9 +40,8 @@ commenterGrade : commenter가 입력한 학점. String
 commenterDifficulty : commenter가 입력한 수준. String
 rating : commenter가 입력한 rating. number (0-5)
 
-위 comment 데이터들이 아직 없음
+위 comment 데이터들이 아직 없음 
 */
-
 
 
 import React, { Component } from 'react';
@@ -56,14 +68,21 @@ import Comment from '../components/Comment';
 import TextBox from '../components/TextBox'
 import FixedRatingStar from '../components/fixed_RatingStar'
 import EvaluationScreen from './EvaluationScreen';
-import LoadingScreen from './LoadingScreen'
+import LoadingScreen from './LoadingScreen';  
 
+import {CourseRatingEntries_Mock} from '../../../Mockup_Datas/UnifiedEntries'; 
 
-import {CourseRatingEntries_Mock} from '../../../Mockup_Datas/UnifiedEntries'
+//related to data transfer - start
+import axios from 'axios'; 
+import {server} from '../../ServerLib/config' 
+//related to data transfer - end
+
+//loading page from 헌남 
+import LoadingPage from '../../Tools/LoadingPage';
 
 class EvaluationList extends Component {
     state = {
-        search: '',
+        search: '',  
       };
     static navigationOptions = {
         title: 'Course Evaluation',
@@ -73,8 +92,55 @@ class EvaluationList extends Component {
         this.setState({ search });
     };
     
-    
-  render() {
+    //Initiate variables that is used in data transfer  
+    constructor(props){
+      super(props); 
+       // To indicate the start/end index of array that includes courseslist. 
+       // CommentslistAmount: Amount of courses that will be shown in one screen  
+        // At first, the server is requested to send 20 courses that written most recent time. 
+        this.state = {
+          CourseslistStartIndex: 0, 
+          CourseslistEndIndex: 19,  
+          CourseslistAmount: 20,
+          courseslist: null, 
+          isLoading: true, 
+         
+        };
+    }
+
+
+  //data request function - start 
+  // 1. Get 20 elements from 'courseslist' array whoose start/end indexes are courseliststartindex/courselistendindex
+    _handleGetCoursesList = async () => {
+      var url = server.serverURL + '/process/ShowCoursesList'; 
+      this.setState({
+        isLoading: true,
+      });
+      await axios.post(url, {coursesliststartindex: this.state.CourseslistStartIndex, 
+        courseslistendindex: this.state.CourseslistEndIndex, search: this.state.search}) 
+          .then((response) => {       
+              this.setState({
+                courseslist: response.data.courseslist, 
+                isLoading: false
+              });  
+              
+          }) 
+          .catch(( err ) => {
+              Alert.alert(
+                  'Cannot connect to the server. Falling back to default option.',
+                  'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                  [{text: 'OK'}]
+              ); 
+          });    
+      }
+  
+    // It is necessary to execute '_handleGetCoursesList' 
+    async componentDidMount(){
+      await this._handleGetCoursesList();
+    }
+    //data request function - end
+
+  render() { 
     const { search } = this.state;
     return (
         <View>
@@ -91,10 +157,11 @@ class EvaluationList extends Component {
                 value={search}
             />
             <ScrollView>
-            {
+            { 
+            //Wait until get data from 'componentDidMount'  
+            this.state.isLoading ? <LoadingPage/>:
             
-            
-            CourseRatingEntries_Mock.map((l, i) => (
+            this.state.courseslist.map((l, i) => (
             <ListItem
                 rounded
                 key={i}
@@ -105,7 +172,7 @@ class EvaluationList extends Component {
                 subtitle = {<FixedRatingStar 
                     ratingSize = {10}
                     onPress_status = {true}
-                    value = {l.overalRating}
+                    value = {l.overallRating}
                 />}
                 onPress = {() => this.props.navigation.navigate('EvaluationScreen', {
                   itemID : l.courseID,
@@ -113,18 +180,14 @@ class EvaluationList extends Component {
                   ProfessorName : l.professor,
                   ExamNumber : l.exam,
                   Assignment : l.assignment,
-                  Star : l.overalRating,
+                  Star : l.overallRating,
                   Difficulty : l.difficulty,
                   Grade : l.grade,
 
                   //more
                 }
                 
-                )}
-
-                
-            
-          
+                )}          
             />
             ))
             

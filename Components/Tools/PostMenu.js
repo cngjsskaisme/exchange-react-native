@@ -79,13 +79,13 @@ class PostMenu extends Component{
             }) 
             .catch(( err ) => {
                 Alert.alert(
-                    'Cannot connect to the server. Falling back to default option.',
+                    'Cannot connect to the server.',
                     'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                     [{text: 'OK'}]
                 );
             });    
     }  
-    // 2. 좋아요 1 증가
+    // 2. 게시글 좋아요 1 증가
     _handleIncreLikeEntry = async() => {
         var url = server.serverURL + '/process/IncreLikeEntry';
         this.setState({
@@ -100,7 +100,7 @@ class PostMenu extends Component{
             }) 
             .catch(( err ) => {
                 Alert.alert(
-                    'Cannot connect to the server. Falling back to default option.',
+                    'Cannot connect to the server.',
                     'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                     [{text: 'OK'}]
                 );
@@ -123,7 +123,7 @@ class PostMenu extends Component{
             }) 
             .catch(( err ) => {
                 Alert.alert(
-                    'Cannot connect to the server. Falling back to default option.',
+                    'Cannot connect to the server.',
                     'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                     [{text: 'OK'}]
                 );
@@ -137,7 +137,7 @@ class PostMenu extends Component{
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, { boardid: this.state.boardid, entryid: this.state.entryid, replyid: "5d783833ebecb9af8be1c309"}) 
+        await axios.post(url, { boardid: "board1", entryid: "5d75a757d47cdf78a5ce79d1", replyid: "5d78f145a039958385f9c75d"}) 
             .then((response) => {       
                 this.setState({
                 isLoading: false
@@ -145,12 +145,35 @@ class PostMenu extends Component{
             }) 
             .catch(( err ) => {
                 Alert.alert(
-                    'Cannot connect to the server. Falling back to default option.',
+                    'Cannot connect to the server.',
                     'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                     [{text: 'OK'}]
                 );
             });    
-    }  
+    }
+
+    // 5. 댓글 좋아요 1 증가
+    _handleIncreLikeComment = async() => {
+        var url = server.serverURL + '/process/IncreLikeComment';
+        this.setState({
+            isLoading: true,
+            isError: false
+        }) 
+        await axios.post(url, { boardid: "board1", entryid: "5d75e153e6339cf16c9abbfa", replyid: "5d785b63bff6656864bc419c"}) 
+            .then((response) => {       
+                this.setState({
+                isLoading: false
+                }) 
+            }) 
+            .catch(( err ) => {
+                Alert.alert(
+                    'Cannot connect to the server.',
+                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                    [{text: 'OK'}]
+                );
+            });    
+    }
+
 
     // 렌더 함수 시작
     render(){ 
