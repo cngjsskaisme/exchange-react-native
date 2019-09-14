@@ -28,7 +28,8 @@ import {CourseRatingEntries_Mock} from '../../../Mockup_Datas/UnifiedEntries'
 
 //related to data transfer - start
 import axios from 'axios'; 
-import {server} from '../../ServerLib/config'  
+import {server} from '../../ServerLib/config'; 
+axios.defaults.timeout = 5000;
 //related to data transfer - end
 
 //loading page from 헌남 
@@ -40,10 +41,12 @@ class EvaluationScreen extends Component {
     super(props)
     this.state = {
       active: false, 
-      // To indicate the start/end index of array that includes commentslist. 
+      // To indicate the start/end index of array that includes commentslist.  
+      // CommentslistAmount: Amount of comments that will be shown in one screen 
       // At first, the server is requested to send 20 comments that written most recent time.
       CommentslistStartIndex: 0, 
       CommentslistEndIndex: 19,
+      CommentslistAmount: 20, 
       courseid: this.props.navigation.getParam('itemID', 'NO-ID'),
       commentslist: null,   
       isLoading: true
@@ -56,13 +59,13 @@ class EvaluationScreen extends Component {
    )
   } 
 
-  //data request function 
+  //data request function - start
   // 1. Get 20 elements from 'courseslist' array whoose start/end indexes are courseliststartindex/courselistendindex
   _handleGetCommentsList = async () => {
     var url = server.serverURL + '/process/ShowCommentsList';  
-    console.log("I'm here")
-    this.setState({
-      isLoading: true,
+    
+    await this.setState({
+      isLoading: true
     });
     await axios.post(url, {courseid: this.state.courseid, 
       commentsliststartindex: this.state.CommentslistStartIndex, 
@@ -82,12 +85,23 @@ class EvaluationScreen extends Component {
         });    
     }
 
+  // 2. Get Next 20 elements from courseslist 
+    _handleGetNextCommentsList = async() => {
+      await this.setState({
+        CommentslistStartIndex: this.state.CommentslistEndIndex + 1, 
+        CommentslistEndIndex: this.state.CommentslistEndIndex + this.state.CommentslistAmount
+      }) 
+      await this._handleGetCommentsList();
+    }
+
   // It is necessary to execute '_handleGetCommentsList' 
   async componentDidMount(){  
-    alert("I'm here")
     await this._handleGetCommentsList(); 
-      
-  }
+  }  
+
+//data request function - end
+
+
 
   render() {
     const {navigation, subject, professor, place, exam, assignment, grade, again, text, difficulty} = this.props;
@@ -196,7 +210,7 @@ class EvaluationScreen extends Component {
               <View style={styles.bottomPart}>  
                 <Button
                     title="More comments"
-                    onPress = {() => this.Test_Button()}
+                    onPress = {this._handleGetNextCommentsList.bind(this)}
                   /> 
               </View>
               
