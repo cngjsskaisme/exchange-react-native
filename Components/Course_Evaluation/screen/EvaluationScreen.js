@@ -26,13 +26,27 @@ import LoadingScreen from './LoadingScreen'
 
 import {CourseRatingEntries_Mock} from '../../../Mockup_Datas/UnifiedEntries'
 
+//related to data transfer - start
+import axios from 'axios'; 
+import {server} from '../../ServerLib/config'  
+//related to data transfer - end
+
+//loading page from 헌남 
+import LoadingPage from '../../Tools/LoadingPage'
 
 class EvaluationScreen extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      active: false
+      active: false, 
+      // To indicate the start/end index of array that includes commentslist. 
+      // At first, the server is requested to send 20 comments that written most recent time.
+      CommentslistStartIndex: 0, 
+      CommentslistEndIndex: 19,
+      courseid: this.props.navigation.getParam('itemID', 'NO-ID'),
+      commentslist: null,   
+      isLoading: true
     };
   }
 
@@ -40,6 +54,39 @@ class EvaluationScreen extends Component {
     Alert.alert(
       'You need to...'
    )
+  } 
+
+  //data request function 
+  // 1. Get 20 elements from 'courseslist' array whoose start/end indexes are courseliststartindex/courselistendindex
+  _handleGetCommentsList = async () => {
+    var url = server.serverURL + '/process/ShowCommentsList';  
+    console.log("I'm here")
+    this.setState({
+      isLoading: true,
+    });
+    await axios.post(url, {courseid: this.state.courseid, 
+      commentsliststartindex: this.state.CommentslistStartIndex, 
+      commentslistendindex: this.state.CommentslistEndIndex}) 
+        .then((response) => {       
+            this.setState({
+              commentslist: response.data.commentslist, 
+              isLoading: false
+            });  
+        }) 
+        .catch(( err ) => {
+            Alert.alert(
+                'Cannot connect to the server. Falling back to default option.',
+                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                [{text: 'OK'}]
+            ); 
+        });    
+    }
+
+  // It is necessary to execute '_handleGetCommentsList' 
+  async componentDidMount(){  
+    alert("I'm here")
+    await this._handleGetCommentsList(); 
+      
   }
 
   render() {
@@ -56,9 +103,7 @@ class EvaluationScreen extends Component {
     const Grade = navigation.getParam('Grade', 'A+')
     const Again = again ||  'Yes'
     const i = 0
-
     
-
     return (
       <View style={styles.container}>
 
@@ -137,25 +182,22 @@ class EvaluationScreen extends Component {
             
             <View style={styles.bodyContent}>
               <View style={styles.commentTitle}><Text style={{fontSize : 15, fontWeight:'bold'}}>Comments</Text></View>
-              <Comment />
-              <Comment 
-                person = "Kevin lala"
-                cmtText = "If you prefer to exclude prop-types from your application and use it globally via window.PropTypes, the prop-types package provides single-file distributions, which are hosted on the following CDNs:"
-              />
-              <Comment 
-                person = "Hellay Cool"
-              />
-              <Comment />
-              <Comment />
-              <Comment />
-              <View style={styles.bottomPart}>
-                
-              <Button
-                  title="More comments"
-                  onPress = {() => this.Test_Button()}
-                />
-                
-                
+              { 
+                //Since 'commentslist' is also array, I changed this part into a 'map'. 
+                this.state.isLoading ? <LoadingPage/>:
+                  this.state.commentslist.map( (l) => (
+                  <Comment 
+                    person = {l.username}
+                    cmtText = {l.contents} 
+                    key = {l.userid}
+                  /> 
+                  ))
+              }
+              <View style={styles.bottomPart}>  
+                <Button
+                    title="More comments"
+                    onPress = {() => this.Test_Button()}
+                  /> 
               </View>
               
               
