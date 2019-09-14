@@ -83,8 +83,6 @@ class BulletinBoardsContent extends Component{
                             />
                     <View style={styles.EntryReplies}>
                         <BulletinBoardsReplies
-                            refhandover = {this.refs.RepliesInput} //참조함수 전달
-
                             boardid = {this.state.boardid}
                             entryid = {this.state.entryid}
                             userid = {this.state.userid}
@@ -98,8 +96,6 @@ class BulletinBoardsContent extends Component{
                     style={styles.container}
                     keyboardVerticalOffset = {Header.HEIGHT + 40}>
                     <BulletinBoardsRepliesInput
-                        ref = "RepliesInput" //참조 함수
-
                         boardid = {this.state.boardid}
                         entryid = {this.state.entryid}
                         userid = {this.state.userid}

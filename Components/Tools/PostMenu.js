@@ -79,7 +79,7 @@ class PostMenu extends Component{
             }) 
             .catch(( err ) => {
                 Alert.alert(
-                    'Cannot connect to the server. Falling back to default option.',
+                    'Cannot connect to the server.',
                     'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                     [{text: 'OK'}]
                 );
@@ -100,7 +100,7 @@ class PostMenu extends Component{
             }) 
             .catch(( err ) => {
                 Alert.alert(
-                    'Cannot connect to the server. Falling back to default option.',
+                    'Cannot connect to the server.',
                     'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                     [{text: 'OK'}]
                 );
@@ -123,7 +123,7 @@ class PostMenu extends Component{
             }) 
             .catch(( err ) => {
                 Alert.alert(
-                    'Cannot connect to the server. Falling back to default option.',
+                    'Cannot connect to the server.',
                     'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                     [{text: 'OK'}]
                 );
@@ -145,7 +145,7 @@ class PostMenu extends Component{
             }) 
             .catch(( err ) => {
                 Alert.alert(
-                    'Cannot connect to the server. Falling back to default option.',
+                    'Cannot connect to the server.',
                     'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                     [{text: 'OK'}]
                 );
@@ -167,7 +167,7 @@ class PostMenu extends Component{
             }) 
             .catch(( err ) => {
                 Alert.alert(
-                    'Cannot connect to the server. Falling back to default option.',
+                    'Cannot connect to the server.',
                     'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                     [{text: 'OK'}]
                 );
@@ -192,7 +192,7 @@ class PostMenu extends Component{
                     />
                     }
                 >
-                    <Menu.Item onPress={this._handleDeleteComment()} title="Delete" />
+                    <Menu.Item onPress={this._handleDeleteComment.bind(this)} title="Delete" />
                     <Menu.Item onPress={() => {
                                         this._closeMenu();
                                         //{this.state.replyid == 0 ? }//게시글 편집모드와 댓글 편집모드가 다르게 렌더링됨.

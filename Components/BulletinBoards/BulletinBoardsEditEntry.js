@@ -71,7 +71,7 @@ class BulletinBoardsEditEntry extends Component{
             }) 
         .catch(( err ) => {
             Alert.alert(
-                'Cannot connect to the server. Falling back to default option.',
+                'Cannot connect to the server.',
                 'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                 [{text: 'OK'}]
             );
@@ -95,7 +95,7 @@ class BulletinBoardsEditEntry extends Component{
             }) 
         .catch(( err ) => {
             Alert.alert(
-                'Cannot connect to the server. Falling back to default option.',
+                'Cannot connect to the server.',
                 'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                 [{text: 'OK'}]
               );
@@ -118,7 +118,7 @@ class BulletinBoardsEditEntry extends Component{
             }) 
         .catch(( err ) => {
             Alert.alert(
-                'Cannot connect to the server. Falling back to default option.',
+                'Cannot connect to the server.',
                 'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                 [{text: 'OK'}]
               );

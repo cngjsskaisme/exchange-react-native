@@ -12,6 +12,7 @@ import BulletinBoardsEditEntry from "./Components/BulletinBoards/BulletinBoardsE
 import BulletinBoardsLists from "./Components/BulletinBoards/BulletinBoardsLists";
 import CourseEvaluation from './Components/Course_Evaluation/CourseEvaluation';
 import CalendarScreen from './Components/EventCalendar/EventCalendar'
+import BulletinBoardsMain from "./Components/BulletinBoards/BulletinBoardsMain";
 
 
 const MainStack = createStackNavigator({
@@ -23,6 +24,7 @@ const SettingsStack = createStackNavigator({
 });
 
 const BulletinBoardsStack = createStackNavigator({
+  BulletinBoardsMain: BulletinBoardsMain,
   BulletinBoardsLists: BulletinBoardsLists,
   BulletinBoards: BulletinBoards,
   Post: BulletinBoardsContent,
