@@ -16,14 +16,14 @@ import {server} from '../../ServerLib/config';
 
 class BulletinBoardsRepliesInput extends Component{
     static defaultProps = {
-        refhandover: null,
-
         boardid: 0,
         entryid: 0,
         currentuserid: 0,
         username: '',
         profile: '',
-        contents: ''
+        contents: '',
+        
+        replyEditMode: false,
     }
 
     constructor(props){
@@ -36,7 +36,9 @@ class BulletinBoardsRepliesInput extends Component{
             currentuserid: this.props.currentuserid,
             username: this.props.username,
             profile: this.props.profile,
-            contents: ''
+            contents: '',
+
+            replyEditMode: this.props.replyEditMode,
         }
     }
 
@@ -72,19 +74,34 @@ class BulletinBoardsRepliesInput extends Component{
         return(
             // Text 입력을 위한 TextInput 컴포넌트와 아이콘 버튼으로 구성
             <View style={styles.Container}>
-                <TextInput
-                    style = {styles.TextInput}
-                    label = 'Comment'
-                    onChangeText = {(contents) => {this.setState({contents})}}
-                    placeholder = 'Enter to leave a comment!'
-                    value = {this.state.contents}
-                    multiline = {true}/>                
-                <IconButton
-                    icon="arrow-upward"
-                    color={Colors.red500}
-                    size={20}
-                    onPress={this._onAddComment}
-                />
+                {this.state.replyEditMode ? 
+                    <View>
+                        <TextInput
+                            style = {styles.TextInput}
+                            label = 'Comment'
+                            onChangeText = {(contents) => {this.setState({contents})}}
+                            placeholder = {this.props.contents} // state 변경 전 prop으로 전달된 contents
+                            value = {this.state.contents}
+                            multiline = {true}/>                
+                        <IconButton
+                            icon="arrow-upward"
+                            color={Colors.red500}
+                            size={20}
+                            onPress={this._onAddComment}/>
+                    </View> :
+                    <View>
+                        <TextInput
+                            style = {styles.TextInput}
+                            label = 'Comment'
+                            onChangeText = {(contents) => {this.setState({contents})}}
+                            placeholder = 'Enter to leave a comment!'
+                            multiline = {true}/>                
+                        <IconButton
+                            icon="arrow-upward"
+                            color={Colors.red500}
+                            size={20}
+                            onPress={this._onAddComment}/>
+                    </View>}
             </View>
         );
     }

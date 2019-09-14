@@ -18,6 +18,7 @@ import axios from 'axios';
 import {server} from '../ServerLib/config';
 import ErrorPage from '../Tools/ErrorPage';
 import LoadingPage from '../Tools/LoadingPage';
+import ConsoleLog from '../Tools/ConsoleLog';
 
 axios.defaults.timeout = 5000;
 

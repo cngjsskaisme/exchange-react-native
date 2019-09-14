@@ -17,6 +17,7 @@ import PostMenu from '../Tools/PostMenu';
 import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
 import BulletinBoardsRepliesInput from './Replies/BulletinBoardsRepliesInput'
 import { Divider } from 'react-native-elements';
+import { FlatList } from 'react-native-gesture-handler';
 
 class BulletinBoardsContent extends Component{
     static defaultProps = {
@@ -36,7 +37,8 @@ class BulletinBoardsContent extends Component{
         keyboardHeight:0,
         normalHeight: 0,
         shortHeight: 0,
-        isDev: false
+        isDev: false,
+        replyEditMode: false,
     }
     
     constructor(props){
@@ -58,9 +60,18 @@ class BulletinBoardsContent extends Component{
             keyboardHeight: 0,
             normalHeight: 0,
             shortHeight: 0,
-            isDev: this.props.navigation.getParam('isDev')
+            isDev: this.props.navigation.getParam('isDev'),
+            replyEditMode: false,
         }
     }
+
+    // 댓글 수정 기능
+    // 전달 경로 -   1. BulletinBoardsReplies -> BulletinBoardsRepliesEntries  2. BulletinBoardsReplies -> BulletinBoardsRepliesEntries -> PostMenu
+    _handleReplyEdit = () => this.setState({ replyEditMode: true })
+
+    // BulletinBoardsRepliesEntries의 수정모드에서 contents 값 변경시 처리
+    // 전달 경로 -   1. BulletinBoardsReplies -> BulletinBoardsRepliesEntries  2. BulletinBoardsReplies -> BulletinBoardsRepliesEntries -> PostMenu
+    _handleContentsChange = (contents) => this.setState({contents}) 
 
     // 렌더 함수
     render(){
@@ -77,13 +88,18 @@ class BulletinBoardsContent extends Component{
                     </View>
                     <Divider />
                         <PostMenu
+                            boardid = {this.state.boardid}
+                            entryid = {this.state.entryid}
+                            currentuserid = {this.state.currentuserid}
                             ismine = {this.state.ismine}
+                            title = {this.state.title}
+                            contents = {this.state.contents}
                             style = {styles.PostMenu}
-                            props = {this.state}
                             />
                     <View style={styles.EntryReplies}>
                         <BulletinBoardsReplies
-                            refhandover = {this.refs.RepliesInput} //참조함수 전달
+                            _handleReplyEdit = {this._handleReplyEdit}
+                            _handleContentsChange = {this._handleContentsChange}
 
                             boardid = {this.state.boardid}
                             entryid = {this.state.entryid}
@@ -98,14 +114,14 @@ class BulletinBoardsContent extends Component{
                     style={styles.container}
                     keyboardVerticalOffset = {Header.HEIGHT + 40}>
                     <BulletinBoardsRepliesInput
-                        ref = "RepliesInput" //참조 함수
-
                         boardid = {this.state.boardid}
                         entryid = {this.state.entryid}
                         userid = {this.state.userid}
                         currentuserid = {this.state.currentuserid}
                         username = {this.state.username}
-                        profile = {this.state.profile}/>
+                        profile = {this.state.profile}
+                        
+                        replyEditMode = {this.state.replyEditMode}/>
                 </KeyboardAvoidingView>
             </View>
         );

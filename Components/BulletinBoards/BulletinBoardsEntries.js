@@ -31,6 +31,8 @@ class BulletinBoardsEntries extends Component{
         ismine: false,
         title: '',
         contents: '',
+
+        
     }
 
     constructor(props){
@@ -47,29 +49,31 @@ class BulletinBoardsEntries extends Component{
             ismine: props.ismine,
             title: props.title,
             contents: props.contents,
-            isDev: props.isDev
+            isDev: props.isDev,
+
+            replyEditMode: false
         }
     }
-
 
     // 렌더 함수
     render(){        
         return(
-            <TouchableRipple key={this.state.entryid} 
-                                    onPress={() => this.props.navigation.navigate('Post', { 
-                                                                                    boardid: this.state.boardid,
-                                                                                    entryid: this.state.entryid,
-                                                                                    userid: this.state.userid,
-                                                                                    currentuserid: this.state.currentuserid,
-                                                                                    username: this.state.username,
-                                                                                    profile: this.state.profile,
-                                                                                    likes: this.state.likes,
-                                                                                    date: this.state.date,
-                                                                                    ismine: this.state.ismine,
-                                                                                    title: this.state.title,
-                                                                                    contents: this.state.contents,
-                                                                                    pictures: this.state.pictures,
-                                                                                    isDev: this.state.isDev})}>
+            <TouchableRipple
+                key={this.state.entryid}
+                onPress={() => this.props.navigation.navigate('Post', { 
+                    boardid: this.state.boardid,
+                    entryid: this.state.entryid,
+                    userid: this.state.userid,
+                    currentuserid: this.state.currentuserid,
+                    username: this.state.username,
+                    profile: this.state.profile,
+                    likes: this.state.likes,
+                    date: this.state.date,
+                    ismine: this.state.ismine,
+                    title: this.state.title,
+                    contents: this.state.contents,
+                    pictures: this.state.pictures,
+                    isDev: this.state.isDev})}>
                 <View style={styles.BulletinBoardsEntries}>
                     <Text style={styles.BulletinBoardsEntriesTitle}>{this.state.title}</Text> 
                     <Text style={styles.BulletinBoardsEntriesContents}>  {this.state.contents} </Text>
@@ -78,7 +82,9 @@ class BulletinBoardsEntries extends Component{
                         ismine = {this.state.ismine}
                         boardid = {this.state.boardid}
                         entryid = {this.state.entryid}
-                        userid = {this.state.userid}
+                        userid = {this.state.currentuserid}
+                        title = {this.state.title}
+                        contents = {this.state.contents}
                         style = {styles.PostMenu}/>
                 </View>
             </TouchableRipple>

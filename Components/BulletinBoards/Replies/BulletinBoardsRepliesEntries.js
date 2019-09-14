@@ -7,10 +7,12 @@
 */
 
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 import PropTypes from 'prop-types';
 import PostMenu from '../../Tools/PostMenu';
 import {ContentMedium, MetaLight, TitleBold} from '../../Theming/Theme'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import ConsoleLog from '../../Tools/ConsoleLog';
 
 class BulletinBoardRepliesEntries extends Component{
     static defaultProps = {
@@ -25,7 +27,9 @@ class BulletinBoardRepliesEntries extends Component{
         ismine: false,
         title: '',
         contents: "",
-        pictures: ""
+        pictures: "",
+
+        replyEditMode: false, //PostMenu 컴포넌트에 있는 replyEditMode를 활용
     }
 
     constructor(props){
@@ -42,8 +46,11 @@ class BulletinBoardRepliesEntries extends Component{
             ismine: this.props.ismine,
             title: this.props.title,
             contents: this.props.contents,
-            pictures: this.props.pictures
+            pictures: this.props.pictures,
+
+            replyEditMode: this.props.replyEditMode, 
         }
+        
     }
 
     // 렌더 함수 시작
@@ -51,31 +58,49 @@ class BulletinBoardRepliesEntries extends Component{
         return(
             // BulletinBoardsContent에서 보여지는 각 댓글 칸의 디자인을 구현
             // 댓글의 내용과 PostMenu 컴포넌트로 구성됨
-            <View 
-                key={this.state.replyid}
-                style={styles.RepliesEntry}>
-                <ConsoleLog>{this.state}</ConsoleLog>
-                <View style={styles.RepliesEntryContents}>
-                    <ContentMedium>{this.state.contents}</ContentMedium>
-                </View>
-                <View style={styles.RepliesEntryMeta}>
-                    <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
-                </View>
-                <PostMenu
-                    ismine = {this.state.ismine}
-                    style = {styles.PostMenu}
-                    boardid = {this.state.boardid}
-                    entryid = {this.state.entryid}
-                    replyid = {this.state.replyid}
-                    userid = {this.state.userid}
-                    username = {this.state.username}
-                    profile = {this.state.profile}
-                    likes = {this.state.likes}
-                    date = {this.state.date}
-                    ismine = {this.state.ismine}
-                    title = {this.state.title}
-                    contents = {this.state.contents}
-                    pictures = {this.state.pictures}/>
+            // 댓글 수정 기능도 포함되어 있음
+            <View key={this.state.replyid}>
+                <ConsoleLog>{this.props}</ConsoleLog>
+                {this.state.replyEditMode ?
+                    // 댓글 수정모드일 때
+                    <View 
+                    style={styles.RepliesEntry}>
+                        <View style={styles.RepliesEntryContents}>
+                        <MetaLight>(You're editing here)</MetaLight>
+                        <ContentMedium>{this.state.contents}</ContentMedium>
+                        </View>
+                        <View style={styles.RepliesEntryMeta}>
+                            <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
+                        </View>
+                        <Icon name="pencil-alt" size={20} color="#a1a1a1" /> 
+                    </View>:
+                    // 댓글 수정모드가 아닐 때
+                    <View 
+                    style={styles.RepliesEntry}>
+                    <View style={styles.RepliesEntryContents}>
+                        <ContentMedium>{this.state.contents}</ContentMedium>
+                    </View>
+                    <View style={styles.RepliesEntryMeta}>
+                        <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
+                    </View>
+                    <PostMenu
+                        _handleReplyEdit = {this._handleReplyEdit} //댓글 수정 기능 전달용
+
+                        ismine = {this.state.ismine}
+                        style = {styles.PostMenu}
+                        boardid = {this.state.boardid}
+                        entryid = {this.state.entryid}
+                        replyid = {this.state.replyid}
+                        userid = {this.state.userid}
+                        username = {this.state.username}
+                        profile = {this.state.profile}
+                        likes = {this.state.likes}
+                        date = {this.state.date}
+                        ismine = {this.state.ismine}
+                        title = {this.state.title}
+                        contents = {this.state.contents}
+                        pictures = {this.state.pictures}/>
+                    </View>}
             </View>
         );
     }

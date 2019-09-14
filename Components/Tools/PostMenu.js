@@ -169,10 +169,11 @@ class PostMenu extends Component{
                     />
                     }
                 >
-                    <Menu.Item onPress={this._handleDeleteComment()} title="Delete" />
+                    <Menu.Item onPress={this._handleDeleteComment.bind(this)} title="Delete" />
                     <Menu.Item onPress={() => {
                                         this._closeMenu();
-                                        //{this.state.replyid == 0 ? }//게시글 편집모드와 댓글 편집모드가 다르게 렌더링됨.
+                                        // 게시글 수정, 댓글 수정 기능을 서로 분리
+                                        {this.state.replyid != 0 ? 
                                             this.props.navigation.navigate('EntryEdit', {
                                                 boardid: this.state.boardid,
                                                 entryid: this.state.entryid,
@@ -186,7 +187,9 @@ class PostMenu extends Component{
                                                 title: this.state.title,
                                                 contents: this.state.contents,
                                                 pictures: this.state.pictures
-                                            })}} title="Modify" />
+                                            }, 500):
+                                            this.props._handleReplyEdit()
+                                            }}} title="Modify" />
                     <Menu.Item onPress={this._handleAddReport.bind(this)} title="Report" />
                     <Divider />
                     <Menu.Item onPress={this._handleIncreLikeEntry.bind(this)} title="Like this!" />
@@ -202,9 +205,9 @@ class PostMenu extends Component{
                     onDismiss={this._closeMenu}
                     anchor={
                     <IconButton
-                    icon="more-vert"
-                    size={20}
-                    onPress={this._openMenu}
+                        icon="more-vert"
+                        size={20}
+                        onPress={this._openMenu}
                     />
                     }
                 >
