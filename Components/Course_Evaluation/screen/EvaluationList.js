@@ -96,10 +96,12 @@ class EvaluationList extends Component {
     constructor(props){
       super(props); 
        // To indicate the start/end index of array that includes courseslist. 
+       // CommentslistAmount: Amount of courses that will be shown in one screen  
         // At first, the server is requested to send 20 courses that written most recent time. 
         this.state = {
           CourseslistStartIndex: 0, 
-          CourseslistEndIndex: 19, 
+          CourseslistEndIndex: 19,  
+          CourseslistAmount: 20,
           courseslist: null, 
           isLoading: true, 
          
@@ -107,7 +109,7 @@ class EvaluationList extends Component {
     }
 
 
-  //data request function 
+  //data request function - start 
   // 1. Get 20 elements from 'courseslist' array whoose start/end indexes are courseliststartindex/courselistendindex
     _handleGetCoursesList = async () => {
       var url = server.serverURL + '/process/ShowCoursesList'; 
@@ -136,7 +138,7 @@ class EvaluationList extends Component {
     async componentDidMount(){
       await this._handleGetCoursesList();
     }
-
+    //data request function - end
 
   render() { 
     const { search } = this.state;
