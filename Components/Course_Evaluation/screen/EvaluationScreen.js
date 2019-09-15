@@ -211,7 +211,8 @@ class EvaluationScreen extends Component {
                     person = {l.username}
                     cmtText = {l.contents} 
                     key = {l.commentid} 
-                    userid = {l.userid}
+                    userid = {l.userid} 
+                    commentid = {l.commentid}
                   /> 
                   ))
               }
