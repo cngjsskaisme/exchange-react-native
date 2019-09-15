@@ -98,9 +98,7 @@ class EvaluationScreen extends Component {
   async componentDidMount(){  
     await this._handleGetCommentsList(); 
   }  
-
-//data request function - end
-
+//data request function - end 
 
 
   render() {
@@ -109,7 +107,8 @@ class EvaluationScreen extends Component {
     const itemID = navigation.getParam('itemID', 'NO-ID')
     const SubjectName = navigation.getParam('SubjectName', 'NO-NAME')|| subject || 'React Native'
     const ProfessorName = navigation.getParam('ProfessorName', 'NO-NAME') || professor || "Punreach RANY" 
-    const Institution = place || "Hanyang University"
+    //institutation 부분 수정 - ChangHee
+    const Institution = navigation.getParam('Place')|| place || "Hanyang University"
     const ExamNumber = navigation.getParam('ExamNumber', 'NO-ID') || exam || 2
     const Assignment = navigation.getParam('Assignment', 'NO-ID') || assignment || 2
     const Star = navigation.getParam('Star', 5)
@@ -197,13 +196,22 @@ class EvaluationScreen extends Component {
             <View style={styles.bodyContent}>
               <View style={styles.commentTitle}><Text style={{fontSize : 15, fontWeight:'bold'}}>Comments</Text></View>
               { 
-                //Since 'commentslist' is also array, I changed this part into a 'map'. 
-                this.state.isLoading ? <LoadingPage/>:
-                  this.state.commentslist.map( (l) => (
+                //Since 'commentslist' is also array, I changed this part into a 'map'. - ChangeHee
+                this.state.isLoading ? <LoadingPage/>: 
+                  
+                  //If there's no comment - ChangeHee
+                  this.state.commentslist.length <=0 ? 
+                    <View> 
+                      <Text> 
+                        There's no comment
+                      </Text> 
+                    </View>
+                  :this.state.commentslist.map( (l) => (
                   <Comment 
                     person = {l.username}
                     cmtText = {l.contents} 
-                    key = {l.userid}
+                    key = {l.commentid} 
+                    userid = {l.userid}
                   /> 
                   ))
               }
@@ -213,8 +221,6 @@ class EvaluationScreen extends Component {
                     onPress = {this._handleGetNextCommentsList.bind(this)}
                   /> 
               </View>
-              
-              
             </View>
          </View>
       </ScrollView>
