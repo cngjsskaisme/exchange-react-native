@@ -17,14 +17,17 @@ import propTypes from 'prop-types';
 import RatingStar from './RatingStar';
 import RatingStar_Without_TextBox from './RatingStar_Without_TextBox'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import FixedRatingStar from './fixed_RatingStar';
+import {createStackNavigator, createAppContainer, createBottomTabNavigator, createSwitchNavigator} from 'react-navigation'
 
 export default class Comment extends Component{
     
     render(){
-        const {navigation, person, cmtText} = this.props
+        const {person, cmtText, Star} = this.props;
+        const CommentStar = Star || 3
+
         const CommentPerson = person || "Punreach RANY"
         const CommentText = cmtText || "This is my comment"
-        const Star = navigation.getParam('Star', 5)
         const TopRight = [];
         const a = 0;
 
@@ -74,7 +77,7 @@ export default class Comment extends Component{
                         <FixedRatingStar 
                             ratingSize = {10}
                             onPress_status = {false}
-                            value = {Star}
+                            value ={CommentStar}
                         />
                         
                     </View>
@@ -94,6 +97,7 @@ export default class Comment extends Component{
 Comment.propTypes = {
     person : propTypes.string,
     cmtText : propTypes.string,
+    Star : propTypes.number,
 }
 const styles = StyleSheet.create({
     wrapper : { 

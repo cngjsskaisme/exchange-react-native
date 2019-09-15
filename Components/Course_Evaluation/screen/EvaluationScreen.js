@@ -213,6 +213,7 @@ class EvaluationScreen extends Component {
                     key = {l.commentid} 
                     userid = {l.userid} 
                     commentid = {l.commentid}
+                    Star = {l.rating}
                   /> 
                   ))
               }

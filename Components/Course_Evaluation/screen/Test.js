@@ -158,6 +158,7 @@ class Test extends Component {
                     person = {'Punreach'}
                     cmtText = {'I hate you'} 
                     key = {1}
+                    Star =  {2}
                   /> 
                   
               <View style={styles.bottomPart}>  
