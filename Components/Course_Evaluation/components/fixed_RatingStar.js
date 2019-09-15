@@ -34,7 +34,7 @@ export default class FixedRatingStar extends Component{
         const status = onPress_status || false;
         var list = starText || ["Bad","Okay", "Average","Good","Awesome"];
         var listColor = color || ["red","#e67e22","#f1c40f","#3498db","#2ecc71"]
-        const numberStar = value || 0
+        const numberStar = value || 3
         const star = []
 
         for(let i = 0 ; i < numberStar ; i++){

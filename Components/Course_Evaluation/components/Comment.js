@@ -37,7 +37,7 @@ export default class Comment extends Component{
                         <TouchableOpacity style={[{paddingRight : 10, borderRadius : 10},styles.personName]}>
                             <View style={{flexDirection : 'row'}}>
                 
-                                <Text style={{fontSize : 20}}>   Report</Text>
+                            <Text style={{fontSize : 20}}>   Report</Text>
                             </View>
                         </TouchableOpacity>
                         

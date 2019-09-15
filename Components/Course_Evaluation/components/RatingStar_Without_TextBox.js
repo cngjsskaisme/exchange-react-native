@@ -26,7 +26,7 @@ export default class RatingStar extends Component{
             SOURCE_IMAGE_3 : STAR_SELECTED_IMAGE,
             SOURCE_IMAGE_4 : STAR_IMAGE,
             SOURCE_IMAGE_5 : STAR_IMAGE,
-            value : 2
+            value : 3
         }
         this.updateStar_1 = this.updateStar_1.bind(this)
         //this.handleNextButton = this.handleNextButton.bind(this);

@@ -59,17 +59,23 @@ class EvaluationScreen extends Component {
    )
   } 
 
-  //data request function - start
-  // 1. Get 20 elements from 'courseslist' array whoose start/end indexes are courseliststartindex/courselistendindex
-  _handleGetCommentsList = async () => {
+  /*
+  data request function - start
+   1. Get 20 elements from 'courseslist' array whoose start/end indexes are courseliststartindex/courselistendindex
+    You need to pass to me: 
+    userid: specifies current userid. located: x. (헌남 also didn't do this part.)
+  */ 
+   _handleGetCommentsList = async () => {
     var url = server.serverURL + '/process/ShowCommentsList';  
     
     await this.setState({
       isLoading: true
     });
-    await axios.post(url, {courseid: this.state.courseid, 
-      commentsliststartindex: this.state.CommentslistStartIndex, 
-      commentslistendindex: this.state.CommentslistEndIndex}) 
+    await axios.post(url, {
+        courseid: this.state.courseid,  
+        userid: "5d5373177443381df03f3040",
+        commentsliststartindex: this.state.CommentslistStartIndex, 
+        commentslistendindex: this.state.CommentslistEndIndex}) 
         .then((response) => {       
             this.setState({
               commentslist: response.data.commentslist, 
@@ -86,18 +92,18 @@ class EvaluationScreen extends Component {
     }
 
   // 2. Get Next 20 elements from courseslist 
-    _handleGetNextCommentsList = async() => {
-      await this.setState({
-        CommentslistStartIndex: this.state.CommentslistEndIndex + 1, 
-        CommentslistEndIndex: this.state.CommentslistEndIndex + this.state.CommentslistAmount
-      }) 
-      await this._handleGetCommentsList();
-    }
+  _handleGetNextCommentsList = async() => {
+    await this.setState({
+      CommentslistStartIndex: this.state.CommentslistEndIndex + 1, 
+      CommentslistEndIndex: this.state.CommentslistEndIndex + this.state.CommentslistAmount
+    }) 
+    await this._handleGetCommentsList();
+  }
 
   // It is necessary to execute '_handleGetCommentsList' 
   async componentDidMount(){  
     await this._handleGetCommentsList(); 
-  }  
+  }   
 //data request function - end 
 
 
@@ -207,13 +213,13 @@ class EvaluationScreen extends Component {
                       </Text> 
                     </View>
                   :this.state.commentslist.map( (l) => (
-                  <Comment 
+                    <Comment 
                     person = {l.username}
                     cmtText = {l.contents} 
                     key = {l.commentid} 
-                    userid = {l.userid} 
-                    commentid = {l.commentid}
-                    Star = {l.rating}
+                    userid = {l.userid}
+                    Star={l.rating} 
+                    ismine = {l.ismine}
                   /> 
                   ))
               }

@@ -36,11 +36,13 @@ export default class EvaluationInput extends Component {
     this.state = {
       skill : 5,
       difficulty : 4,
-      assignment : 0,
-      exam : 0,
+      assignment : 2,
+      exam : 2,
       grade : 8,
-      rate : 5
-    }
+      rate : 5, 
+      Difficulty_Array: ['Very Easy', 'Easy', 'Average', 'Hard', 'Very Hard'],
+      Grade_Array: ['F', 'E', 'D','C0','C+','B0','B+','A0','A+']
+    };
 
   }
 
@@ -138,52 +140,41 @@ export default class EvaluationInput extends Component {
     }
   }
 
-/*data request function - start
+/*
+  data request function - start
   1. Add a reply to the server  
   
   You need to pass to me:
     courseid: specifies current courseid. located: 'this.state.courseid' in EvaluationScreen 
     userid: specifies current userid. located: x. (헌남 also didn't do this part.)  
-    contents: contents of the comments that user is writing in this component. 
-
-    2. Edit a reply and send to the server
-     courseid: specifies current courseid. located: 'this.state.courseid' in EvaluationScreen 
-     commentid: specifies current courseid. located: 'l.commentid' in EvaluationScreen
-     contents,exam,assignment,grade,difficulty, rating 
+    contents: contents of the comments that user is writing in this component.   
 
 */
-  _handleAddComment = async () => {
-    var url = server.serverURL + '/process/EditCourseEvaluationComment';  
-    
-    await this.setState({
-      isLoading: true
-    });
-    await axios.post(url, {
-      courseid: "5d7b68b52ec3549472239b79",  
-      commentid: "5d7e0983f63f5a278c2a890d",  
-      contents: " ", 
-      exam: this.state.exam,
-      assignment: this.state.assignment,
-      grade: this.state.grade, 
-      difficulty: this.state.difficulty,
-      rating: this.state.rate
+_handleAddComment = async () => {
+  var url = server.serverURL + '/process/ShowProfessorProfile';  
+  
+  await this.setState({
+    isLoading: true
+  });
+  await axios.post(url, {
+    professor: "pro1"
+    }) 
+      .then((response) => {       
+          this.setState({ 
+            isLoading: false
+          });  
       }) 
-        .then((response) => {       
-            this.setState({ 
-              isLoading: false
-            });  
-        }) 
-        .catch(( err ) => {
-            Alert.alert(
-                'Cannot connect to the server. Falling back to default option.',
-                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [{text: 'OK'}]
-            ); 
-        });    
-    }
+      .catch(( err ) => {
+          Alert.alert(
+              'Cannot connect to the server. Falling back to default option.',
+              'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+              [{text: 'OK'}]
+          ); 
+      });    
+  }
 //data request function - end
   
-  render() {
+  render() { 
     const {navigation} = this.props
     const SubjectName = navigation.getParam('SubjectName', 'NO-ID') || 'React Native'
     const ProfessorName = navigation.getParam('ProfessorName', 'NO-ID') || "Punreach RANY" 
@@ -192,7 +183,7 @@ export default class EvaluationInput extends Component {
 
     var Difficulty_Array = ['Very Easy', 'Easy', 'Average', 'Hard', 'Very Hard'];
     var Grade_Array  = ['F', 'E', 'D','C0','C+','B0','B+','A0','A+'];
-    
+   
     
     
 
