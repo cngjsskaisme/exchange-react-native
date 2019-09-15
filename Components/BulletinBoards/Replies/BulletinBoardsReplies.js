@@ -15,6 +15,7 @@ import BulletinBoardsRepliesEntries from './BulletinBoardsRepliesEntries';
 import axios from 'axios'; 
 import {server} from '../../ServerLib/config';
 import ErrorPage from '../../Tools/ErrorPage';
+import ConsoleLog from '../../Tools/ConsoleLog';
 
 
 class BulletinBoardsReplies extends Component{
@@ -31,6 +32,7 @@ class BulletinBoardsReplies extends Component{
         commentendindex: 19,
 
         isDev: false,
+        replyEditMode: false,
     }
 
     constructor(props){
@@ -48,6 +50,7 @@ class BulletinBoardsReplies extends Component{
             commentendindex: this.props.commentendindex,             
 
             isDev: this.props.isDev,
+            replyEditMode: false,
         }
     }
 
@@ -71,7 +74,7 @@ class BulletinBoardsReplies extends Component{
             }) 
             .catch(( err ) => {
                 Alert.alert(
-                    'Cannot connect to the server. Falling back to default option.',
+                    'Cannot connect to the server.',
                     'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                     [{text: 'OK'}]
                 );
@@ -97,7 +100,11 @@ class BulletinBoardsReplies extends Component{
     // Flatlist RenderItem 함수
     _renderItem = ({ item }) => {
         return(
+            <View>
+            <ConsoleLog>{this.props}</ConsoleLog>
             <BulletinBoardsRepliesEntries
+                _handleReplyEdit = {this._handleReplyEdit}
+
                 key = {item.replyid}
                 boardid = {item.boardid}
                 entryid = {item.entryid}
@@ -109,7 +116,10 @@ class BulletinBoardsReplies extends Component{
                 ismine = {item.ismine}
                 title = {''}
                 contents = {item.contents}
-                pictures = {item.pictures}/>
+                pictures = {item.pictures}
+                
+                replyEditMode = {this.state.replyEditMode}/>
+                </View>
         )
     };
 

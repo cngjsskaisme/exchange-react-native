@@ -17,42 +17,27 @@ import { Input } from 'react-native-elements';
 import { withNavigation, NavigationEvents } from 'react-navigation'; 
 import axios from 'axios'; 
 import {server} from '../ServerLib/config';
+import ConsoleLog from '../Tools/ConsoleLog';
+import LoadingPage from '../Tools/LoadingPage';
 
 class BulletinBoardsEditEntry extends Component{
-    static defaultProps = {
-        boardid: 0,
-        entryid: 0,
-        userid: 0,
-        username: "",
-        profile: "",
-        likes: 0,
-        date: "2019-01-01",
-        ismine: false,
-        title: '',
-        contents: "",
-        pictures: ""
+    componentDidMount(){
+        setTimeout(() => {this.setState({
+            boardid: this.props.navigation.getParam('boardid', 0),
+            entryid: this.props.navigation.getParam('entryid', 0),
+            replyid: this.props.navigation.getParam('entryid', 0),
+            userid: this.props.navigation.getParam('userid', 0),
+            username: this.props.navigation.getParam('username', ''),
+            profile: this.props.navigation.getParam('profile', ''),
+            likes: this.props.navigation.getParam('likes', 0),
+            date: this.props.navigation.getParam('date', ''),
+            ismine: this.props.navigation.getParam('ismine', false),
+            title: this.props.navigation.getParam('title', ''),
+            contents: this.props.navigation.getParam('contents', ''),
+            pictures: this.props.navigation.getParam('pictures', ''),
+        })}, 50);
     }
 
-//데이터 처리 시작   
-
-//게시글을 추가 or 수정하는 함수
-    constructor(props){
-        super(props);
-        this.setState({
-            boardid: this.props.navigation.getParam('boardid'),
-            entryid: this.props.navigation.getParam('entryid'),
-            replyid: this.props.navigation.getParam('entryid'),
-            userid: this.props.navigation.getParam('userid'),
-            username: this.props.navigation.getParam('username'),
-            profile: this.props.navigation.getParam('profile'),
-            likes: this.props.navigation.getParam('likes'),
-            date: this.props.navigation.getParam('date'),
-            ismine: this.props.navigation.getParam('ismine'),
-            title: this.props.navigation.getParam('title'),
-            contents: this.props.navigation.getParam('contents'),
-            pictures: this.props.navigation.getParam('pictures')
-        });
-    }
 
     //데이터 요청 시 함수
     // 1. 게시글을 추가 or 수정하는 함수
@@ -71,7 +56,7 @@ class BulletinBoardsEditEntry extends Component{
             }) 
         .catch(( err ) => {
             Alert.alert(
-                'Cannot connect to the server. Falling back to default option.',
+                'Cannot connect to the server.',
                 'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                 [{text: 'OK'}]
             );
@@ -95,7 +80,7 @@ class BulletinBoardsEditEntry extends Component{
             }) 
         .catch(( err ) => {
             Alert.alert(
-                'Cannot connect to the server. Falling back to default option.',
+                'Cannot connect to the server.',
                 'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                 [{text: 'OK'}]
               );
@@ -118,46 +103,31 @@ class BulletinBoardsEditEntry extends Component{
             }) 
         .catch(( err ) => {
             Alert.alert(
-                'Cannot connect to the server. Falling back to default option.',
+                'Cannot connect to the server.',
                 'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                 [{text: 'OK'}]
               );
         });    
     }  
 
-
-    // 렌더 함수
-    render(){
+    // 렌더 함수   
+    render() {
         return(
             <View>
-                <NavigationEvents onDidFocus={() => {
-                    this.setState({
-                        boardid: this.props.navigation.getParam('boardid'),
-                        entryid: this.props.navigation.getParam('entryid'),
-                        userid: this.props.navigation.getParam('userid'),
-                        username: this.props.navigation.getParam('username'),
-                        profile: this.props.navigation.getParam('profile'),
-                        likes: this.props.navigation.getParam('likes'),
-                        date: this.props.navigation.getParam('date'),
-                        ismine: this.props.navigation.getParam('ismine'),
-                        title: this.props.navigation.getParam('title'),
-                        contents: this.props.navigation.getParam('contents'),
-                        pictures: this.props.navigation.getParam('pictures')
-                    })
-                }} />
-                <Text>{this.state.title} {this.state.contents}</Text>
-                <Input
-                    placeholder='An awesome Title'
-                />
-                <TextInput
-                    placeholder='An awesome Title'
-                    value= {this.props.navigation.getParam('title')}
-                    onChangeText={title => this.setState({ title })}/>
-                <TextInput
-                    placeholder='Cool text for post (Optional)'
-                    value= {this.props.navigation.getParam('contents')}
-                    onChangeText={contents => this.setState({ contents })}/>
-                <Button onPress={this._handleSubmit.bind(this)}>Submit</Button>
+                {this.state === null ? 
+                    <LoadingPage/> :
+                    <View>
+                    <TextInput
+                        placeholder='An awesome Title'
+                        value = {this.state.title}
+                        onChangeText={title => this.setState({ title })}/>
+                    <TextInput
+                        placeholder='Cool text for post (Optional)'
+                        value = {this.state.contents}
+                        onChangeText={contents => this.setState({ contents })}/>
+                    <Button onPress={this._handleSubmit.bind(this)}>Submit</Button> 
+                    </View>
+                    }
             </View>
         );
     }

@@ -29,7 +29,7 @@ class LoadingPage extends Component{
                     <View style={styles.LoadingScreen01}>
                         <ActivityIndicator animating= 'true' size = 'large'/>
                     </View>
-                    <ContentMedium style={styles.LoadingScreen02}>Threads are loading...{"\n"}Wait Please...</ContentMedium>    
+                    <ContentMedium style={styles.LoadingScreen02}>Things are loading...{"\n"}Please wait...</ContentMedium>    
             </View>
         );
     }
