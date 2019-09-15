@@ -142,21 +142,26 @@ export default class EvaluationInput extends Component {
   1. Add a reply to the server  
   
   You need to pass to me:
-    courseid: specifies current courseid. located: 'this.state.courseid' in EvaluationList  
+    courseid: specifies current courseid. located: 'this.state.courseid' in EvaluationScreen 
     userid: specifies current userid. located: x. (헌남 also didn't do this part.)  
-    contents: contents of the comments that user is writing in this component.
+    contents: contents of the comments that user is writing in this component. 
+
+    2. Edit a reply and send to the server
+     courseid: specifies current courseid. located: 'this.state.courseid' in EvaluationScreen 
+     commentid: specifies current courseid. located: 'l.commentid' in EvaluationScreen
+     contents,exam,assignment,grade,difficulty, rating 
 
 */
   _handleAddComment = async () => {
-    var url = server.serverURL + '/process/AddCourseEvaluationComment';  
+    var url = server.serverURL + '/process/EditCourseEvaluationComment';  
     
     await this.setState({
       isLoading: true
     });
     await axios.post(url, {
       courseid: "5d7b68b52ec3549472239b79",  
-      userid: "5d5373177443381df03f3040",  
-      contents: "So funny", 
+      commentid: "5d7e0983f63f5a278c2a890d",  
+      contents: " ", 
       exam: this.state.exam,
       assignment: this.state.assignment,
       grade: this.state.grade, 
