@@ -19,13 +19,21 @@ import ConsoleLog from '../Tools/ConsoleLog'
 class BulletinBoardsMain extends Component{
     constructor(props){
         super(props);
+        this._toggleDevMode = (isDev) => { this.setState({ isDev : isDev })},
+        this._toggleReplyEditMode = (isReplyEditMode) => { this.setState({ isReplyEditMode : !isReplyEditMode });
+        this._toggleChecker = () => {<ConsoleLog>{'Function also working!'}</ConsoleLog>}
+        <ConsoleLog>{this.state.isReplyEditMode.toString()}</ConsoleLog>}
+
         this.state = {
             currentuserid : '5d5373177443381df03f3040',
             isDev : false,
             isReplyEditMode : false,
             
-            _toggleDevMode: ({isDev}) => { this.setState({ isDev : isDev })},
-            _toggleReplyEditMode: ({isReplyEditMode}) => { this.setState({ isReplyEditMode : !isReplyEditMode })}
+            checker: 'context is working',
+            _toggleChecker: this._toggleChecker,
+            
+            _toggleDevMode : this._toggleDevMode,
+            _toggleReplyEditMode: this._toggleReplyEditMode,
         }
     }
 
@@ -36,7 +44,6 @@ class BulletinBoardsMain extends Component{
     render(){
         return(
             <BulletinBoardsContext.Provider value={this.state}>
-                                <ConsoleLog>{this.props}</ConsoleLog>
                 <BulletinBoardsLists/>
             </BulletinBoardsContext.Provider>
         );

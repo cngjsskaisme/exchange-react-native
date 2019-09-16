@@ -14,6 +14,8 @@ import { withNavigation } from 'react-navigation'
 import PropTypes from 'prop-types'; 
 import axios from 'axios';
 import {server} from '../ServerLib/config';
+import { BulletinBoardsContext } from '../BulletinBoards/BulletinBoardsContext'; 
+import ConsoleLog from './ConsoleLog';
 
 class PostMenu extends Component{
     static defaultProps = {
@@ -56,6 +58,8 @@ class PostMenu extends Component{
             style: this.props.style,
         }
     }
+
+    static contextType = BulletinBoardsContext;
 
     _openMenu = () => this.setState({ visible: true });
 
@@ -177,6 +181,7 @@ class PostMenu extends Component{
 
     // 렌더 함수 시작
     render(){ 
+        const { isReplyEditMode, _toggleReplyEditMode } = this.context;
         //내 글이거나 관리자 모드일 때
         if(this.state.ismine || this.state.admin){
             return (
@@ -194,25 +199,29 @@ class PostMenu extends Component{
                 >
                     <Menu.Item onPress={this._handleDeleteComment.bind(this)} title="Delete" />
                     <Menu.Item onPress={() => {
-                                        this._closeMenu();
-                                        // 게시글 수정, 댓글 수정 기능을 서로 분리
-                                        {this.state.replyid != 0 ? 
-                                            this.props.navigation.navigate('EntryEdit', {
-                                                boardid: this.state.boardid,
-                                                entryid: this.state.entryid,
-                                                replyid: this.state.replyid,
-                                                userid: this.state.userid,
-                                                username: this.state.username,
-                                                profile: this.state.profile,
-                                                likes: this.state.likes,
-                                                date: this.state.date,
-                                                ismine: this.state.ismine,
-                                                title: this.state.title,
-                                                contents: this.state.contents,
-                                                pictures: this.state.pictures
-                                            }, 500):
-                                            this.props._handleReplyEdit()
-                                            }}} title="Modify" />
+                        this._closeMenu();
+                        // 게시글 수정, 댓글 수정 기능을 서로 분리 (예정) 
+                        { //this.state.replyid == 0 ?
+                            true ?
+                            // 게시글 수정
+                            this.props.navigation.navigate('EntryEdit', {
+                                boardid: this.state.boardid,
+                                entryid: this.state.entryid,
+                                replyid: this.state.replyid,
+                                userid: this.state.userid,
+                                username: this.state.username,
+                                profile: this.state.profile,
+                                likes: this.state.likes,
+                                date: this.state.date,
+                                ismine: this.state.ismine,
+                                title: this.state.title,
+                                contents: this.state.contents,
+                                pictures: this.state.pictures}, 500) :
+                            // 댓글 수정
+                            {}
+                            }
+                        }
+                    } title="Modify" />
                     <Menu.Item onPress={this._handleAddReport.bind(this)} title="Report" />
                     <Divider />
                     <Menu.Item onPress={this._handleIncreLikeEntry.bind(this)} title="Like this!" />

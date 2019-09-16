@@ -14,8 +14,11 @@ export const context = {
         isDev: false,
         isReplyEditMode: false,
 
+        checker: 'context is working',
+        _toggleChecker: () => {},
+
         _toggleDevMode: () => {},
-        _toggleReplyEditMode: () => {}
+        _toggleReplyEditMode: () => {},
     }
 }
 
