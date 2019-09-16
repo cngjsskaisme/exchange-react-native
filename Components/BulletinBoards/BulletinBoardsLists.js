@@ -66,7 +66,8 @@ class BulletinBoardsLists extends Component{
               );
             this.setState({
                 postslist: BulletinBoardsLists_Mock,
-                isError: true
+                isError: true,
+                isDev: true // !!!!!!!!!!!!!!!!1 이 부분 지워라 지워라 !!!!!!!
             })
         });    
     }

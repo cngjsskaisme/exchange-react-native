@@ -100,7 +100,7 @@ class BulletinBoardsContent extends Component{
                 </ScrollView>
                 <KeyboardAvoidingView
                     behavior='padding' 
-                    style={{width: '100%'}}
+                    style={styles.container}
                     keyboardVerticalOffset = {Header.HEIGHT + 40}>
                     <BulletinBoardsRepliesInput
                         boardid = {this.state.boardid}
@@ -135,12 +135,10 @@ BulletinBoardsContent.propTypes = {
         flexDirection: 'column',
         flex: 1,
         height: '100%',
-        width: '100%',
         padding: 15
     },
     BottomInput: {
         position: 'absolute',
-        alignSelf: 'flex-end',
         margin: 0,
         bottom: 0,
     },
