@@ -49,7 +49,7 @@ class BulletinBoards extends Component{
             boardname: this.props.navigation.getParam('boardname'),
             isLoading: false,
             isError: false,
-            isDev: this.props.navigation.getParam('isDev'), 
+            isDev: false,//this.props.navigation.getParam('isDev'), 
             //데이터 관련. 불러올 첫/마지막 게시물의 index 번호 
             postStartIndex: 0, 
             postEndIndex: 0

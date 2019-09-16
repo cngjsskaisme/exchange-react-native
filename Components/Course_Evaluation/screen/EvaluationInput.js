@@ -151,13 +151,20 @@ export default class EvaluationInput extends Component {
 
 */
 _handleAddComment = async () => {
-  var url = server.serverURL + '/process/ShowProfessorProfile';  
+  var url = server.serverURL + '/process/AddCourseEvaluationComment';  
   
   await this.setState({
     isLoading: true
   });
   await axios.post(url, {
-    professor: "pro1"
+    courseid: "5d7b68b52ec3549472239b79",  
+    userid: "5d5373177443381df03f3040",  
+    contents: "So funny", 
+    exam: this.state.exam,
+    assignment: this.state.assignment,
+    grade: this.state.Grade_Array[this.state.grade], 
+    difficulty: this.state.Difficulty_Array[this.state.difficulty],
+    rating: this.state.rate
     }) 
       .then((response) => {       
           this.setState({ 
