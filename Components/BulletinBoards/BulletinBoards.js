@@ -60,18 +60,21 @@ class BulletinBoards extends Component{
     // 1. 게시글 목록 불러오는 함수
     _onGetPostsLists = async () => {   
         var url = server.serverURL + '/process/ShowBulletinBoard';
-        this.setState({
+        await this.setState({
             isLoading: true,
             isError: false,
-
-            postStartIndex: postEndIndex,
-            postEndIndex: postStartIndex + 19
+            postStartIndex: 0, 
+            postEndIndex: 2
+            /*
+            postStartIndex: this.state.postEndIndex,
+            postEndIndex: this.state.postStartIndex + 19 
+            */
         }) 
         await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
             postStartIndex: this.state.postStartIndex, postEndIndex: this.state.postEndIndex})
             .then((response) => {       
                 this.setState({ 
-                entrieslist: [...this.state.entrieslist, ...response.data.postslist],
+                entrieslist: response.data.postslist,
                 isLoading: false
             }) 
         }) 
