@@ -8,30 +8,87 @@ import {
     Animated, 
     TouchableOpacity,
     Image,
+    Picker,
+    UIManager, 
+    findNodeHandle,
 } from 'react-native';
+
 import propTypes from 'prop-types';
 import RatingStar from './RatingStar';
 import RatingStar_Without_TextBox from './RatingStar_Without_TextBox'
+import Icon from 'react-native-vector-icons/FontAwesome';
+import FixedRatingStar from './fixed_RatingStar';
+import {createStackNavigator, createAppContainer, createBottomTabNavigator, createSwitchNavigator} from 'react-navigation'
 
 export default class Comment extends Component{
+    
     render(){
-        const {person, cmtText} = this.props
+        const {person, cmtText, Star} = this.props;
+        const CommentStar = Star || 3
+
         const CommentPerson = person || "Punreach RANY"
         const CommentText = cmtText || "This is my comment"
+        const TopRight = [];
+        const a = 0;
+
+        if( a == 0) {
+            TopRight.push(
+                <View key={0} style={styles.TopRightView}>
+                        <TouchableOpacity style={[{paddingRight : 10, borderRadius : 10},styles.personName]}>
+                            <View style={{flexDirection : 'row'}}>
+                
+                            <Text style={{fontSize : 20}}>   Report</Text>
+                            </View>
+                        </TouchableOpacity>
+                        
+                        
+                        
+                </View>
+                
+            )
+        } else {
+            TopRight.push(
+                <View key={0} style={styles.TopRightView}>
+                        <TouchableOpacity style={[{paddingRight : 10, borderRadius : 10},styles.personName]}>
+                            <View style={{flexDirection : 'row'}}>
+                
+                                <Text style={{fontSize : 20}}>Edit</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[{paddingRight : 10, borderRadius : 10},styles.personName]}>
+                            <View style={{flexDirection : 'row'}}>
+                
+                                <Text style={{fontSize : 20}}>Delete</Text>
+                            </View>
+                        </TouchableOpacity>
+                        
+                        
+                        
+                </View>
+                
+            )
+        }
 
         return(         
             <View style={styles.wrapper}>
-
-                <View style={styles.personView}>
-                    <Text style={styles.personName}>{CommentPerson[0]+"*****"}</Text>
-                    <RatingStar_Without_TextBox
-                        ratingSize = {15}
-                        onPress_status = {false}
-                    />
-                    <Text style={{paddingRight : 15}}>CommentText</Text>
+                <View style={{flex : 1, flexDirection : 'row'}}>
+                    <View style={styles.personView}>
+                        <Text style={styles.personName}>{CommentPerson[0]+"*****"}</Text>
+                        <FixedRatingStar 
+                            ratingSize = {10}
+                            onPress_status = {false}
+                            value ={CommentStar}
+                        />
+                        
+                    </View>
+                    {TopRight}
                 </View>
+                    
 
-                <View style={styles.CommentView}><Text>{CommentText}</Text></View>
+                <View style={{flex : 1, flexDirection : 'row'}}>
+                    <View style={styles.CommentView}><Text>{CommentText}</Text></View>
+                </View>
+                    
             </View>    
         )
     }
@@ -40,34 +97,52 @@ export default class Comment extends Component{
 Comment.propTypes = {
     person : propTypes.string,
     cmtText : propTypes.string,
+    Star : propTypes.number,
 }
 const styles = StyleSheet.create({
     wrapper : { 
-        
+        flex : 1,
+        width : '100%',
         flexDirection : 'column',
         
         padding : 10,
     },
     personName : {
-        
+        alignSelf : 'center',
         fontSize : 15,
         fontWeight : 'bold',
-        paddingTop : 15,
-        paddingLeft : 15,
-        paddingBottom : 15,
+        //paddingTop : 10,
+        paddingLeft : 10,
+        //paddingBottom : 10,
     },
     CommentView : {
+        flex : 1,
+        width : '100%',
         padding : 15,
         fontSize : 15,
         borderWidth: 0.5,
         borderColor: '#d6d7da',
-        borderTopRightRadius : 10,
+        //borderTopRightRadius : 10,
         borderBottomRightRadius : 10,
         borderBottomLeftRadius : 10,
         backgroundColor : '#bdc3c7',
     },
+    TopRightView : {
+        flex : 1,
+        width : '100%',
+        flexDirection : 'row',
+        justifyContent : 'flex-end',
+
+        //alignContent : 'flex-end',
+        borderWidth: 0.5,
+        borderColor: '#d6d7da',
+        borderTopLeftRadius : 10,
+        borderTopRightRadius : 10,
+    },
+
     personView : {
-        width : '50%',
+        flex : 1.2,
+        width : '100%',
         flexDirection : 'row',
         borderWidth: 0.5,
         borderColor: '#d6d7da',

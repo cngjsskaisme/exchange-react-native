@@ -22,7 +22,13 @@ import {createStackNavigator, createAppContainer, createBottomTabNavigator, Head
 import RatingStar from '../components/RatingStar';
 import RatingStar_Without_TextBox from '../components/RatingStar_Without_TextBox';
 import Comment from '../components/Comment';
-import TextBox from '../components/TextBox'
+import TextBox from '../components/TextBox' 
+
+//related to data transfer - start
+import axios from 'axios'; 
+import {server} from '../../ServerLib/config'; 
+axios.defaults.timeout = 5000;
+//related to data transfer - end
 
 export default class EvaluationInput extends Component {
   constructor () {
@@ -30,11 +36,13 @@ export default class EvaluationInput extends Component {
     this.state = {
       skill : 5,
       difficulty : 4,
-      assignment : 0,
-      exam : 0,
+      assignment : 2,
+      exam : 2,
       grade : 8,
-      rate : 5
-    }
+      rate : 5, 
+      Difficulty_Array: ['Very Easy', 'Easy', 'Average', 'Hard', 'Very Hard'],
+      Grade_Array: ['F', 'E', 'D','C0','C+','B0','B+','A0','A+']
+    };
 
   }
 
@@ -132,13 +140,41 @@ export default class EvaluationInput extends Component {
     }
   }
 
+/*
+  data request function - start
+  1. Add a reply to the server  
+  
+  You need to pass to me:
+    courseid: specifies current courseid. located: 'this.state.courseid' in EvaluationScreen 
+    userid: specifies current userid. located: x. (헌남 also didn't do this part.)  
+    contents: contents of the comments that user is writing in this component.   
 
-
+*/
+_handleAddComment = async () => {
+  var url = server.serverURL + '/process/ShowProfessorProfile';  
   
+  await this.setState({
+    isLoading: true
+  });
+  await axios.post(url, {
+    professor: "pro1"
+    }) 
+      .then((response) => {       
+          this.setState({ 
+            isLoading: false
+          });  
+      }) 
+      .catch(( err ) => {
+          Alert.alert(
+              'Cannot connect to the server. Falling back to default option.',
+              'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+              [{text: 'OK'}]
+          ); 
+      });    
+  }
+//data request function - end
   
-  
-   
-  render() {
+  render() { 
     const {navigation} = this.props
     const SubjectName = navigation.getParam('SubjectName', 'NO-ID') || 'React Native'
     const ProfessorName = navigation.getParam('ProfessorName', 'NO-ID') || "Punreach RANY" 
@@ -147,7 +183,7 @@ export default class EvaluationInput extends Component {
 
     var Difficulty_Array = ['Very Easy', 'Easy', 'Average', 'Hard', 'Very Hard'];
     var Grade_Array  = ['F', 'E', 'D','C0','C+','B0','B+','A0','A+'];
-    
+   
     
     
 
@@ -261,7 +297,8 @@ export default class EvaluationInput extends Component {
             </View>
             <View style={[styles.cellTwo, styles.base]}>
               <Button 
-                title="Post"
+                title="Post" 
+                onPress={this._handleAddComment.bind(this)}
               />
             </View>
 

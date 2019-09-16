@@ -9,6 +9,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableNativeFeedback, Alert } from 'react-native';
 import PropTypes from 'prop-types';
+import {withNavigation} from 'react-navigation'
 import BulletinBoards from './BulletinBoards';
 import {TouchableRipple, Button, ActivityIndicator, Colors } from 'react-native-paper'
 import { BulletinBoardsLists_Mock } from '../../Mockup_Datas/UnifiedEntries'

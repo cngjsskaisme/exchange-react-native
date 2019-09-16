@@ -14,6 +14,8 @@ import CourseEvaluation from './Components/Course_Evaluation/CourseEvaluation';
 import CalendarScreen from './Components/EventCalendar/EventCalendar'
 import BulletinBoardsMain from "./Components/BulletinBoards/BulletinBoardsMain";
 
+import  Test from './Components/Course_Evaluation/screen/Test'
+
 
 const MainStack = createStackNavigator({
   Main: MainScreen,
@@ -70,6 +72,13 @@ const TabNavigator = createBottomTabNavigator(
       screen : CourseEvaluation,
       navigationOptions : {
         tabBarLabel : 'CourseEvaluation',
+        tabBarIcon : ({tintColor}) => (<Icon name="star" color={tintColor} size = {20}/>)
+      }
+    },
+    Test : {
+      screen : Test,
+      navigationOptions : {
+        tabBarLabel : 'Test',
         tabBarIcon : ({tintColor}) => (<Icon name="star" color={tintColor} size = {20}/>)
       }
     },

@@ -35,7 +35,7 @@ axios.defaults.timeout = 5000;
 //loading page from 헌남 
 import LoadingPage from '../../Tools/LoadingPage'
 
-class EvaluationScreen extends Component {
+class Test extends Component {
 
   constructor(props) {
     super(props)
@@ -59,53 +59,6 @@ class EvaluationScreen extends Component {
    )
   } 
 
-  /*
-  data request function - start
-   1. Get 20 elements from 'courseslist' array whoose start/end indexes are courseliststartindex/courselistendindex
-    You need to pass to me: 
-    userid: specifies current userid. located: x. (헌남 also didn't do this part.)
-  */ 
-   _handleGetCommentsList = async () => {
-    var url = server.serverURL + '/process/ShowCommentsList';  
-    
-    await this.setState({
-      isLoading: true
-    });
-    await axios.post(url, {
-        courseid: this.state.courseid,  
-        userid: "5d5373177443381df03f3040",
-        commentsliststartindex: this.state.CommentslistStartIndex, 
-        commentslistendindex: this.state.CommentslistEndIndex}) 
-        .then((response) => {       
-            this.setState({
-              commentslist: response.data.commentslist, 
-              isLoading: false
-            });  
-        }) 
-        .catch(( err ) => {
-            Alert.alert(
-                'Cannot connect to the server. Falling back to default option.',
-                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [{text: 'OK'}]
-            ); 
-        });    
-    }
-
-  // 2. Get Next 20 elements from courseslist 
-  _handleGetNextCommentsList = async() => {
-    await this.setState({
-      CommentslistStartIndex: this.state.CommentslistEndIndex + 1, 
-      CommentslistEndIndex: this.state.CommentslistEndIndex + this.state.CommentslistAmount
-    }) 
-    await this._handleGetCommentsList();
-  }
-
-  // It is necessary to execute '_handleGetCommentsList' 
-  async componentDidMount(){  
-    await this._handleGetCommentsList(); 
-  }   
-//data request function - end 
-
 
   render() {
     const {navigation, subject, professor, place, exam, assignment, grade, again, text, difficulty} = this.props;
@@ -113,8 +66,7 @@ class EvaluationScreen extends Component {
     const itemID = navigation.getParam('itemID', 'NO-ID')
     const SubjectName = navigation.getParam('SubjectName', 'NO-NAME')|| subject || 'React Native'
     const ProfessorName = navigation.getParam('ProfessorName', 'NO-NAME') || professor || "Punreach RANY" 
-    //institutation 부분 수정 - ChangHee
-    const Institution = navigation.getParam('Place')|| place || "Hanyang University"
+    const Institution = place || "Hanyang University"
     const ExamNumber = navigation.getParam('ExamNumber', 'NO-ID') || exam || 2
     const Assignment = navigation.getParam('Assignment', 'NO-ID') || assignment || 2
     const Star = navigation.getParam('Star', 5)
@@ -201,34 +153,22 @@ class EvaluationScreen extends Component {
             
             <View style={styles.bodyContent}>
               <View style={styles.commentTitle}><Text style={{fontSize : 15, fontWeight:'bold'}}>Comments</Text></View>
-              { 
-                //Since 'commentslist' is also array, I changed this part into a 'map'. - ChangeHee
-                this.state.isLoading ? <LoadingPage/>: 
-                  
-                  //If there's no comment - ChangeHee
-                  this.state.commentslist.length <=0 ? 
-                    <View> 
-                      <Text> 
-                        There's no comment
-                      </Text> 
-                    </View>
-                  :this.state.commentslist.map( (l) => (
-                    <Comment 
-                    person = {l.username}
-                    cmtText = {l.contents} 
-                    key = {l.commentid} 
-                    userid = {l.userid}
-                    Star={l.rating} 
-                    ismine = {l.ismine}
+              
+                  <Comment 
+                    person = {'Punreach'}
+                    cmtText = {'I hate you'} 
+                    key = {1}
+                    Star =  {2}
                   /> 
-                  ))
-              }
+                  
               <View style={styles.bottomPart}>  
                 <Button
                     title="More comments"
-                    onPress = {this._handleGetNextCommentsList.bind(this)}
+                    //onPress = {this._handleGetNextCommentsList.bind(this)}
                   /> 
               </View>
+              
+              
             </View>
          </View>
       </ScrollView>
@@ -255,7 +195,7 @@ class EvaluationScreen extends Component {
   }
 }
 
-EvaluationScreen.propTypes = {
+Test.propTypes = {
   professor : propTypes.string, 
   place :  propTypes.string, 
   exam : propTypes.number, 
@@ -269,10 +209,8 @@ EvaluationScreen.propTypes = {
 }
 
 const RootNavigator = createSwitchNavigator({
-  EvaluationScreen: EvaluationScreen,
+    Test: Test,
   LoadingScreen: LoadingScreen
-}, {
-  initialRouteName: 'LoadingScreen'
 });
 
 export default createAppContainer(RootNavigator);
