@@ -98,8 +98,7 @@ class BulletinBoardsRepliesInput extends Component{
                             multiline = {true}/>                
                         <IconButton
                             icon="arrow-upward"
-                            color={Colors.red500}
-                            size={20}
+                            size={15}
                             onPress={this._onAddComment}/>
                     </View>}
             </View>
@@ -112,23 +111,25 @@ BulletinBoardsRepliesInput.propTypes = {
 
 
 const styles = StyleSheet.create({
-  PostMenu:{
-      position: 'absolute',
-      margin: 0,
-      right: 0,
-      top: 0,
-  },
-  TextInput: {
-      width: '85%',
-  },
-  Container: {
-      display: 'flex',
-      width: '100%',
-      flexDirection: 'row'
-  },
-  Button: {
-      paddingTop: 8
-  },
+    Container: {
+        backgroundColor: 'blue',
+        display: 'flex',
+        width: '100%',
+        flexDirection: 'row'
+    },
+    PostMenu:{
+        position: 'absolute',
+        margin: 0,
+        right: 0,
+        top: 0,
+    },
+    TextInput: {
+        width: '85%',
+    },
+    Button: {
+        paddingTop: 8,
+        alignContent: 'flex-end'
+    },
 });
 
 export default BulletinBoardsRepliesInput;
