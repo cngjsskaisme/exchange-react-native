@@ -46,8 +46,8 @@ class BulletinBoardsReplies extends Component{
             profile: this.props.profile,
             
             //가져올 댓글의 시작, 끝 인덱스 번호 
-            commentstartindex: 0, 
-            commentendindex: 0,             
+            commentstartindex: 0,
+            commentendindex: 0,
 
             isDev: this.props.isDev,
             replyEditMode: false,
@@ -82,7 +82,7 @@ class BulletinBoardsReplies extends Component{
                     [{text: 'OK'}]
                 );
             this.setState({
-                isError: true
+                isError: true,
             })
         });    
     }

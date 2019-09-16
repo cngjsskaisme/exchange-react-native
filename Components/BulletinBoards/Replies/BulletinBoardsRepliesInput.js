@@ -89,7 +89,7 @@ class BulletinBoardsRepliesInput extends Component{
                             size={20}
                             onPress={this._onAddComment}/>
                     </View> :
-                    <View>
+                    <View style={styles.Container}>
                         <TextInput
                             style = {styles.TextInput}
                             label = 'Comment'
@@ -98,6 +98,7 @@ class BulletinBoardsRepliesInput extends Component{
                             multiline = {true}/>                
                         <IconButton
                             icon="arrow-upward"
+                            style= {styles.Button}
                             size={15}
                             onPress={this._onAddComment}/>
                     </View>}
@@ -112,10 +113,9 @@ BulletinBoardsRepliesInput.propTypes = {
 
 const styles = StyleSheet.create({
     Container: {
-        backgroundColor: 'blue',
         display: 'flex',
+        flexDirection: 'row',
         width: '100%',
-        flexDirection: 'row'
     },
     PostMenu:{
         position: 'absolute',
@@ -124,11 +124,12 @@ const styles = StyleSheet.create({
         top: 0,
     },
     TextInput: {
-        width: '85%',
+        flex: 9,
     },
     Button: {
-        paddingTop: 8,
-        alignContent: 'flex-end'
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 

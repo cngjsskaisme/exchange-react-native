@@ -50,6 +50,7 @@ class BulletinBoards extends Component{
             isLoading: false,
             isError: false,
             isDev: this.props.navigation.getParam('isDev'), 
+
             //데이터 관련. 불러올 첫/마지막 게시물의 index 번호 
             postStartIndex: 0, 
             postEndIndex: 0
@@ -64,16 +65,22 @@ class BulletinBoards extends Component{
             isLoading: true,
             isError: false,
 
-            postStartIndex: postEndIndex,
-            postEndIndex: postStartIndex + 19
+            postStartIndex: this.state.postEndIndex,
+            postEndIndex: this.state.postStartIndex + 19
         }) 
         await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
             postStartIndex: this.state.postStartIndex, postEndIndex: this.state.postEndIndex})
-            .then((response) => {       
-                this.setState({ 
-                entrieslist: [...this.state.entrieslist, ...response.data.postslist],
-                isLoading: false
-            }) 
+            .then((response) => {
+                console.log(postStartIndex, postEndIndex, entrieslist);
+                if(response.data.postslist == null)
+                    this.setState({
+                        isLoading: false
+                    })
+                else
+                    this.setState({ 
+                        entrieslist: response.data.postslist,
+                        isLoading: false
+                    }) 
         }) 
         .catch(( err ) => {
             Alert.alert(
@@ -83,7 +90,7 @@ class BulletinBoards extends Component{
               );
             this.setState({
                 postslist: BulletinBoardsEntries_Mock,
-                isError: true
+                isError: true,
             })
         });    
     }
