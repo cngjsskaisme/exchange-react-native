@@ -65,14 +65,6 @@ class BulletinBoardsContent extends Component{
         }
     }
 
-    // 댓글 수정 기능
-    // 전달 경로 -   1. BulletinBoardsReplies -> BulletinBoardsRepliesEntries  2. BulletinBoardsReplies -> BulletinBoardsRepliesEntries -> PostMenu
-    _handleReplyEdit = () => this.setState({ replyEditMode: true })
-
-    // BulletinBoardsRepliesEntries의 수정모드에서 contents 값 변경시 처리
-    // 전달 경로 -   1. BulletinBoardsReplies -> BulletinBoardsRepliesEntries  2. BulletinBoardsReplies -> BulletinBoardsRepliesEntries -> PostMenu
-    _handleContentsChange = (contents) => this.setState({contents}) 
-
     // 렌더 함수
     render(){
         return(
@@ -98,9 +90,6 @@ class BulletinBoardsContent extends Component{
                             />
                     <View style={styles.EntryReplies}>
                         <BulletinBoardsReplies
-                            _handleReplyEdit = {this._handleReplyEdit}
-                            _handleContentsChange = {this._handleContentsChange}
-
                             boardid = {this.state.boardid}
                             entryid = {this.state.entryid}
                             userid = {this.state.userid}
@@ -111,7 +100,7 @@ class BulletinBoardsContent extends Component{
                 </ScrollView>
                 <KeyboardAvoidingView
                     behavior='padding' 
-                    style={styles.container}
+                    style={{width: '100%'}}
                     keyboardVerticalOffset = {Header.HEIGHT + 40}>
                     <BulletinBoardsRepliesInput
                         boardid = {this.state.boardid}
@@ -146,6 +135,7 @@ BulletinBoardsContent.propTypes = {
         flexDirection: 'column',
         flex: 1,
         height: '100%',
+        width: '100%',
         padding: 15
     },
     BottomInput: {

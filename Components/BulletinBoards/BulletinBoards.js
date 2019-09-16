@@ -62,13 +62,16 @@ class BulletinBoards extends Component{
         var url = server.serverURL + '/process/ShowBulletinBoard';
         this.setState({
             isLoading: true,
-            isError: false
+            isError: false,
+
+            postStartIndex: postEndIndex,
+            postEndIndex: postStartIndex + 19
         }) 
         await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
             postStartIndex: this.state.postStartIndex, postEndIndex: this.state.postEndIndex})
             .then((response) => {       
                 this.setState({ 
-                entrieslist: response.data.postslist,
+                entrieslist: [...this.state.entrieslist, ...response.data.postslist],
                 isLoading: false
             }) 
         }) 
@@ -142,10 +145,12 @@ class BulletinBoards extends Component{
                 <View style={{width: '100%', height: '100%'}}>
                     <FlatList 
                             data = {this.state.entrieslist}
+                            extraData = {this.state}
                             renderItem = {this._renderItem}
                             keyExtractor = {this._keyExtractor}
                             onRefresh = {this._onGetPostsLists}
-                            refreshing = {this.state.isLoading}/>
+                            refreshing = {this.state.isLoading}
+                            onEndReached = {this._onGetPostsLists}/>
                     <FAB
                             style={styles.Floating}
                             icon='add'

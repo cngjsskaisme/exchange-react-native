@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
   },
   Container: {
       display: 'flex',
+      width: '100%',
       flexDirection: 'row'
   },
   Button: {

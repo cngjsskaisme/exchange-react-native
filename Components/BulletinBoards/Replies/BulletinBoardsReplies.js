@@ -29,7 +29,7 @@ class BulletinBoardsReplies extends Component{
 
         //가져올 댓글의 시작, 끝 인덱스 번호 
         commentstartindex: 0, 
-        commentendindex: 19,
+        commentendindex: 0,
 
         isDev: false,
         replyEditMode: false,
@@ -46,8 +46,8 @@ class BulletinBoardsReplies extends Component{
             profile: this.props.profile,
             
             //가져올 댓글의 시작, 끝 인덱스 번호 
-            commentstartindex: this.props.commentstartindex, 
-            commentendindex: this.props.commentendindex,             
+            commentstartindex: 0, 
+            commentendindex: 0,             
 
             isDev: this.props.isDev,
             replyEditMode: false,
@@ -60,7 +60,10 @@ class BulletinBoardsReplies extends Component{
         var url = server.serverURL + '/process/ShowComments';
         this.setState({
             isLoading: true,
-            isError: false
+            isError: false,
+
+            commentstartindex: this.state.commentendindex,
+            commentendindex: this.state.commentstartindex + 19,
         }) 
         await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
             entryid: this.state.entryid, 
@@ -68,7 +71,7 @@ class BulletinBoardsReplies extends Component{
 
             .then((response) => {       
                 this.setState({ 
-                commentslist: response.data.commentslist,
+                commentslist: [...this.state.commentslist, ...response.data.commentslist],
                 isLoading: false
                 }) 
             }) 
@@ -101,13 +104,11 @@ class BulletinBoardsReplies extends Component{
     _renderItem = ({ item }) => {
         return(
             <View>
-            <ConsoleLog>{this.props}</ConsoleLog>
             <BulletinBoardsRepliesEntries
-                _handleReplyEdit = {this._handleReplyEdit}
-
                 key = {item.replyid}
                 boardid = {item.boardid}
                 entryid = {item.entryid}
+                replyid = {item.replyid}
                 userid = {item.userid}
                 username = {item.username}
                 profile = {item.profile}
@@ -137,9 +138,11 @@ class BulletinBoardsReplies extends Component{
                     </View> :
                     //댓글 정상 출력
                     <FlatList 
-                        data = {this.state.commentslist} 
+                        data = {this.state.commentslist}
+                        extraData = {this.state} 
                         renderItem = {this._renderItem}
-                        keyExtractor = {this._keyExtractor}/>
+                        keyExtractor = {this._keyExtractor}
+                        onEndReached = {this._onGetComments}/>
                 }
             </View>
         );

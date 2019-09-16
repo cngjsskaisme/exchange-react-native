@@ -12,6 +12,7 @@ import PropTypes from 'prop-types';
 import BulletinBoards from './BulletinBoards';
 import {TouchableRipple, Button, ActivityIndicator, Colors } from 'react-native-paper'
 import { BulletinBoardsLists_Mock } from '../../Mockup_Datas/UnifiedEntries'
+import {withNavigation} from 'react-navigation'
 import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
 import axios from 'axios'; 
 import {server} from '../ServerLib/config';
