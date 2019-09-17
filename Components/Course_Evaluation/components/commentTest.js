@@ -23,7 +23,7 @@ import {createStackNavigator, createAppContainer, createBottomTabNavigator, crea
 //const {likeNumber} = this.props;
 //const NumberLike = 0;
 
-export default class Comment extends Component{
+export default class CommentTest extends Component{
     
     constructor(props){
         super(props)
@@ -128,7 +128,7 @@ export default class Comment extends Component{
     }
 }
 
-Comment.propTypes = {
+CommentTest.propTypes = {
     NumberLike : propTypes.number,
     person : propTypes.string,
     cmtText : propTypes.string,

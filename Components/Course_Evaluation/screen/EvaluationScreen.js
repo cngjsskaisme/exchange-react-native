@@ -15,7 +15,8 @@ import propTypes from 'prop-types';
 import { Button } from 'react-native-elements';
 import { Fab } from 'native-base';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+//import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import {createStackNavigator, createAppContainer, createBottomTabNavigator, createSwitchNavigator} from 'react-navigation'
 
 import RatingStar from '../components/RatingStar';
@@ -247,7 +248,7 @@ class EvaluationScreen extends Component {
                   )}
             >
             
-            <Icon name="comments" />
+            <Icon name="add"/>
       </Fab>
       
       </View>

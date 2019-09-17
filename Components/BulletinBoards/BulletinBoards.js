@@ -65,12 +65,15 @@ class BulletinBoards extends Component{
     // 1. 게시글 목록 불러오는 함수
     _onGetPostsLists = async () => {   
         var url = server.serverURL + '/process/ShowBulletinBoard';
-        this.setState({
+        await this.setState({
             isLoading: true,
             isError: false,
-
+            postStartIndex: 0, 
+            postEndIndex: 2
+            /*
             postStartIndex: this.state.postEndIndex,
-            postEndIndex: this.state.postStartIndex + 19
+            postEndIndex: this.state.postStartIndex + 19 
+            */
         }) 
         await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
             postStartIndex: this.state.postStartIndex, postEndIndex: this.state.postEndIndex})
@@ -139,12 +142,22 @@ class BulletinBoards extends Component{
             {
                 this.state.isDev ? 
                 // 개발자 모드일 때
+                <View>
                     <FlatList 
                         data = {BulletinBoardsEntries_Mock}
                         renderItem = {this._renderItem}
                         keyExtractor = {this._keyExtractor}
                         onRefresh = {() => {}}
-                        refreshing = {this.state.isLoading}/> :
+                        refreshing = {this.state.isLoading}/> 
+                    <FAB
+                        style={styles.Floating}
+                        icon='add'
+                        onPress={() => this.props.navigation.navigate('EntryEdit', { 
+                            boardid: this.state.boardid,
+                            userid: this.state.userid,
+                            username: this.state.username,
+                            profile: this.state.profile})} />   
+                </View>:
                 this.state.isError ?
                 // 에러발생 했을 때
                     <View>
