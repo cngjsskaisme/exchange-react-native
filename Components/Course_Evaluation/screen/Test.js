@@ -15,11 +15,12 @@ import propTypes from 'prop-types';
 import { Button } from 'react-native-elements';
 import { Fab } from 'native-base';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+//import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import {createStackNavigator, createAppContainer, createBottomTabNavigator, createSwitchNavigator} from 'react-navigation'
 
 import RatingStar from '../components/RatingStar';
-import Comment from '../components/Comment';
+import CommentTest from '../components/commentTest';
 import TextBox from '../components/TextBox'
 import FixedRatingStar from '../components/fixed_RatingStar'
 import LoadingScreen from './LoadingScreen'
@@ -154,11 +155,13 @@ class Test extends Component {
             <View style={styles.bodyContent}>
               <View style={styles.commentTitle}><Text style={{fontSize : 15, fontWeight:'bold'}}>Comments</Text></View>
               
-                  <Comment 
+                  <CommentTest 
                     person = {'Punreach'}
                     cmtText = {'I hate you'} 
                     key = {1}
                     Star =  {2}
+                    
+                    NumberLike = {5}
                   /> 
                   
               <View style={styles.bottomPart}>  
@@ -187,7 +190,7 @@ class Test extends Component {
                   )}
             >
             
-            <Icon name="comments" />
+            <Icon name="add" type="material"/>
       </Fab>
       
       </View>

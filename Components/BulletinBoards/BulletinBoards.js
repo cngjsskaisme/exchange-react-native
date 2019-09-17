@@ -130,12 +130,22 @@ class BulletinBoards extends Component{
             <View>{
                 this.state.isDev ? 
                 // 개발자 모드일 때
+                <View>
                     <FlatList 
                         data = {BulletinBoardsEntries_Mock}
                         renderItem = {this._renderItem}
                         keyExtractor = {this._keyExtractor}
                         onRefresh = {() => {}}
-                        refreshing = {this.state.isLoading}/> :
+                        refreshing = {this.state.isLoading}/> 
+                    <FAB
+                        style={styles.Floating}
+                        icon='add'
+                        onPress={() => this.props.navigation.navigate('EntryEdit', { 
+                            boardid: this.state.boardid,
+                            userid: this.state.userid,
+                            username: this.state.username,
+                            profile: this.state.profile})} />   
+                </View>:
                 this.state.isError ?
                 // 에러발생 했을 때
                     <View>
