@@ -135,7 +135,7 @@ BulletinBoardsContent.propTypes = {
         flexDirection: 'column',
         flex: 1,
         height: '100%',
-        padding: 15
+        padding: 10
     },
     BottomInput: {
         position: 'absolute',

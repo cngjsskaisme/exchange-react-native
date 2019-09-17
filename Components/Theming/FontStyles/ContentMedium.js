@@ -30,10 +30,21 @@ class ContentMedium extends Component{
 
     render(){
         return(
-            <Text style={{
-                fontSize: this.state.fontSize,
-                color: this.state.color,
-                ...this.state.style}}>{this.props.children}</Text>
+            <View>
+                {typeof this.props.numberOfLines === 'undefined'? 
+                    //numberOfLines가 정의되지 않았을 떄
+                    <Text style={{
+                        fontSize: this.state.fontSize,
+                        color: this.state.color,
+                        ...this.state.style}}>{this.props.children}</Text> :
+                    //numberOfLines가 정의되었을 떄
+                    <Text style={{
+                        fontSize: this.state.fontSize,
+                        color: this.state.color,
+                        ...this.state.style}}
+                        numberOfLines = {this.props.numberOfLines}
+                        ellipsizeMode = {this.props.ellipsizeMode}>{this.props.children}</Text>}
+            </View>
         );
     }
 }

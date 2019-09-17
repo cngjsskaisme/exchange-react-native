@@ -76,7 +76,10 @@ class BulletinBoardsEntries extends Component{
                     isDev: this.state.isDev})}>
                 <View style={styles.BulletinBoardsEntries}>
                     <Text style={styles.BulletinBoardsEntriesTitle}>{this.state.title}</Text> 
-                    <Text style={styles.BulletinBoardsEntriesContents}>  {this.state.contents} </Text>
+                    <Text 
+                        style={styles.BulletinBoardsEntriesContents}
+                        numberOfLines = {5}
+                        ellipsizeMode = 'tail'>{this.state.contents}</Text>
                     <Text style={styles.BulletinBoardsEntriesMetadata}> written by {this.state.username} at {this.state.date}, {this.state.likes} Likes</Text>
                     <PostMenu 
                         ismine = {this.state.ismine}
@@ -126,8 +129,9 @@ const styles = StyleSheet.create({
     BulletinBoardsEntriesContents:{
         flex: 5,
         fontSize: 14,
-        width: '75%',
-        paddingBottom: 10
+        width: '95%',
+        paddingLeft: 2,
+        paddingBottom: 5
     },
     BulletinBoardsEntriesMetadata:{
         flex: 2,

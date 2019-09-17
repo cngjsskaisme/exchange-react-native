@@ -18,6 +18,8 @@ import {server} from '../ServerLib/config';
 import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
 import ErrorPage from '../Tools/ErrorPage';
 import LoadingPage from '../Tools/LoadingPage'
+import { stringify } from 'querystring';
+import ConsoleLog from '../Tools/ConsoleLog';
 
 axios.defaults.timeout = 5000;
 
@@ -32,9 +34,10 @@ class BulletinBoards extends Component{
         userid: 0,
         currentuserid: 0,
         boardname: '',
-        entrieslist: null,
+        entrieslist: [],
         isLoading: false,
         isError: false,
+        isLoadingListFinished: false,
         isDev: false,
         postStartIndex: 0,
         postEndIndex: 0
@@ -49,6 +52,7 @@ class BulletinBoards extends Component{
             boardname: this.props.navigation.getParam('boardname'),
             isLoading: false,
             isError: false,
+            isLoadingListFinished: false,
             isDev: this.props.navigation.getParam('isDev'), 
 
             //데이터 관련. 불러올 첫/마지막 게시물의 index 번호 
@@ -71,16 +75,10 @@ class BulletinBoards extends Component{
         await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
             postStartIndex: this.state.postStartIndex, postEndIndex: this.state.postEndIndex})
             .then((response) => {
-                console.log(postStartIndex, postEndIndex, entrieslist);
-                if(response.data.postslist == null)
-                    this.setState({
-                        isLoading: false
-                    })
-                else
-                    this.setState({ 
-                        entrieslist: response.data.postslist,
-                        isLoading: false
-                    }) 
+                this.setState({ 
+                    entrieslist: response.data.postslist,
+                    isLoading: false,
+                }) 
         }) 
         .catch(( err ) => {
             Alert.alert(
@@ -94,6 +92,11 @@ class BulletinBoards extends Component{
             })
         });    
     }
+
+    _onLoadList = () => {
+        if( !this.state.isLoadingListFinished )
+            this._onGetPostsLists()
+    };
 
     //컴포넌트 마운트 시
     async componentDidMount(){
@@ -109,6 +112,7 @@ class BulletinBoards extends Component{
                 key = {item.entryid}
                 boardid = {item.boardid}
                 userid = {item.userid}
+                currentuserid = {this.state.currentuserid}
                 entryid = {item.entryid}
                 username = {item.username}
                 profile = {item.profile}
@@ -130,7 +134,9 @@ class BulletinBoards extends Component{
     render(){ 
         return(
             // 게시판의 게시글들을 목록으로 보여주는 함수임.
-            <View>{
+            <View>
+            <ConsoleLog>{this.state.isError}</ConsoleLog>
+            {
                 this.state.isDev ? 
                 // 개발자 모드일 때
                     <FlatList 
@@ -149,23 +155,31 @@ class BulletinBoards extends Component{
                 // 로딩중일 때
                     <LoadingPage/>:
                 // 게시판 목록을 보여줄 때, FlatList와 FAB 컴포넌트로 구성되어 있음
-                <View style={{width: '100%', height: '100%'}}>
-                    <FlatList 
-                            data = {this.state.entrieslist}
-                            extraData = {this.state}
-                            renderItem = {this._renderItem}
-                            keyExtractor = {this._keyExtractor}
-                            onRefresh = {this._onGetPostsLists}
-                            refreshing = {this.state.isLoading}
-                            onEndReached = {this._onGetPostsLists}/>
-                    <FAB
+                <View>
+                    <View style={{width: '100%'}}>
+                        <FlatList 
+                                data = {this.state.entrieslist}
+                                extraData = {this.state}
+                                renderItem = {this._renderItem}
+                                keyExtractor = {this._keyExtractor}
+                                onRefresh = {this._onGetPostsLists}
+                                refreshing = {this.state.isLoading}
+                        />
+                        <FAB
                             style={styles.Floating}
                             icon='add'
                             onPress={() => this.props.navigation.navigate('EntryEdit', { 
                                 boardid: this.state.boardid,
                                 userid: this.state.userid,
+                                currentuserid: this.state.currentuserid,
                                 username: this.state.username,
-                                profile: this.state.profile})} />        
+                                profile: this.state.profile})} />
+                        <Button onPress = {{}}>Load More...</Button>        
+                    </View>
+
+                    <View style={{width: '100%', height: '100%'}}>
+
+                    </View>
                 </View>
 
             }</View>)

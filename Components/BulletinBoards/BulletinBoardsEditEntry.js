@@ -27,6 +27,7 @@ class BulletinBoardsEditEntry extends Component{
             entryid: this.props.navigation.getParam('entryid', 0),
             replyid: this.props.navigation.getParam('entryid', 0),
             userid: this.props.navigation.getParam('userid', 0),
+            currentuserid: this.props.navigation.getParam('currentuserid', 0),
             username: this.props.navigation.getParam('username', ''),
             profile: this.props.navigation.getParam('profile', ''),
             likes: this.props.navigation.getParam('likes', 0),
@@ -47,7 +48,7 @@ class BulletinBoardsEditEntry extends Component{
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
+        await axios.post(url, {userid: this.state.currentuserid, boardid: this.state.boardid, 
             entryid: this.state.entryid, title: this.state.title, contents: this.state.contents}) 
             .then((response) => {       
                 this.setState({
@@ -60,7 +61,7 @@ class BulletinBoardsEditEntry extends Component{
                 'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                 [{text: 'OK'}]
             );
-        });    
+        });  
 }  
 
     //2. 댓글을 추가하는 함수 
@@ -71,7 +72,7 @@ class BulletinBoardsEditEntry extends Component{
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
+        await axios.post(url, {userid: this.state.currentuserid, boardid: this.state.boardid, 
             entryid: this.state.entryid, contents: this.state.contents}) 
             .then((response) => {       
                 this.setState({
@@ -93,7 +94,7 @@ class BulletinBoardsEditEntry extends Component{
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
+        await axios.post(url, {userid: this.state.currentuserid, boardid: this.state.boardid, 
             entryid: this.state.entryid, replyid: this.state.replyid, 
             contents: this.state.contents}) 
             .then((response) => {       

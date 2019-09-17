@@ -51,7 +51,7 @@ export const BulletinBoardsEntries_Mock = [
         date: '2019-08-20',
         ismine: true,
         title: 'Why you little!!',
-        contents: 'Love Simpsons!',
+        contents: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fames ac turpis egestas sed tempus urna. Fermentum et sollicitudin ac orci phasellus egestas. A diam sollicitudin tempor id eu nisl nunc mi ipsum. Lorem donec massa sapien faucibus et molestie ac feugiat sed. Velit laoreet id donec ultrices tincidunt arcu non sodales neque. Enim sit amet venenatis urna cursus. Euismod nisi porta lorem mollis aliquam ut porttitor leo a. Eget lorem dolor sed viverra ipsum nunc. Quam quisque id diam vel quam elementum pulvinar etiam non.',
         pictures: 'IMAGELINK (To be implemented)'
     },
     {
@@ -205,7 +205,7 @@ export const CommentEntries_Mock = [
         likes: 33,
         date: '2019-03-12',
         ismine: true,
-        contents: 'This is your comment',
+        contents: 'Urna nec tincidunt praesent semper feugiat nibh sed pulvinar proin. Velit aliquet sagittis id consectetur purus ut. Mi proin sed libero enim sed faucibus turpis in. Phasellus vestibulum lorem sed risus ultricies tristique nulla aliquet enim. Ultrices tincidunt arcu non sodales neque sodales. Sed id semper risus in hendrerit gravida. Arcu risus quis varius quam quisque id diam vel. Etiam non quam lacus suspendisse faucibus interdum posuere lorem ipsum. Vel orci porta non pulvinar neque laoreet suspendisse interdum consectetur. Faucibus et molestie ac feugiat sed lectus vestibulum mattis ullamcorper. Leo vel orci porta non pulvinar. Ornare lectus sit amet est placerat in. Magna eget est lorem ipsum. Et malesuada fames ac turpis. Egestas integer eget aliquet nibh praesent tristique magna sit amet. Ante metus dictum at tempor commodo ullamcorper a. Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Tellus integer feugiat scelerisque varius.',
         pictures: 'IMAGELINK (To be implemented)'
     },
 

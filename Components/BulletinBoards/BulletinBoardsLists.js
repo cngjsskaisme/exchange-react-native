@@ -38,7 +38,7 @@ class BulletinBoardsLists extends Component{
             currentuserid: "5d5373177443381df03f3040", //userid 반환 여기서 하게끔 boardslist에서 불러오기 (onget)
             isLoading: false,
             isError: false,
-            isDev: false //개발자 모드는 여기서 활성화
+            isDev: true //개발자 모드는 여기서 활성화
         }
     }
 
@@ -64,9 +64,7 @@ class BulletinBoardsLists extends Component{
                 [{text: 'OK'}]
               );
             this.setState({
-                postslist: BulletinBoardsLists_Mock,
                 isError: true,
-                isDev: true // !!!!!!!!!!!!!!!!1 이 부분 지워라 지워라 !!!!!!!
             })
         });    
     }
@@ -91,10 +89,10 @@ class BulletinBoardsLists extends Component{
                         isDev : this.state.isDev })}}>
                 <View style={styles.BulletinBoards}>
                     <View style={styles.BulletinBoardsName}>
-                        <TitleBold fontSize={20}>{item.boardname}</TitleBold>
+                        <TitleBold style= {{fontSize: 20}}>{item.boardname}</TitleBold>
                     </View>
                     <View style={styles.BulletinBoardsContents}>
-                        <MetaLight fontSize={14}>{item.contents}</MetaLight>
+                        <MetaLight style= {{fontSize: 14}}>{item.contents}</MetaLight>
                     </View>
                 </View>
             </TouchableRipple>
@@ -106,7 +104,6 @@ class BulletinBoardsLists extends Component{
 
     // 렌더 함수
     render(){  
-        
         return(
             <View>{
                 this.state.isDev ? 
@@ -125,7 +122,7 @@ class BulletinBoardsLists extends Component{
                     </View> :
                 this.state.isLoading ?
                 // 로딩중일 때
-                    <LoadingPage/>:
+                        <LoadingPage/> :
                 // 게시판 목록을 보여줄 때
                     <FlatList 
                             data = {this.state.boardslist}

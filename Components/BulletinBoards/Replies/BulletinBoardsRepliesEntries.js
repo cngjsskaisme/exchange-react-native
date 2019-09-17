@@ -80,27 +80,29 @@ class BulletinBoardRepliesEntries extends Component{
                         // 댓글 수정모드가 아닐 때
                         <View 
                         style={styles.RepliesEntry}>
-                        <View style={styles.RepliesEntryContents}>
-                            <ContentMedium>{this.state.contents}</ContentMedium>
-                        </View>
-                        <View style={styles.RepliesEntryMeta}>
-                            <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
-                        </View>
-                        <PostMenu
-                            ismine = {this.state.ismine}
-                            style = {styles.PostMenu}
-                            boardid = {this.state.boardid}
-                            entryid = {this.state.entryid}
-                            replyid = {this.state.replyid}
-                            userid = {this.state.userid}
-                            username = {this.state.username}
-                            profile = {this.state.profile}
-                            likes = {this.state.likes}
-                            date = {this.state.date}
-                            ismine = {this.state.ismine}
-                            title = {this.state.title}
-                            contents = {this.state.contents}
-                            pictures = {this.state.pictures}/>
+                            <View style={styles.RepliesEntryContents}>
+                                <ContentMedium
+                                    numberOfLines = {5}
+                                    ellipsizeMode = 'tail'>{this.state.contents}</ContentMedium>
+                            </View>
+                            <View style={styles.RepliesEntryMeta}>
+                                <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
+                            </View>
+                            <PostMenu
+                                ismine = {this.state.ismine}
+                                style = {styles.PostMenu}
+                                boardid = {this.state.boardid}
+                                entryid = {this.state.entryid}
+                                replyid = {this.state.replyid}
+                                userid = {this.state.userid}
+                                username = {this.state.username}
+                                profile = {this.state.profile}
+                                likes = {this.state.likes}
+                                date = {this.state.date}
+                                ismine = {this.state.ismine}
+                                title = {this.state.title}
+                                contents = {this.state.contents}
+                                pictures = {this.state.pictures}/>
                         </View>}
             </View>
         );
@@ -119,6 +121,7 @@ const styles = StyleSheet.create({
         top: 0,
     },
     RepliesEntry: {
+        paddingRight: 13,
         paddingBottom: 5
     },
     RepliesEntryContents: {
