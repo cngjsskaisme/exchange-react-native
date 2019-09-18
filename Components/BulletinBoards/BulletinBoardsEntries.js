@@ -91,7 +91,9 @@ class BulletinBoardsEntries extends Component{
                         userid = {this.state.currentuserid}
                         title = {this.state.title}
                         contents = {this.state.contents}
-                        style = {styles.PostMenu}/>
+                        style = {styles.PostMenu}
+                        
+                        _onGetPostsLists = {this.props._onGetPostsLists}/>
                 </View>
             </TouchableRipple>
         );

@@ -12,10 +12,11 @@ import { StyleSheet, Text, View, FlatList, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import { CommentEntries_Mock }  from '../../../Mockup_Datas/UnifiedEntries'; 
 import BulletinBoardsRepliesEntries from './BulletinBoardsRepliesEntries'; 
-import axios from 'axios'; 
-import {server} from '../../ServerLib/config';
 import ErrorPage from '../../Tools/ErrorPage';
+import LoadingPage from '../../Tools/LoadingPage'
 import ConsoleLog from '../../Tools/ConsoleLog';
+import axios from 'axios';
+import {server} from '../../ServerLib/config'
 
 
 class BulletinBoardsReplies extends Component{
@@ -32,6 +33,7 @@ class BulletinBoardsReplies extends Component{
         commentstartindex: 0, 
         commentendindex: 0,
 
+        isLoading: true,
         isDev: false,
         replyEditMode: false,
     }
@@ -45,12 +47,13 @@ class BulletinBoardsReplies extends Component{
             userid: this.props.userid,
             username: this.props.username,
             profile: this.props.profile,
-            commentslist: null,
+            commentslist: this.props.commentslist,
             
             //가져올 댓글의 시작, 끝 인덱스 번호 
             commentstartindex: 0,
             commentendindex: 0,
 
+            isLoading: true,
             isDev: this.props.isDev,
             replyEditMode: false,
         }
@@ -93,14 +96,12 @@ class BulletinBoardsReplies extends Component{
     async componentDidMount(){
         // 일반 사용자 모드일 때
         if (!this.state.isDev)
-            await this. _onGetComments();
+            await this._onGetComments();
         // 개발자 모드일 떄
         else{
             this.setState({commentslist : CommentEntries_Mock})
         }
     }
-   
-
 
     // Flatlist RenderItem 함수
     _renderItem = ({ item }) => {
@@ -121,8 +122,9 @@ class BulletinBoardsReplies extends Component{
                 contents = {item.contents}
                 pictures = {item.pictures}
                 
+                _onGetComments = {this._onGetComments}
                 replyEditMode = {this.state.replyEditMode}/>
-                </View>
+            </View>
         )
     };
 
@@ -133,17 +135,20 @@ class BulletinBoardsReplies extends Component{
     render(){
         return(
             <View>
-                {this.state.isError ? 
-                    //오류 발생 시
-                    <View>
-                    <ErrorPage/>
-                    </View> :
-                    //댓글 정상 출력
-                    <FlatList 
-                        data = {this.state.commentslist}
-                        extraData = {this.state} 
-                        renderItem = {this._renderItem}
-                        keyExtractor = {this._keyExtractor}/>
+                {this.state.isLoading ?
+                //로딩중일 시
+                <LoadingPage What={'Comments'}/> :
+                this.state.isError ? 
+                //오류 발생 시
+                <View>
+                <ErrorPage/>
+                </View> :
+                //댓글 정상 출력
+                <FlatList 
+                    data = {this.state.commentslist}
+                    extraData = {this.state} 
+                    renderItem = {this._renderItem}
+                    keyExtractor = {this._keyExtractor}/>
                 }
             </View>
         );

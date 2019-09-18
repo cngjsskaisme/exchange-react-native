@@ -91,7 +91,7 @@ class BulletinBoards extends Component{
                     this.state.entrieslist.splice(this.state.entrieslist.findIndex((element) => {return element.entryid == 'lastlastlast'}), 1)
                     this.state.entrieslist.push(...response.data.postslist)
                 }
-                {this.state.entrieslist.length % 20 == 0 ? // % 20으로 나눈 이유는 왜 인지 알 거 같지?
+                {this.state.entrieslist.length % 20 == 0  && response.data.length != 0? // % 20으로 나눈 이유는 왜 인지 알 거 같지?
                     // 게시글 개수가 20개가 꽉 찼을 떄 Load More 버튼 표시 (이후 반환받는 Entry가 비어있을 때에는 다음 처리)
                     this.state.entrieslist.push({lastElement:true, okToShow: true, entryid: 'lastlastlast'}) :
                     // 게시글 개수가 20개가 안될 떄
@@ -101,10 +101,8 @@ class BulletinBoards extends Component{
                     entrieslist: this.state.entrieslist,
                     isLoading: false,
                 }) ;
-                {console.log(this.state.entrieslist)}
         }) 
         .catch(( err ) => {
-            {console.log('Error Entered')}
             Alert.alert(
                 'Cannot connect to the server.',
                 'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
@@ -151,6 +149,9 @@ class BulletinBoards extends Component{
                     ismine = {item.ismine}
                     title = {item.title}
                     contents = {item.contents}
+
+                    _onGetPostsLists = {this._onGetPostsLists}
+
                     isDev = {this.state.isDev}
                     style = {styles.BulletinBoardsEntries}/>
             )

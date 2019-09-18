@@ -126,6 +126,12 @@ class BulletinBoardsEditEntry extends Component{
         });    
     }  
 
+    //4. 게시글 Submit 버튼 누를 시 navigation.goBack() 및 부모 컴포넌트 새로고침
+    _onSubmitPressed = () => {
+        this.state._onGetPostsLists(0, 0, true);
+        this.props.navigation.goBack();
+    }
+
     // 렌더 함수   
     render() {
         return(
@@ -148,9 +154,7 @@ class BulletinBoardsEditEntry extends Component{
                             {/*Loading스크린 집어넣기 */}}}}>Submit</Button>
                         <View>
                             {this.state.isUploadDone?
-                                () => {
-                                    this.props.navigation.goBack();
-                                    this.props.navigation._onGetPostsLists(0, 0, true)} :
+                                this._onSubmitPressed() :
                                 <View></View>}
                         </View>
                     </View>

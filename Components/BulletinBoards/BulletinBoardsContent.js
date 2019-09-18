@@ -34,6 +34,8 @@ class BulletinBoardsContent extends Component{
         contents: "",
         pictures: "",
 
+        commentslist: [],
+
         keyboardHeight:0,
         normalHeight: 0,
         shortHeight: 0,
@@ -57,12 +59,47 @@ class BulletinBoardsContent extends Component{
             contents: this.props.navigation.getParam('contents'),
             pictures: this.props.navigation.getParam('pictures'),
 
+            commentslist: [],
+
             keyboardHeight: 0,
             normalHeight: 0,
             shortHeight: 0,
             isDev: this.props.navigation.getParam('isDev'),
             replyEditMode: false,
         }
+    }
+
+    //데이터 요청 시 함수
+    // 1. 댓글 목록 얻기 요청
+    _onGetComments = async () => {   
+        var url = server.serverURL + '/process/ShowComments';
+        this.setState({
+            isLoading: true,
+            isError: false,
+
+            commentstartindex: this.state.commentendindex,
+            commentendindex: this.state.commentstartindex + 19,
+        }) 
+        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
+            entryid: this.state.entryid, 
+            commentstartindex: this.state.commentstartindex, commentendindex: this.state.commentendindex}) 
+
+            .then((response) => {       
+                this.setState({ 
+                commentslist: response.data.commentslist,
+                isLoading: false
+                }) 
+            }) 
+            .catch(( err ) => {
+                Alert.alert(
+                    'Cannot connect to the server.',
+                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+                    [{text: 'OK'}]
+                );
+            this.setState({
+                isError: true,
+            })
+        });    
     }
 
     // 렌더 함수
@@ -95,6 +132,7 @@ class BulletinBoardsContent extends Component{
                             userid = {this.state.userid}
                             username = {this.state.username}
                             profile = {this.state.profile}
+                            
                             isDev = {this.state.isDev}/>
                     </View>
                 </ScrollView>
@@ -110,7 +148,8 @@ class BulletinBoardsContent extends Component{
                         username = {this.state.username}
                         profile = {this.state.profile}
                         
-                        replyEditMode = {this.state.replyEditMode}/>
+                        replyEditMode = {this.state.replyEditMode}
+                        _onGetComments = {this._onGetComments}/>
                 </KeyboardAvoidingView>
             </View>
         );

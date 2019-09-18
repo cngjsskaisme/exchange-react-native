@@ -75,11 +75,7 @@ class PostMenu extends Component{
         }) 
         await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid,
             entryid: this.state.entryid, title: this.state.title, contents: this.state.contents}) 
-            .then((response) => {       
-                this.setState({
-                isLoading: false
-                }) 
-            
+            .then((response) => {
             }) 
             .catch(( err ) => {
                 Alert.alert(
@@ -87,6 +83,9 @@ class PostMenu extends Component{
                     'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                     [{text: 'OK'}]
                 );
+                this.setState({
+                    isError: true
+                })
             });    
     }  
     // 2. 게시글 좋아요 1 증가
@@ -99,7 +98,7 @@ class PostMenu extends Component{
         await axios.post(url, {boardid: this.state.boardid, entryid: this.state.entryid}) 
             .then((response) => {       
                 this.setState({
-                isLoading: false
+                isLoading: false,
                 }) 
             }) 
             .catch(( err ) => {
@@ -124,7 +123,7 @@ class PostMenu extends Component{
                 this.setState({
                 isLoading: false
                 }) 
-            }) 
+            })
             .catch(( err ) => {
                 Alert.alert(
                     'Cannot connect to the server.',
@@ -181,7 +180,7 @@ class PostMenu extends Component{
 
     // 렌더 함수 시작
     render(){ 
-        const { isReplyEditMode, _toggleReplyEditMode } = this.context;
+        {console.log(this.props)}
         //내 글이거나 관리자 모드일 때
         if(this.state.ismine || this.state.admin){
             return (
@@ -197,8 +196,16 @@ class PostMenu extends Component{
                     />
                     }
                 >
-                    <Menu.Item onPress={this._handleDeleteComment.bind(this)} title="Delete" />
                     <Menu.Item onPress={() => {
+                        //게시글 삭제
+                        { this.state.replyid == 0?
+                            //게시글일 떄
+                            this._handleDeleteEntry() :
+                            //댓글일 떄
+                            this._handleDeleteComment()}}} title="Delete" />
+        
+                    <Menu.Item onPress={() => {
+                        //글 수정
                         this._closeMenu();
                         // 게시글 수정, 댓글 수정 기능을 서로 분리 (예정) 
                         { //this.state.replyid == 0 ?
@@ -222,9 +229,16 @@ class PostMenu extends Component{
                             }
                         }
                     } title="Modify" />
-                    <Menu.Item onPress={this._handleAddReport.bind(this)} title="Report" />
+
+                    <Menu.Item onPress={
+                        //게시글 신고
+                        this._handleAddReport.bind(this)} title="Report" />
+
                     <Divider />
-                    <Menu.Item onPress={this._handleIncreLikeEntry.bind(this)} title="Like this!" />
+
+                    <Menu.Item onPress={
+                        //게시글 좋아요
+                        this._handleIncreLikeEntry.bind(this)} title="Like this!" />
                 </Menu>
             </View>);
         }
