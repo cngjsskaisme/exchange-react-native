@@ -99,6 +99,7 @@ class BulletinBoardRepliesEntries extends Component{
                                 entryid = {this.state.entryid}
                                 replyid = {this.state.replyid}
                                 userid = {this.state.userid}
+                                currentuserid = {this.state.currentuserid}
                                 username = {this.state.username}
                                 profile = {this.state.profile}
                                 likes = {this.state.likes}

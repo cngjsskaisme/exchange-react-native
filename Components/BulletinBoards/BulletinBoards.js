@@ -18,8 +18,10 @@ import {server} from '../ServerLib/config';
 import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
 import ErrorPage from '../Tools/ErrorPage';
 import LoadingPage from '../Tools/LoadingPage'
+import EmptyPage from '../Tools/EmptyPage'
 import { stringify } from 'querystring';
 import ConsoleLog from '../Tools/ConsoleLog';
+import { _onGetBulletinBoardsPost } from '../ServerLib/ServerRequest'
 
 axios.defaults.timeout = 5000;
 
@@ -57,69 +59,24 @@ class BulletinBoards extends Component{
     }
     
     // 데이터 요청 함수
-    // 1. 게시글 목록 불러오는 함수
-    _onGetPostsLists = async (postStartIndex, postEndIndex, isRefresh) => {   
-        var url = server.serverURL + '/process/ShowBulletinBoard';
-        // 새로고침인 경우 isLoading 활성화 후 모든 목록 다시 받기
-        if(isRefresh){
-            postStartIndex= 0;
-            postEndIndex= 19;
-            await this.setState({
-                isLoading: true,
-                isError: false,
-            }) 
-        }
-        // 새로고침이 아닌 경우 isLoadingMore 활성화 후 일부 목록만 추가로 이어 받기
-        else{
-            postStartIndex= this.state.entrieslist.length - 1;
-            postEndIndex= postStartIndex + 20;
-            await this.setState({
-                isLoadingMore: true,
-                isError: false,
-            }) 
-        }
-        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
-            postStartIndex: postStartIndex, postEndIndex: postEndIndex})
-            .then((response) => {
-                // 새로고침시 목록 다 지우고 게시글 목록 새로 받기
-                if(isRefresh){
-                    this.state.entrieslist.splice(0, this.state.entrieslist.length)    
-                    this.state.entrieslist.push(...response.data.postslist)
-                }
-                // 새로고침이 아닌 경우
-                else{
-                    this.state.entrieslist.splice(this.state.entrieslist.findIndex((element) => {return element.entryid == 'lastlastlast'}), 1)
-                    this.state.entrieslist.push(...response.data.postslist)
-                }
-                {this.state.entrieslist.length % 20 == 0  && response.data.length != 0? // % 20으로 나눈 이유는 왜 인지 알 거 같지?
-                    // 게시글 개수가 20개가 꽉 찼을 떄 Load More 버튼 표시 (이후 반환받는 Entry가 비어있을 때에는 다음 처리)
-                    this.state.entrieslist.push({lastElement:true, okToShow: true, entryid: 'lastlastlast'}) :
-                    // 게시글 개수가 20개가 안될 떄
-                    this.state.entrieslist.push({lastElement:true, okToShow: false, entryid: 'lastlastlast'})
-                }
-                this.setState({ 
-                    entrieslist: this.state.entrieslist,
-                    isLoading: false,
-                }) ;
-        }) 
-        .catch(( err ) => {
-            Alert.alert(
-                'Cannot connect to the server.',
-                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [{text: 'OK'}]
-              );
-            this.setState({
-                postslist: BulletinBoardsEntries_Mock,
-                isError: true,
-            })
-        });    
+    // 0. 함수로 내려보낼 SetState
+    _onSetState = (state) => {
+        this.setState({
+            ...state
+        })
+    }
+
+    // 1. BulletinBoardsEditEntry로 내려보낼 _refresher
+    _refresher = () => {
+        this.forceUpdate();
+        _onGetBulletinBoardsPost({...this.state}, this._onSetState, true);
     }
 
     //컴포넌트 마운트 시
     async componentDidMount(){
         // 일반 사용자 모드일 때 게시글 목록 불러오기
         if(!this.state.isDev)
-            await this._onGetPostsLists(0, 19, true); 
+            await _onGetBulletinBoardsPost({...this.state}, this._onSetState, true);
     }
 
     // Flatlist RenderItem 함수
@@ -127,7 +84,7 @@ class BulletinBoards extends Component{
         if(item.lastElement){
             if(item.okToShow)
                 return(
-                    <View>
+                    <View style={{paddingTop: 10}}>
                     <Button onPress={this._onGetPostsLists}>Load More...</Button>
                     </View>
                 )
@@ -149,8 +106,6 @@ class BulletinBoards extends Component{
                     ismine = {item.ismine}
                     title = {item.title}
                     contents = {item.contents}
-
-                    _onGetPostsLists = {this._onGetPostsLists}
 
                     isDev = {this.state.isDev}
                     style = {styles.BulletinBoardsEntries}/>
@@ -189,11 +144,27 @@ class BulletinBoards extends Component{
                 // 에러발생 했을 때
                     <View>
                         <ErrorPage/>
-                        <Button onPress={() => this._onGetPostsLists(0,0,true)}>Refresh</Button> 
+                        <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetState, true)}>Refresh</Button> 
                     </View> :
                 this.state.isLoading?
                 // 로딩중일 때
                     <LoadingPage What='Threads'/>:
+                this.state.entrieslist.length === 1?
+                // 게시글이 없을 때
+                    <View style={{width:'100%', height:'100%'}}>
+                        <EmptyPage What='Threads' /> 
+                        <FAB
+                        style={styles.Floating}
+                        icon='add'
+                        onPress={() => this.props.navigation.navigate('EntryEdit', { 
+                            boardid: this.state.boardid,
+                            userid: this.state.userid,
+                            currentuserid: this.state.currentuserid,
+                            username: this.state.username,
+                            profile: this.state.profile,
+                            
+                            _refresher: this._refresher})} />
+                    </View>:
                 // 게시판 목록을 보여줄 때, FlatList와 FAB 컴포넌트로 구성되어 있음
                 <View>
                     <View style={{width: '100%', height: '100%'}}>
@@ -202,7 +173,7 @@ class BulletinBoards extends Component{
                                 extraData = {this.state}
                                 renderItem = {this._renderItem}
                                 keyExtractor = {this._keyExtractor}
-                                onRefresh = {() => this._onGetPostsLists(0, 0, true)}
+                                onRefresh = {() => _onGetBulletinBoardsPost({...this.state}, this._onSetState, true)}
                                 refreshing = {this.state.isLoading}
                         />
                         <FAB
@@ -215,7 +186,7 @@ class BulletinBoards extends Component{
                                 username: this.state.username,
                                 profile: this.state.profile,
                                 
-                                _onGetPostsLists: this._onGetPostsLists,})} />        
+                                _refresher: this._refresher})} />        
                     </View>
                 </View>
 

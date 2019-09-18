@@ -16,13 +16,14 @@ import axios from 'axios';
 import {server} from '../ServerLib/config';
 import { BulletinBoardsContext } from '../BulletinBoards/BulletinBoardsContext'; 
 import ConsoleLog from './ConsoleLog';
+import { _handleBulletinBoardsPostDelete, _handleDeleteReplies, _handleAddReport, _handleLikeIncrease } from '../ServerLib/ServerRequest'
 
 class PostMenu extends Component{
     static defaultProps = {
         boardid: 0,
         entryid: 0,
         replyid: 0,
-        userid: 0,
+        currentuserid: 0,
         username: '',
         profile: '',
         likes: 0,
@@ -43,7 +44,7 @@ class PostMenu extends Component{
             boardid: this.props.boardid,
             entryid: this.props.entryid,
             replyid: this.props.replyid,
-            userid: this.props.userid,
+            currentuserid: this.props.currentuserid,
             username: this.props.username,
             profile: this.props.profile,
             likes: this.props.likes,
@@ -66,121 +67,13 @@ class PostMenu extends Component{
     _closeMenu = () => this.setState({ visible: false }); 
 
     // 데이터 요청 함수
-    // 1. 하나의 게시글 삭제 
-    _handleDeleteEntry = async() => {
-        var url = server.serverURL + '/process/DeleteEntry';
-        this.setState({
-            isLoading: true,
-            isError: false
-        }) 
-        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid,
-            entryid: this.state.entryid, title: this.state.title, contents: this.state.contents}) 
-            .then((response) => {
-            }) 
-            .catch(( err ) => {
-                Alert.alert(
-                    'Cannot connect to the server.',
-                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                    [{text: 'OK'}]
-                );
-                this.setState({
-                    isError: true
-                })
-            });    
-    }  
-    // 2. 게시글 좋아요 1 증가
-    _handleIncreLikeEntry = async() => {
-        var url = server.serverURL + '/process/IncreLikeEntry';
-        this.setState({
-            isLoading: true,
-            isError: false
-        }) 
-        await axios.post(url, {boardid: this.state.boardid, entryid: this.state.entryid}) 
-            .then((response) => {       
-                this.setState({
-                isLoading: false,
-                }) 
-            }) 
-            .catch(( err ) => {
-                Alert.alert(
-                    'Cannot connect to the server.',
-                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                    [{text: 'OK'}]
-                );
-            });    
-    }    
-
-    // 3. 게시물 신고
-    _handleAddReport = async() => {
-        var url = server.serverURL + '/process/AddReport';
-        this.setState({
-            isLoading: true,
-            isError: false
-        }) 
-        await axios.post(url, {title: "report title1", contents: "report contents1", userid: "5d5373177443381df03f3040", boardid: "board1", 
-            entryid: "5d75a757d47cdf78a5ce79d1", commentid: null }) 
-            .then((response) => {       
-                this.setState({
-                isLoading: false
-                }) 
-            })
-            .catch(( err ) => {
-                Alert.alert(
-                    'Cannot connect to the server.',
-                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                    [{text: 'OK'}]
-                );
-            });    
+    // 0. 내려보내기 위한 _onSetState 함수
+    _onSetState = (state) => {
+        this.setState(state)
     }
-
-    // 4. 댓글 삭제
-    _handleDeleteComment = async() => {
-        var url = server.serverURL + '/process/DeleteComment';
-        this.setState({
-            isLoading: true,
-            isError: false
-        }) 
-        await axios.post(url, { boardid: "board1", entryid: "5d75a757d47cdf78a5ce79d1", replyid: "5d78f145a039958385f9c75d"}) 
-            .then((response) => {       
-                this.setState({
-                isLoading: false
-                }) 
-            }) 
-            .catch(( err ) => {
-                Alert.alert(
-                    'Cannot connect to the server.',
-                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                    [{text: 'OK'}]
-                );
-            });    
-    }
-
-    // 5. 댓글 좋아요 1 증가
-    _handleIncreLikeComment = async() => {
-        var url = server.serverURL + '/process/IncreLikeComment';
-        this.setState({
-            isLoading: true,
-            isError: false
-        }) 
-        await axios.post(url, { boardid: "board1", entryid: "5d75e153e6339cf16c9abbfa", replyid: "5d785b63bff6656864bc419c"}) 
-            .then((response) => {       
-                this.setState({
-                isLoading: false
-                }) 
-            }) 
-            .catch(( err ) => {
-                Alert.alert(
-                    'Cannot connect to the server.',
-                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                    [{text: 'OK'}]
-                );
-            });    
-    }
-
 
     // 렌더 함수 시작
     render(){ 
-        {console.log(this.props)}
         //내 글이거나 관리자 모드일 때
         if(this.state.ismine || this.state.admin){
             return (
@@ -200,9 +93,9 @@ class PostMenu extends Component{
                         //게시글 삭제
                         { this.state.replyid == 0?
                             //게시글일 떄
-                            this._handleDeleteEntry() :
+                            _handleBulletinBoardsPostDelete({...this.state}, this._onSetState) :
                             //댓글일 떄
-                            this._handleDeleteComment()}}} title="Delete" />
+                            _handleDeleteReplies({...this.state}, this._onSetState)}}} title="Delete" />
         
                     <Menu.Item onPress={() => {
                         //글 수정
@@ -216,6 +109,7 @@ class PostMenu extends Component{
                                 entryid: this.state.entryid,
                                 replyid: this.state.replyid,
                                 userid: this.state.userid,
+                                currentuserid: this.state.currentuserid,
                                 username: this.state.username,
                                 profile: this.state.profile,
                                 likes: this.state.likes,
@@ -230,15 +124,15 @@ class PostMenu extends Component{
                         }
                     } title="Modify" />
 
-                    <Menu.Item onPress={
+                    <Menu.Item onPress={ () =>
                         //게시글 신고
-                        this._handleAddReport.bind(this)} title="Report" />
+                        this._handleAddReport({...this.state}, this._onSetState)} title="Report" />
 
                     <Divider />
 
-                    <Menu.Item onPress={
+                    <Menu.Item onPress={ () =>
                         //게시글 좋아요
-                        this._handleIncreLikeEntry.bind(this)} title="Like this!" />
+                        this._handleLikeIncrease({...this.state}, this._onSetState)} title="Like this!" />
                 </Menu>
             </View>);
         }
@@ -257,9 +151,9 @@ class PostMenu extends Component{
                     />
                     }
                 >
-                    <Menu.Item onPress={this._handleAddReport.bind(this)} title="Report" />
+                    <Menu.Item onPress={() => this._handleAddReport({...this.state}, this._onSetState)} title="Report" />
                     <Divider />
-                    <Menu.Item onPress={this._handleIncreLikeEntry.bind(this)} title="Like this!" />
+                    <Menu.Item onPress={() => this._handleLikeIncrease({...this.state}, this._onSetState)} title="Like this!" />
                 </Menu>
             </View>);
         }

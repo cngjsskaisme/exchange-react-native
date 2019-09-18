@@ -19,6 +19,7 @@ import {server} from '../ServerLib/config';
 import ErrorPage from '../Tools/ErrorPage';
 import LoadingPage from '../Tools/LoadingPage';
 import ConsoleLog from '../Tools/ConsoleLog';
+import { _onGetBulletinBoardsLists } from '../ServerLib/ServerRequest'
 
 axios.defaults.timeout = 5000;
 
@@ -43,37 +44,18 @@ class BulletinBoardsLists extends Component{
     }
 
     // 데이터 요청 함수
-    // 1. 게시글 목록 불러오는 함수
-    _onGetBulletinBoardsLists = async () => {   
-        var url = server.serverURL + '/process/ShowBulletinBoardsList';
+    // 0. 함수로 내려보낼 SetState
+    _onSetState = (state) => {
         this.setState({
-            isLoading: true,
-            isError: false
+            ...state
         })
-        await axios.post(url) 
-            .then((response) => {       
-                this.setState({ 
-                boardslist: response.data.boardslist,
-                isLoading: false
-                }) 
-            }) 
-        .catch(( err ) => {
-            Alert.alert(
-                'Cannot connect to the server.',
-                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [{text: 'OK'}]
-              );
-            this.setState({
-                isError: true,
-            })
-        });    
     }
 
     // 컴포넌트 마운트 시
     async componentDidMount(){
         // 일반 사용자 모드일 때
         if (!this.state.isDev)
-            await this._onGetBulletinBoardsLists(); 
+            await _onGetBulletinBoardsLists(this._onSetState); 
     }
 
     // FlatList의 RenderItem 함수
@@ -118,7 +100,7 @@ class BulletinBoardsLists extends Component{
                 // 에러발생 했을 때
                     <View>
                         <ErrorPage/>
-                        <Button onPress={this._onGetBulletinBoardsLists}>Refresh</Button> 
+                        <Button onPress={() => _onGetBulletinBoardsLists(this._onSetState)}>Refresh</Button> 
                     </View> :
                 this.state.isLoading ?
                 // 로딩중일 때
@@ -128,7 +110,7 @@ class BulletinBoardsLists extends Component{
                             data = {this.state.boardslist}
                             renderItem = {this._renderItem}
                             keyExtractor = {this._keyExtractor}
-                            onRefresh = {this._onGetBulletinBoardsLists}
+                            onRefresh = {() => _onGetBulletinBoardsLists(this._onSetState)}
                             refreshing = {this.state.isLoading}/>
 
             }</View>)

@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import { TextInput, IconButton, Colors } from 'react-native-paper'
 import axios from 'axios'; 
 import {server} from '../../ServerLib/config';
+import { _onAddBulletinBoardsReplies } from '../../ServerLib/ServerRequest'
 
 class BulletinBoardsRepliesInput extends Component{
     static defaultProps = {
@@ -29,8 +30,6 @@ class BulletinBoardsRepliesInput extends Component{
     constructor(props){
         super(props);
         this.state = {
-            refhandover: this.props.refhandover,
-
             boardid: this.props.boardid,
             entryid: this.props.entryid,
             currentuserid: this.props.currentuserid,
@@ -43,31 +42,11 @@ class BulletinBoardsRepliesInput extends Component{
     }
 
 
-    //데이터 요청 시 함수
-    // 1. 댓글을 추가하는 함수 
-    //onPress={this._onAddComment.bind(this)} 
-    _onAddComment = async() => {
-        var url = server.serverURL + '/process/AddComment';
-        this.setState({
-            isLoading: true,
-            isError: false
-        }) 
-        await axios.post(url, {userid: this.state.currentuserid, boardid: this.state.boardid, 
-            entryid: this.state.entryid, contents: this.state.contents}) 
-            .then((response) => {       
-                this.setState({
-                isLoading: false
-                });
-                this.props.refhandover._onGetComments
-            }) 
-        .catch(( err ) => {
-            Alert.alert(
-                'Cannot connect to the server.',
-                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [{text: 'OK'}]
-              );
-        });    
-    } 
+    // 데이터 요청 시 함수
+    // 0. 내려보낼 _onSetState 함수
+    _onSetState = (state) => {
+        this.setState(state)
+    }
 
     //렌더 함수
     render(){
@@ -87,7 +66,7 @@ class BulletinBoardsRepliesInput extends Component{
                             icon="arrow-upward"
                             color={Colors.red500}
                             size={20}
-                            onPress={this._onAddComment}/>
+                            onPress={() => _onAddBulletinBoardsReplies({...this.state}, this._onSetState)}/>
                     </View> :
                     <View style={styles.Container}>
                         <TextInput
@@ -100,7 +79,7 @@ class BulletinBoardsRepliesInput extends Component{
                             icon="arrow-upward"
                             style= {styles.Button}
                             size={15}
-                            onPress={this._onAddComment}/>
+                            onPress={() => _onAddBulletinBoardsReplies({...this.state}, this._onSetState)}/>
                     </View>}
             </View>
         );

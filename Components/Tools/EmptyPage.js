@@ -16,15 +16,27 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Button } from 'react-native-paper';
 
 class ErrorPage extends Component{
+    static defaultProps = {
+        What : '',
+    }
+
+    constructor(props){
+        super(props);
+        this.state = {
+            What : this.props.What,
+        }
+    }
+
     render(){
         return(
             <View style={styles.ErrorView}>
                 <View style={styles.Header}>
                     <Icon name="mood" size={80} color="#a1a1a1" />
-                    <TitleBold style={{fontSize:30}}>Nothing is here.</TitleBold>
+                    <TitleBold style={{fontSize:30}}>{this.state.What === ''? 'Nothing ' : 'No ' + this.state.What + ' '}here.</TitleBold>
                 </View>
                 <View>
-                    <ContentMedium style={{fontSize:20}}>Be the first leave something here!</ContentMedium>
+                    <ContentMedium style={{fontSize:20}}>Be the first person to leave</ContentMedium>
+                    <ContentMedium style={{fontSize:20, textAlign: 'center'}}>{this.state.what === ''? '': this.state.What + ' '}here!</ContentMedium>
                 </View>
             </View>
         );
@@ -35,7 +47,8 @@ const styles = StyleSheet.create({
     ErrorView: {
         display: 'flex',
         alignItems: 'center',
-        paddingTop: '45%'
+        paddingTop: 30,
+        paddingBottom: 40,
     },
     Header: {
         justifyContent: 'flex-end',

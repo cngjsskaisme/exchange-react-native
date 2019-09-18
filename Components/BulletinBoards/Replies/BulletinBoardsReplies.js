@@ -13,10 +13,10 @@ import PropTypes from 'prop-types';
 import { CommentEntries_Mock }  from '../../../Mockup_Datas/UnifiedEntries'; 
 import BulletinBoardsRepliesEntries from './BulletinBoardsRepliesEntries'; 
 import ErrorPage from '../../Tools/ErrorPage';
+import EmptyPage from '../../Tools/EmptyPage'
 import LoadingPage from '../../Tools/LoadingPage'
 import ConsoleLog from '../../Tools/ConsoleLog';
-import axios from 'axios';
-import {server} from '../../ServerLib/config'
+import { _onGetBulletinBoardsReplies } from '../../ServerLib/ServerRequest'
 
 
 class BulletinBoardsReplies extends Component{
@@ -59,44 +59,17 @@ class BulletinBoardsReplies extends Component{
         }
     }
 
-    //데이터 요청 시 함수
-    // 1. 댓글 목록 얻기 요청
-    _onGetComments = async () => {   
-        var url = server.serverURL + '/process/ShowComments';
-        this.setState({
-            isLoading: true,
-            isError: false,
-
-            commentstartindex: this.state.commentendindex,
-            commentendindex: this.state.commentstartindex + 19,
-        }) 
-        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
-            entryid: this.state.entryid, 
-            commentstartindex: this.state.commentstartindex, commentendindex: this.state.commentendindex}) 
-
-            .then((response) => {       
-                this.setState({ 
-                commentslist: response.data.commentslist,
-                isLoading: false
-                }) 
-            }) 
-            .catch(( err ) => {
-                Alert.alert(
-                    'Cannot connect to the server.',
-                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                    [{text: 'OK'}]
-                );
-            this.setState({
-                isError: true,
-            })
-        });    
+    // 데이터 요청 시 함수
+    // 0. 내려보낼 _onSetState 함수
+    _onSetState = (state) => {
+        this.setState(state)
     }
 
     //컴포넌트 마운트 시
     async componentDidMount(){
         // 일반 사용자 모드일 때
         if (!this.state.isDev)
-            await this._onGetComments();
+            await _onGetBulletinBoardsReplies({...this.state}, this._onSetState);
         // 개발자 모드일 떄
         else{
             this.setState({commentslist : CommentEntries_Mock})
@@ -138,6 +111,9 @@ class BulletinBoardsReplies extends Component{
                 {this.state.isLoading ?
                 //로딩중일 시
                 <LoadingPage What={'Comments'}/> :
+                this.state.commentslist.length == 0 ?
+                //댓글이 비어있을 시
+                <EmptyPage What={'Comment'}/> :
                 this.state.isError ? 
                 //오류 발생 시
                 <View>
