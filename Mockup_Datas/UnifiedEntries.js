@@ -63,7 +63,7 @@ export const BulletinBoardsEntries_Mock = [
         likes: 1,
         date: '2019-07-21',
         ismine: false,
-        title: 'yes',
+        title: 'Ac tincidunt vitae semper quis lectus nulla at. Feugiat nibh sed pulvinar proin gravida hendrerit lectus. Ultrices vitae auctor eu augue. A arcu cursus vitae congue. Cras fermentum odio eu feugiat pretium. At ultrices mi tempus imperdiet nulla malesuada pellentesque elit eget. Sit amet purus gravida quis. Pulvinar elementum integer enim neque volutpat ac tincidunt vitae semper. Fringilla est ullamcorper eget nulla facilisi etiam dignissim. Risus commodo viverra maecenas accumsan lacus vel facilisis. Mauris cursus mattis molestie a iaculis at erat pellentesque adipiscing. Sapien pellentesque habitant morbi tristique senectus et netus. Pharetra et ultrices neque ornare aenean. Urna nec tincidunt praesent semper feugiat nibh. Dolor purus non enim praesent elementum facilisis leo vel fringilla. Ipsum dolor sit amet consectetur adipiscing elit pellentesque. Sed adipiscing diam donec adipiscing tristique risus nec.',
         contents: 'I am yesman',
         pictures: 'IMAGELINK (To be implemented)'
     },
@@ -76,8 +76,8 @@ export const BulletinBoardsEntries_Mock = [
         likes: 23,
         date: '2019-02-21',
         ismine: false,
-        title: 'as hell',
-        contents: 'yeah',
+        title: 'In ante metus dictum at tempor commodo ullamcorper. Lorem donec massa sapien faucibus et molestie ac feugiat sed. Vel facilisis volutpat est velit egestas dui. Nunc faucibus a pellentesque sit amet porttitor eget dolor. Faucibus vitae aliquet nec ullamcorper sit amet risus nullam. Orci a scelerisque purus semper eget. Integer eget aliquet nibh praesent tristique magna. Viverra mauris in aliquam sem fringilla ut. Sed risus pretium quam vulputate. Convallis posuere morbi leo urna molestie at elementum eu. Ultrices neque ornare aenean euismod elementum nisi quis. Proin sagittis nisl rhoncus mattis rhoncus urna neque viverra justo. Elementum tempus egestas sed sed risus pretium quam.',
+        contents: 'Etiam sit amet nisl purus in. Pellentesque pulvinar pellentesque habitant morbi tristique senectus et netus. Felis donec et odio pellentesque diam. Tempus urna et pharetra pharetra massa. A iaculis at erat pellentesque adipiscing commodo. Sed odio morbi quis commodo odio aenean sed adipiscing diam. Pharetra vel turpis nunc eget. Augue neque gravida in fermentum et sollicitudin ac orci. Orci porta non pulvinar neque laoreet. Praesent elementum facilisis leo vel fringilla. Vulputate odio ut enim blandit volutpat maecenas volutpat.',
         pictures: 'IMAGELINK (To be implemented)'
     },
     {

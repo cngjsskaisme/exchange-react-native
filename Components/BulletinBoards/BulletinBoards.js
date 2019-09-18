@@ -81,10 +81,9 @@ class BulletinBoards extends Component{
         await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
             postStartIndex: postStartIndex, postEndIndex: postEndIndex})
             .then((response) => {
-                {console.log(postStartIndex + " " + postEndIndex )}
                 // 새로고침시 목록 다 지우고 게시글 목록 새로 받기
                 if(isRefresh){
-                    this.state.entrieslist.splaice(0, this.state.entrieslist.length)    
+                    this.state.entrieslist.splice(0, this.state.entrieslist.length)    
                     this.state.entrieslist.push(...response.data.postslist)
                 }
                 // 새로고침이 아닌 경우
@@ -92,16 +91,17 @@ class BulletinBoards extends Component{
                     this.state.entrieslist.splice(this.state.entrieslist.findIndex((element) => {return element.entryid == 'lastlastlast'}), 1)
                     this.state.entrieslist.push(...response.data.postslist)
                 }
-                this.setState({ 
-                    entrieslist: this.state.entrieslist,
-                    isLoading: false,
-                }) ;
                 {this.state.entrieslist.length % 20 == 0 ? // % 20으로 나눈 이유는 왜 인지 알 거 같지?
                     // 게시글 개수가 20개가 꽉 찼을 떄 Load More 버튼 표시 (이후 반환받는 Entry가 비어있을 때에는 다음 처리)
                     this.state.entrieslist.push({lastElement:true, okToShow: true, entryid: 'lastlastlast'}) :
                     // 게시글 개수가 20개가 안될 떄
                     this.state.entrieslist.push({lastElement:true, okToShow: false, entryid: 'lastlastlast'})
                 }
+                this.setState({ 
+                    entrieslist: this.state.entrieslist,
+                    isLoading: false,
+                }) ;
+                {console.log(this.state.entrieslist)}
         }) 
         .catch(( err ) => {
             {console.log('Error Entered')}
@@ -212,7 +212,9 @@ class BulletinBoards extends Component{
                                 userid: this.state.userid,
                                 currentuserid: this.state.currentuserid,
                                 username: this.state.username,
-                                profile: this.state.profile})} />        
+                                profile: this.state.profile,
+                                
+                                _onGetPostsLists: this._onGetPostsLists,})} />        
                     </View>
                 </View>
 

@@ -75,7 +75,10 @@ class BulletinBoardsEntries extends Component{
                     pictures: this.state.pictures,
                     isDev: this.state.isDev})}>
                 <View style={styles.BulletinBoardsEntries}>
-                    <Text style={styles.BulletinBoardsEntriesTitle}>{this.state.title}</Text> 
+                    <Text 
+                        style={styles.BulletinBoardsEntriesTitle}
+                        numberOfLines= {3}
+                        ellipsizeMode= {'tail'}>{this.state.title}</Text> 
                     <Text 
                         style={styles.BulletinBoardsEntriesContents}
                         numberOfLines = {5}

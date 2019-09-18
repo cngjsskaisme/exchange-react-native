@@ -47,6 +47,8 @@ class BulletinBoardsEditEntry extends Component{
             title: this.props.navigation.getParam('title', ''),
             contents: this.props.navigation.getParam('contents', ''),
             pictures: this.props.navigation.getParam('pictures', ''),
+
+            _onGetPostsLists: this.props.navigation.getParam('_onGetPostsLists', ''),
         })}, 50);
     }
 
@@ -146,7 +148,9 @@ class BulletinBoardsEditEntry extends Component{
                             {/*Loading스크린 집어넣기 */}}}}>Submit</Button>
                         <View>
                             {this.state.isUploadDone?
-                                this.props.navigation.goBack() :
+                                () => {
+                                    this.props.navigation.goBack();
+                                    this.props.navigation._onGetPostsLists(0, 0, true)} :
                                 <View></View>}
                         </View>
                     </View>
