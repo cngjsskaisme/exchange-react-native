@@ -14,5 +14,6 @@
 5. BulletinBoardsEntries, BulletinBoardsContents, PostMenu 삭제 요청 시 해당 boardid, entryid, replyid 에 해당하는 DB 한 줄
    지워주기
 6. 연속 댓글에 대한 replylevel 별 정렬 후 반환. (parentreply==replyid 일 경우 그대로 냅두고 replyid에 종속된 다른 replyid인 경우 replylevel에 따른 정렬)
+7. !!!가장 중요!!! -> DM 기능 구현
 
 각각을 재사용 가능하게끔 컴포넌트로 내가 구현할 수 있으니 그냥 API만 대강 만들어서 줘도 괜찮음.

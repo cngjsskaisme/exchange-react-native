@@ -81,9 +81,10 @@ class BulletinBoards extends Component{
         await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
             postStartIndex: postStartIndex, postEndIndex: postEndIndex})
             .then((response) => {
+                {console.log(postStartIndex + " " + postEndIndex )}
                 // 새로고침시 목록 다 지우고 게시글 목록 새로 받기
                 if(isRefresh){
-                    this.state.entrieslist.splice(0, this.state.entrieslist.length)    
+                    this.state.entrieslist.splaice(0, this.state.entrieslist.length)    
                     this.state.entrieslist.push(...response.data.postslist)
                 }
                 // 새로고침이 아닌 경우
@@ -96,13 +97,14 @@ class BulletinBoards extends Component{
                     isLoading: false,
                 }) ;
                 {this.state.entrieslist.length % 20 == 0 ? // % 20으로 나눈 이유는 왜 인지 알 거 같지?
-                    // 게시글 개수가 20개가 넘을 때
+                    // 게시글 개수가 20개가 꽉 찼을 떄 Load More 버튼 표시 (이후 반환받는 Entry가 비어있을 때에는 다음 처리)
                     this.state.entrieslist.push({lastElement:true, okToShow: true, entryid: 'lastlastlast'}) :
                     // 게시글 개수가 20개가 안될 떄
                     this.state.entrieslist.push({lastElement:true, okToShow: false, entryid: 'lastlastlast'})
                 }
         }) 
         .catch(( err ) => {
+            {console.log('Error Entered')}
             Alert.alert(
                 'Cannot connect to the server.',
                 'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
@@ -128,7 +130,6 @@ class BulletinBoards extends Component{
             if(item.okToShow)
                 return(
                     <View>
-                    <ConsoleLog>{'Entered...'}</ConsoleLog>
                     <Button onPress={this._onGetPostsLists}>Load More...</Button>
                     </View>
                 )
@@ -187,7 +188,7 @@ class BulletinBoards extends Component{
                 // 에러발생 했을 때
                     <View>
                         <ErrorPage/>
-                        <Button onPress={this._onGetPostsLists}>Refresh</Button> 
+                        <Button onPress={() => this._onGetPostsLists(0,0,true)}>Refresh</Button> 
                     </View> :
                 this.state.isLoading?
                 // 로딩중일 때
@@ -195,7 +196,6 @@ class BulletinBoards extends Component{
                 // 게시판 목록을 보여줄 때, FlatList와 FAB 컴포넌트로 구성되어 있음
                 <View>
                     <View style={{width: '100%', height: '100%'}}>
-                    {console.log(this.state.entrieslist)}
                         <FlatList 
                                 data = {this.state.entrieslist}
                                 extraData = {this.state}

@@ -62,10 +62,11 @@ class BulletinBoardsEditEntry extends Component{
         await axios.post(url, {userid: this.state.currentuserid, boardid: this.state.boardid, 
             entryid: this.state.entryid, title: this.state.title, contents: this.state.contents}) 
             .then((response) => {       
-                this.setState({
-                    isLoading: false,
-                    isUploadDone: true,
-                }) 
+                if(response.data.msg === 'success')
+                    this.setState({
+                        isLoading: false,
+                        isUploadDone: true,
+                    }) 
             }) 
         .catch(( err ) => {
             Alert.alert(
@@ -144,7 +145,6 @@ class BulletinBoardsEditEntry extends Component{
                                 {/* 의미가 없는 곳 */} :
                             {/*Loading스크린 집어넣기 */}}}}>Submit</Button>
                         <View>
-                        <ConsoleLog>{this.state}</ConsoleLog>
                             {this.state.isUploadDone?
                                 this.props.navigation.goBack() :
                                 <View></View>}

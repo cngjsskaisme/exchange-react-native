@@ -92,7 +92,6 @@ class BulletinBoardsEntries extends Component{
                 </View>
             </TouchableRipple>
         );
-        console.log(this.state.title)
     }
 }
 

@@ -83,7 +83,6 @@ class BulletinBoardsReplies extends Component{
                     'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                     [{text: 'OK'}]
                 );
-                console.log(this.state.commentslist)
             this.setState({
                 isError: true,
             })
@@ -107,7 +106,6 @@ class BulletinBoardsReplies extends Component{
     _renderItem = ({ item }) => {
         return(
             <View>
-                {console.log(this.state.commentslist)}
             <BulletinBoardsRepliesEntries
                 key = {item.replyid}
                 boardid = {item.boardid}
@@ -145,8 +143,7 @@ class BulletinBoardsReplies extends Component{
                         data = {this.state.commentslist}
                         extraData = {this.state} 
                         renderItem = {this._renderItem}
-                        keyExtractor = {this._keyExtractor}
-                        onEndReached = {this._onGetComments}/>
+                        keyExtractor = {this._keyExtractor}/>
                 }
             </View>
         );

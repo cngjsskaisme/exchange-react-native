@@ -15,6 +15,7 @@ import {ContentMedium, MetaLight, TitleBold} from '../../Theming/Theme'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ConsoleLog from '../../Tools/ConsoleLog';
 import { BulletinBoardsContext } from '../BulletinBoardsContext';
+import ViewMoreText from 'react-native-view-more-text';
 
 class BulletinBoardRepliesEntries extends Component{
     static defaultProps = {
@@ -81,9 +82,12 @@ class BulletinBoardRepliesEntries extends Component{
                         <View 
                         style={styles.RepliesEntry}>
                             <View style={styles.RepliesEntryContents}>
-                                <ContentMedium
+                                <ViewMoreText
                                     numberOfLines = {5}
-                                    ellipsizeMode = 'tail'>{this.state.contents}</ContentMedium>
+                                    renderViewMore = {(onPress) => {return (<Text style = {{fontSize: 12, color: 'gray',}} onPress={onPress}>Read More...</Text>)}}
+                                    renderViewLess = {(onPress) => {return (<Text style = {{fontSize: 12, color: 'gray',}} onPress={onPress}>Read Less...</Text>)}}>
+                                    {this.state.contents}
+                                </ViewMoreText>
                             </View>
                             <View style={styles.RepliesEntryMeta}>
                                 <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
