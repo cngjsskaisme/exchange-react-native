@@ -26,6 +26,7 @@ class BulletinBoardsReplies extends Component{
         userid: 0,
         username: '',
         profile: '', 
+        commentslist: null,
 
         //가져올 댓글의 시작, 끝 인덱스 번호 
         commentstartindex: 0, 
@@ -44,6 +45,7 @@ class BulletinBoardsReplies extends Component{
             userid: this.props.userid,
             username: this.props.username,
             profile: this.props.profile,
+            commentslist: null,
             
             //가져올 댓글의 시작, 끝 인덱스 번호 
             commentstartindex: 0,
@@ -71,7 +73,7 @@ class BulletinBoardsReplies extends Component{
 
             .then((response) => {       
                 this.setState({ 
-                commentslist: [...this.state.commentslist, ...response.data.commentslist],
+                commentslist: response.data.commentslist,
                 isLoading: false
                 }) 
             }) 
@@ -81,6 +83,7 @@ class BulletinBoardsReplies extends Component{
                     'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
                     [{text: 'OK'}]
                 );
+                console.log(this.state.commentslist)
             this.setState({
                 isError: true,
             })
@@ -104,6 +107,7 @@ class BulletinBoardsReplies extends Component{
     _renderItem = ({ item }) => {
         return(
             <View>
+                {console.log(this.state.commentslist)}
             <BulletinBoardsRepliesEntries
                 key = {item.replyid}
                 boardid = {item.boardid}

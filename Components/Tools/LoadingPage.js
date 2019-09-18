@@ -19,8 +19,15 @@ import PropTypes from 'prop-types';
 class LoadingPage extends Component{
     static defaultProps = {
         What: '',
-        Plural: false,
         Message: ''
+    }
+
+    constructor(props){
+        super(props);
+        this.state ={
+            What: this.props.What,
+            Message: this.props.Message,
+        }
     }
 
     render(){
@@ -29,7 +36,9 @@ class LoadingPage extends Component{
                     <View style={styles.LoadingScreen01}>
                         <ActivityIndicator animating= 'true' size = 'large'/>
                     </View>
-                    <ContentMedium style={styles.LoadingScreen02}>Things are loading...{"\n"}Please wait...</ContentMedium>    
+                    {console.log(this.state.Message)}
+                    {console.log(this.state.What)}
+                    <ContentMedium style={styles.LoadingScreen02}>Loading{this.state.What!==''? ' ' + this.state.What : ''}...{"\n"}Wait Please... {this.state.Message!==''?"\n" + this.state.Message : ''}</ContentMedium>    
             </View>
         );
     }
@@ -43,7 +52,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     LoadingScreen01: {
-        flex: 5,
+        height: '50%',
         justifyContent: 'flex-end',
         paddingBottom: 20
     },

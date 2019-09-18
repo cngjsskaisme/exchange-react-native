@@ -36,11 +36,9 @@ class BulletinBoards extends Component{
         boardname: '',
         entrieslist: [],
         isLoading: false,
+        isLoadingMore: false,
         isError: false,
-        isLoadingListFinished: false,
         isDev: false,
-        postStartIndex: 0,
-        postEndIndex: 0
     }
 
     constructor(props){
@@ -50,38 +48,59 @@ class BulletinBoards extends Component{
             userid: this.props.navigation.getParam('userid'),
             currentuserid: this.props.navigation.getParam('currentuserid'),
             boardname: this.props.navigation.getParam('boardname'),
+            entrieslist: [],
             isLoading: false,
+            isLoadingMore: false,
             isError: false,
-            isLoadingListFinished: false,
             isDev: this.props.navigation.getParam('isDev'), 
-
-            //데이터 관련. 불러올 첫/마지막 게시물의 index 번호 
-            postStartIndex: 0, 
-            postEndIndex: 0
         }
     }
     
     // 데이터 요청 함수
     // 1. 게시글 목록 불러오는 함수
-    _onGetPostsLists = async () => {   
+    _onGetPostsLists = async (postStartIndex, postEndIndex, isRefresh) => {   
         var url = server.serverURL + '/process/ShowBulletinBoard';
-        await this.setState({
-            isLoading: true,
-            isError: false,
-            postStartIndex: 0, 
-            postEndIndex: 2
-            /*
-            postStartIndex: this.state.postEndIndex,
-            postEndIndex: this.state.postStartIndex + 19 
-            */
-        }) 
+        // 새로고침인 경우 isLoading 활성화 후 모든 목록 다시 받기
+        if(isRefresh){
+            postStartIndex= 0;
+            postEndIndex= 19;
+            await this.setState({
+                isLoading: true,
+                isError: false,
+            }) 
+        }
+        // 새로고침이 아닌 경우 isLoadingMore 활성화 후 일부 목록만 추가로 이어 받기
+        else{
+            postStartIndex= this.state.entrieslist.length - 1;
+            postEndIndex= postStartIndex + 20;
+            await this.setState({
+                isLoadingMore: true,
+                isError: false,
+            }) 
+        }
         await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
-            postStartIndex: this.state.postStartIndex, postEndIndex: this.state.postEndIndex})
+            postStartIndex: postStartIndex, postEndIndex: postEndIndex})
             .then((response) => {
+                // 새로고침시 목록 다 지우고 게시글 목록 새로 받기
+                if(isRefresh){
+                    this.state.entrieslist.splice(0, this.state.entrieslist.length)    
+                    this.state.entrieslist.push(...response.data.postslist)
+                }
+                // 새로고침이 아닌 경우
+                else{
+                    this.state.entrieslist.splice(this.state.entrieslist.findIndex((element) => {return element.entryid == 'lastlastlast'}), 1)
+                    this.state.entrieslist.push(...response.data.postslist)
+                }
                 this.setState({ 
-                    entrieslist: response.data.postslist,
+                    entrieslist: this.state.entrieslist,
                     isLoading: false,
-                }) 
+                }) ;
+                {this.state.entrieslist.length % 20 == 0 ? // % 20으로 나눈 이유는 왜 인지 알 거 같지?
+                    // 게시글 개수가 20개가 넘을 때
+                    this.state.entrieslist.push({lastElement:true, okToShow: true, entryid: 'lastlastlast'}) :
+                    // 게시글 개수가 20개가 안될 떄
+                    this.state.entrieslist.push({lastElement:true, okToShow: false, entryid: 'lastlastlast'})
+                }
         }) 
         .catch(( err ) => {
             Alert.alert(
@@ -96,37 +115,44 @@ class BulletinBoards extends Component{
         });    
     }
 
-    _onLoadList = () => {
-        if( !this.state.isLoadingListFinished )
-            this._onGetPostsLists()
-    };
-
     //컴포넌트 마운트 시
     async componentDidMount(){
         // 일반 사용자 모드일 때 게시글 목록 불러오기
         if(!this.state.isDev)
-            await this._onGetPostsLists(); 
+            await this._onGetPostsLists(0, 19, true); 
     }
 
     // Flatlist RenderItem 함수
     _renderItem = ({ item }) => {
-        return(
-            <BulletinBoardsEntries
-                key = {item.entryid}
-                boardid = {item.boardid}
-                userid = {item.userid}
-                currentuserid = {this.state.currentuserid}
-                entryid = {item.entryid}
-                username = {item.username}
-                profile = {item.profile}
-                likes = {item.likes}
-                date = {item.date}
-                ismine = {item.ismine}
-                title = {item.title}
-                contents = {item.contents}
-                isDev = {this.state.isDev}
-                style = {styles.BulletinBoardsEntries}/>
-        )
+        if(item.lastElement){
+            if(item.okToShow)
+                return(
+                    <View>
+                    <ConsoleLog>{'Entered...'}</ConsoleLog>
+                    <Button onPress={this._onGetPostsLists}>Load More...</Button>
+                    </View>
+                )
+            else
+                return(<View></View>)
+        }
+        else
+            return(
+                <BulletinBoardsEntries
+                    key = {item.entryid}
+                    boardid = {item.boardid}
+                    userid = {item.userid}
+                    currentuserid = {this.state.currentuserid}
+                    entryid = {item.entryid}
+                    username = {item.username}
+                    profile = {item.profile}
+                    likes = {item.likes}
+                    date = {item.date}
+                    ismine = {item.ismine}
+                    title = {item.title}
+                    contents = {item.contents}
+                    isDev = {this.state.isDev}
+                    style = {styles.BulletinBoardsEntries}/>
+            )
     };
 
     // Flatlist keyExtractor 함수
@@ -138,7 +164,6 @@ class BulletinBoards extends Component{
         return(
             // 게시판의 게시글들을 목록으로 보여주는 함수임.
             <View>
-            <ConsoleLog>{this.state.isError}</ConsoleLog>
             {
                 this.state.isDev ? 
                 // 개발자 모드일 때
@@ -164,18 +189,19 @@ class BulletinBoards extends Component{
                         <ErrorPage/>
                         <Button onPress={this._onGetPostsLists}>Refresh</Button> 
                     </View> :
-                this.state.isLoading ?
+                this.state.isLoading?
                 // 로딩중일 때
-                    <LoadingPage/>:
+                    <LoadingPage What='Threads'/>:
                 // 게시판 목록을 보여줄 때, FlatList와 FAB 컴포넌트로 구성되어 있음
                 <View>
-                    <View style={{width: '100%'}}>
+                    <View style={{width: '100%', height: '100%'}}>
+                    {console.log(this.state.entrieslist)}
                         <FlatList 
                                 data = {this.state.entrieslist}
                                 extraData = {this.state}
                                 renderItem = {this._renderItem}
                                 keyExtractor = {this._keyExtractor}
-                                onRefresh = {this._onGetPostsLists}
+                                onRefresh = {() => this._onGetPostsLists(0, 0, true)}
                                 refreshing = {this.state.isLoading}
                         />
                         <FAB
@@ -186,12 +212,7 @@ class BulletinBoards extends Component{
                                 userid: this.state.userid,
                                 currentuserid: this.state.currentuserid,
                                 username: this.state.username,
-                                profile: this.state.profile})} />
-                        <Button onPress = {{}}>Load More...</Button>        
-                    </View>
-
-                    <View style={{width: '100%', height: '100%'}}>
-
+                                profile: this.state.profile})} />        
                     </View>
                 </View>
 

@@ -21,6 +21,17 @@ import ConsoleLog from '../Tools/ConsoleLog';
 import LoadingPage from '../Tools/LoadingPage';
 
 class BulletinBoardsEditEntry extends Component{
+    static defaultProps = {
+        isUploadDone : false,
+    }
+
+    constructor(props){
+        super(props);
+        this.state = {
+            isUploadDone: false,
+        }
+    }
+
     componentDidMount(){
         setTimeout(() => {this.setState({
             boardid: this.props.navigation.getParam('boardid', 0),
@@ -52,7 +63,8 @@ class BulletinBoardsEditEntry extends Component{
             entryid: this.state.entryid, title: this.state.title, contents: this.state.contents}) 
             .then((response) => {       
                 this.setState({
-                    isLoading: false
+                    isLoading: false,
+                    isUploadDone: true,
                 }) 
             }) 
         .catch(( err ) => {
@@ -118,15 +130,25 @@ class BulletinBoardsEditEntry extends Component{
                 {this.state === null ? 
                     <LoadingPage/> :
                     <View>
-                    <TextInput
-                        placeholder='An awesome Title'
-                        value = {this.state.title}
-                        onChangeText={title => this.setState({ title })}/>
-                    <TextInput
-                        placeholder='Cool text for post (Optional)'
-                        value = {this.state.contents}
-                        onChangeText={contents => this.setState({ contents })}/>
-                    <Button onPress={this._handleSubmit.bind(this)}>Submit</Button> 
+                        <TextInput
+                            placeholder='An awesome Title'
+                            value = {this.state.title}
+                            onChangeText={title => this.setState({ title })}/>
+                        <TextInput
+                            placeholder='Cool text for post (Optional)'
+                            value = {this.state.contents}
+                            onChangeText={contents => this.setState({ contents })}/>
+                        <Button onPress={() => {
+                            this._handleSubmit(); 
+                            {this.state.isUploadDone? 
+                                {/* 의미가 없는 곳 */} :
+                            {/*Loading스크린 집어넣기 */}}}}>Submit</Button>
+                        <View>
+                        <ConsoleLog>{this.state}</ConsoleLog>
+                            {this.state.isUploadDone?
+                                this.props.navigation.goBack() :
+                                <View></View>}
+                        </View>
                     </View>
                     }
             </View>
