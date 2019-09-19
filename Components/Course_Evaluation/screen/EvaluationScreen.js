@@ -105,6 +105,11 @@ class EvaluationScreen extends Component {
   async componentDidMount(){  
     await this._handleGetCommentsList(); 
   }   
+
+  
+
+
+
 //data request function - end 
 
 
@@ -227,7 +232,7 @@ class EvaluationScreen extends Component {
               <View style={styles.bottomPart}>  
                 <Button
                     title="More comments"
-                    onPress = {this._handleGetNextCommentsList.bind(this)}
+                    onPress = {this. _handleGetNextCommentsList.bind(this)}
                   /> 
               </View>
             </View>

@@ -24,7 +24,7 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh) =
         }) 
     }
     await axios.post(url, {userid: state.userid, boardid: state.boardid, 
-        postStartIndex: postStartIndex, postEndIndex: postEndIndex})
+        postStartIndex: postStartIndex, postEndIndex: postEndIndex, search: " "})
         .then((response) => {
             // 새로고침시 목록 다 지우고 게시글 목록 새로 받기
             if(isRefresh){
@@ -59,3 +59,10 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh) =
         })
     });    
 }
+
+
+/* 
+27번 줄 search: search 에서 search에 string 값을 입력하면 
+해당 문자열과 일치하거나 해당 문자열을 포함하는 게시글 제목/내용/사용자 명 검색. 대소문자 무관. 아무런 값도 없을 시 전체 목록 전달
+
+*/
