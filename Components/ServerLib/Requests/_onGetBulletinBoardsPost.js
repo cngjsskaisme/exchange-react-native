@@ -3,7 +3,7 @@ import { BulletinBoardsEntries_Mock } from '../../../Mockup_Datas/UnifiedEntries
 import axios from 'axios'; 
 import {server} from '../config';
 
-export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh) => {   
+export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = false, searchquery = "") => {   
     var url = server.serverURL + '/process/ShowBulletinBoard';
     // 새로고침인 경우 isLoading 활성화 후 모든 목록 다시 받기
     if(isRefresh){
@@ -24,7 +24,7 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh) =
         }) 
     }
     await axios.post(url, {userid: state.userid, boardid: state.boardid, 
-        postStartIndex: postStartIndex, postEndIndex: postEndIndex, search: " "})
+        postStartIndex: postStartIndex, postEndIndex: postEndIndex, search: searchquery})
         .then((response) => {
             // 새로고침시 목록 다 지우고 게시글 목록 새로 받기
             if(isRefresh){

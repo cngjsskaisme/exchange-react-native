@@ -8,7 +8,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, FlatList, Alert, Image } from 'react-native';
-import { FAB, ActivityIndicator, Colors, Button } from 'react-native-paper'
+import { FAB, ActivityIndicator, Colors, Button, IconButton } from 'react-native-paper'
 import PropTypes from 'prop-types';
 import BulletinBoardsEntries from './BulletinBoardsEntries';
 import { BulletinBoardsEntries_Mock } from '../../Mockup_Datas/UnifiedEntries'
@@ -29,6 +29,15 @@ class BulletinBoards extends Component{
     // 네비게이션 옵션
     static navigationOptions = ({ navigation }) => ({
         title: `${navigation.state.params.boardname}`,
+        headerRight: (
+            <IconButton
+                icon = 'search'
+                size={30}
+                onPress={() => {
+                    navigation.navigate('Search');
+                }}
+            />
+        ),
       });
     
     static defaultProp = {
@@ -84,8 +93,8 @@ class BulletinBoards extends Component{
         if(item.lastElement){
             if(item.okToShow)
                 return(
-                    <View style={{paddingTop: 10}}>
-                    <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetState)}>Load More...</Button>
+                    <View style={{paddingTop: 10, paddingBottom: 10}}>
+                        <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetState)}>Load More...</Button>
                     </View>
                 )
             else

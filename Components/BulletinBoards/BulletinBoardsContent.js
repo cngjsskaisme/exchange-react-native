@@ -19,6 +19,7 @@ import BulletinBoardsRepliesInput from './Replies/BulletinBoardsRepliesInput'
 import { Divider } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 
+
 class BulletinBoardsContent extends Component{
     static defaultProps = {
         boardid: 0,
@@ -70,36 +71,9 @@ class BulletinBoardsContent extends Component{
     }
 
     //데이터 요청 시 함수
-    // 1. 댓글 목록 얻기 요청
-    _onGetComments = async () => {   
-        var url = server.serverURL + '/process/ShowComments';
-        this.setState({
-            isLoading: true,
-            isError: false,
-
-            commentstartindex: this.state.commentendindex,
-            commentendindex: this.state.commentstartindex + 19,
-        }) 
-        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
-            entryid: this.state.entryid, 
-            commentstartindex: this.state.commentstartindex, commentendindex: this.state.commentendindex}) 
-
-            .then((response) => {       
-                this.setState({ 
-                commentslist: response.data.commentslist,
-                isLoading: false
-                }) 
-            }) 
-            .catch(( err ) => {
-                Alert.alert(
-                    'Cannot connect to the server.',
-                    'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                    [{text: 'OK'}]
-                );
-            this.setState({
-                isError: true,
-            })
-        });    
+    //0. 내려보낼 setState 함수
+    _onSetState = (state) => {
+        this.setState(state)
     }
 
     // 렌더 함수
