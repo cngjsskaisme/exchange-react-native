@@ -95,7 +95,6 @@ class BulletinBoardsReplies extends Component{
                 contents = {item.contents}
                 pictures = {item.pictures}
                 
-                _onGetComments = {this._onGetComments}
                 replyEditMode = {this.state.replyEditMode}/>
             </View>
         )
