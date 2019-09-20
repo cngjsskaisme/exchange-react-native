@@ -2,17 +2,16 @@ import { Alert } from 'react-native';
 import axios from 'axios'; 
 import {server} from '../config';
 
-export default _handleGetUserNameList = async(state, _onSetState) =>  
-    var url = server.serverURL + '/process/ShowUserNameList';
+export default _handleDeleteDM = async(state, _onSetState) => {
+
+    var url = server.serverURL + '/process/DeleteDM';
     await this.setState({
       isLoading: true
     }); 
-  
-    await axios.post(url,{search: "ad"}) 
+    await axios.post(url,{userid: "5d5373177443381df03f3040", dmid: "5d8495276f22b805abffbc2e" }) 
         .then((response) => {       
             this.setState({ 
               isLoading: false 
-              usernamelist: response.data.usernamelist
             });  
         }) 
         .catch(( err ) => {
@@ -22,9 +21,4 @@ export default _handleGetUserNameList = async(state, _onSetState) =>
                 [{text: 'OK'}]
             ); 
         });    
-    } 
-
-/* 
-설명
-모든 사용자의 이름 혹은 검색어 입력 시(search에 값을 넣을 시) 해당 검색 조건을 만족하는 username 만을 반환하는 함수 
-*/
+    }  

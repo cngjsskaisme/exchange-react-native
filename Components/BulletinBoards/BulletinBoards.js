@@ -85,7 +85,7 @@ class BulletinBoards extends Component{
             if(item.okToShow)
                 return(
                     <View style={{paddingTop: 10}}>
-                    <Button onPress={this._onGetPostsLists}>Load More...</Button>
+                    <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetState)}>Load More...</Button>
                     </View>
                 )
             else
