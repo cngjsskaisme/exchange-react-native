@@ -2,10 +2,12 @@ import { Alert } from 'react-native';
 import axios from 'axios'; 
 import {server} from '../config';
 
-export default _handleGetUserNameList = async(state, _onSetState) =>  
+export default _handleGetUserNameList = async(state, _onSetState) => {
     var url = server.serverURL + '/process/ShowUserNameList';
-    await this.setState({
-      isLoading: true
+    
+    _onSetState({
+        isLoading: true,
+        isError: false
     }); 
   
     await axios.post(url,{search: "ad"}) 

@@ -8,7 +8,7 @@ export default _handleSendDM = async(state, _onSetState) => {
     _onSetState({
         isLoading: true,
         isError: false
-    })  
+    });
 
     await axios.post(url, {
       receivername: "admin", 
