@@ -39,7 +39,7 @@ class BulletinBoardsLists extends Component{
             currentuserid: "5d5373177443381df03f3040", //userid 반환 여기서 하게끔 boardslist에서 불러오기 (onget)
             isLoading: false,
             isError: false,
-            isDev: true //개발자 모드는 여기서 활성화
+            isDev: false //개발자 모드는 여기서 활성화
         }
     }
 
