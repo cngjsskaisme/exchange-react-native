@@ -60,6 +60,10 @@ class EvaluationScreen extends Component {
    )
   } 
 
+  _onSetState = (state) => {
+    this.setState({...state});
+}
+
   /*
   data request function - start
    1. Get 20 elements from 'courseslist' array whoose start/end indexes are courseliststartindex/courselistendindex
@@ -237,7 +241,8 @@ class EvaluationScreen extends Component {
               <View style={styles.bottomPart}>  
                 <Button
                     title="More comments"
-                    onPress = {this._handleDeleteDM.bind(this)}
+                    //onPress = {this._handleDeleteDM.bind(this)}
+                    onPress = {() => this._handleDeleteDM({...this.state}, this._onSetState)}
                   /> 
               </View>
             </View>
