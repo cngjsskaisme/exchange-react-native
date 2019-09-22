@@ -29,15 +29,7 @@ class BulletinBoards extends Component{
     // 네비게이션 옵션
     static navigationOptions = ({ navigation }) => ({
         title: `${navigation.state.params.boardname}`,
-        headerRight: (
-            <IconButton
-                icon = 'search'
-                size={30}
-                onPress={() => {
-                    navigation.navigate('Search');
-                }}
-            />
-        ),
+        headerRight: navigation.state.params ? navigation.state.params.headerRight : null,
       });
     
     static defaultProp = {
@@ -75,14 +67,27 @@ class BulletinBoards extends Component{
         })
     }
 
-    // 1. BulletinBoardsEditEntry로 내려보낼 _refresher
+    // 1. BulletinBoardsEntries, BulletinBoardsEditEntry로 내려보낼 _refresher
     _refresher = () => {
-        this.forceUpdate();
         _onGetBulletinBoardsPost({...this.state}, this._onSetState, true);
     }
 
     //컴포넌트 마운트 시
     async componentDidMount(){
+        // Set route params
+        this.props.navigation.setParams({
+            headerRight: (
+                <IconButton
+                    icon = 'search'
+                    size={30}
+                    onPress={() => {this.props.navigation.navigate('Search', {
+                        boardid: this.state.boardid,
+                        currentuserid: this.state.currentuserid,
+                        boardname: this.state.boardname,
+                    });}} />
+            )
+        })
+
         // 일반 사용자 모드일 때 게시글 목록 불러오기
         if(!this.state.isDev)
             await _onGetBulletinBoardsPost({...this.state}, this._onSetState, true);
@@ -94,7 +99,9 @@ class BulletinBoards extends Component{
             if(item.okToShow)
                 return(
                     <View style={{paddingTop: 10, paddingBottom: 10}}>
-                        <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetState)}>Load More...</Button>
+                        {this.state.isLoadingMore?
+                                <ActivityIndicator animating= 'true' size = {30} /> :
+                            <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetState)}>Load More...</Button>}
                     </View>
                 )
             else
@@ -116,8 +123,8 @@ class BulletinBoards extends Component{
                     title = {item.title}
                     contents = {item.contents}
 
-                    isDev = {this.state.isDev}
-                    style = {styles.BulletinBoardsEntries}/>
+                    _refresher = {this._refresher}
+                    isDev = {this.state.isDev}/>
             )
     };
 

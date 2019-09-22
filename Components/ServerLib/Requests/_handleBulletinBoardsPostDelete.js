@@ -6,11 +6,15 @@ export default _handleBulletinBoardsPostDelete = async(state, _onSetState) => {
     var url = server.serverURL + '/process/DeleteEntry';
     _onSetState({
         isLoading: true,
-        isError: false
+        isError: false,
+        isDeleted: false,
     }) 
     await axios.post(url, {userid: state.currentuserid, boardid: state.boardid,
         entryid: state.entryid, title: state.title, contents: state.contents}) 
         .then((response) => {
+            _onSetState({
+                isDeleted: true,
+            })
         }) 
         .catch(( err ) => {
             Alert.alert(
@@ -19,7 +23,7 @@ export default _handleBulletinBoardsPostDelete = async(state, _onSetState) => {
                 [{text: 'OK'}]
             );
             _onSetState({
-                isError: true
+                isError: true,
             })
         });    
 }  

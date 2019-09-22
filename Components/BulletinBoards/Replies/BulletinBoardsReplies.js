@@ -109,7 +109,9 @@ class BulletinBoardsReplies extends Component{
             <View>
                 {this.state.isLoading ?
                 //로딩중일 시
-                <LoadingPage What={'Comments'}/> :
+                <View style={{width: '100%', height: '100%'}}>
+                    <LoadingPage What={'Comments'}/> 
+                </View>:
                 this.state.commentslist.length == 0 ?
                 //댓글이 비어있을 시
                 <EmptyPage What={'Comment'}/> :
