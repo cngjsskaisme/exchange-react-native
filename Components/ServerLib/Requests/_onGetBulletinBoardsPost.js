@@ -3,13 +3,7 @@ import { BulletinBoardsEntries_Mock } from '../../../Mockup_Datas/UnifiedEntries
 import axios from 'axios'; 
 import {server} from '../config';
 
-<<<<<<< HEAD
-export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = false, searchquery = '') => {   
-||||||| merged common ancestors
-export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = false, searchquery = "") => {   
-=======
 export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = false, searchquery = "", language = " ") => {   
->>>>>>> 82ed11c3443c69292c14c9e0cea8c4cc03b1c216
     var url = server.serverURL + '/process/ShowBulletinBoard';
     // 새로고침인 경우 isLoading 활성화 후 모든 목록 다시 받기
     if(isRefresh){
