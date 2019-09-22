@@ -221,6 +221,7 @@ class EvaluationScreen extends Component {
                     userid = {l.userid}
                     Star={l.rating} 
                     ismine = {l.ismine}
+                    NumberLike = {5}
                   /> 
                   ))
               }
@@ -248,7 +249,7 @@ class EvaluationScreen extends Component {
                   )}
             >
             
-            <Icon name="add"/>
+            <Icon name="add" type="material"/>
       </Fab>
       
       </View>
