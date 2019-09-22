@@ -111,6 +111,9 @@ class EvaluationScreen extends Component {
     await this._handleGetCommentsList(); 
   }
   
+ 
+
+    
 //data request function - end 
 
 
@@ -227,13 +230,14 @@ class EvaluationScreen extends Component {
                     userid = {l.userid}
                     Star={l.rating} 
                     ismine = {l.ismine}
+                    NumberLike = {5}
                   /> 
                   ))
               }
               <View style={styles.bottomPart}>  
                 <Button
                     title="More comments"
-                    onPress = {this. _handleGetUserNameList.bind(this)}
+                    onPress = {this._handleDeleteDM.bind(this)}
                   /> 
               </View>
             </View>
@@ -254,7 +258,7 @@ class EvaluationScreen extends Component {
                   )}
             >
             
-            <Icon name="add"/>
+            <Icon name="add" type="material"/>
       </Fab>
       
       </View>
