@@ -16,7 +16,8 @@ import { Button } from 'react-native-elements';
 import { Fab } from 'native-base';
 
 //import Icon from 'react-native-vector-icons/FontAwesome';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+//import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import {createStackNavigator, createAppContainer, createBottomTabNavigator, createSwitchNavigator} from 'react-navigation'
 
 import RatingStar from '../components/RatingStar';
@@ -59,10 +60,6 @@ class EvaluationScreen extends Component {
       'You need to...'
    )
   } 
-
-  _onSetState = (state) => {
-    this.setState({...state});
-}
 
   /*
   data request function - start
@@ -242,7 +239,6 @@ class EvaluationScreen extends Component {
                 <Button
                     title="More comments"
                     //onPress = {this._handleDeleteDM.bind(this)}
-                    onPress = {() => this._handleDeleteDM({...this.state}, this._onSetState)}
                   /> 
               </View>
             </View>
