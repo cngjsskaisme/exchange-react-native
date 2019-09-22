@@ -107,9 +107,7 @@ class BulletinBoardRepliesEntries extends Component{
                                 ismine = {this.state.ismine}
                                 title = {this.state.title}
                                 contents = {this.state.contents}
-                                pictures = {this.state.pictures}
-                                
-                                _onGetComments = {this.props._onGetComments}/>
+                                pictures = {this.state.pictures}/>
                         </View>}
             </View>
         );

@@ -31,8 +31,8 @@ class BulletinBoardsEntries extends Component{
         ismine: false,
         title: '',
         contents: '',
-
         
+        _refresher: () => {}
     }
 
     constructor(props){
@@ -51,7 +51,7 @@ class BulletinBoardsEntries extends Component{
             contents: props.contents,
             isDev: props.isDev,
 
-            replyEditMode: false
+            _refresher: this.props._refresher,
         }
     }
 
@@ -93,7 +93,8 @@ class BulletinBoardsEntries extends Component{
                         contents = {this.state.contents}
                         style = {styles.PostMenu}
                         
-                        _onGetPostsLists = {this.props._onGetPostsLists}/>
+                        isBoardRoot = {true}
+                        _refresher= {this.state._refresher}/>
                 </View>
             </TouchableRipple>
         );

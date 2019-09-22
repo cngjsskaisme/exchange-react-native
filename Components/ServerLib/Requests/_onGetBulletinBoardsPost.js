@@ -12,12 +12,17 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = 
         _onSetState({
             isLoading: true,
             isError: false,
+            // 검색 기능용 state
+            isSearching: true,
         }) 
     }
     // 새로고침이 아닌 경우 isLoadingMore 활성화 후 일부 목록만 추가로 이어 받기
     else{
-        postStartIndex= state.entrieslist.length - 1;
-        postEndIndex= postStartIndex + 20;
+        if(state.entrieslist.length == 0)
+            postStartIndex= 0;
+        else
+            postStartIndex= state.entrieslist.length - 1;
+        postEndIndex= postStartIndex + 19;
         _onSetState({
             isLoadingMore: true,
             isError: false,
@@ -45,6 +50,11 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = 
             _onSetState({ 
                 entrieslist: state.entrieslist,
                 isLoading: false,
+                isLoadingMore: false,
+                // 검색 기능용
+                isSearching: false,
+                isSearched: true,
+                isEmpty: state.entrieslist.length == 1? true : false,
             }) ;
     }) 
     .catch(( err ) => {

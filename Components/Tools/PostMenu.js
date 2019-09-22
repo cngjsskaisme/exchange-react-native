@@ -36,7 +36,11 @@ class PostMenu extends Component{
         admin: false,
         visible: false,
         style: {},
-        state: null
+
+        isBoardRoot: false,
+        isDeleted: false,
+
+        _refresher: () => {},
     }
     constructor(props){
         super(props);
@@ -57,6 +61,11 @@ class PostMenu extends Component{
             admin: this.props.admin,
             visible: false,
             style: this.props.style,
+
+            isBoardRoot: this.props.isBoardRoot,
+            isDeleted: false,
+
+            _refresher: this.props._refresher,
         }
     }
 
@@ -72,9 +81,25 @@ class PostMenu extends Component{
         this.setState(state)
     }
 
+    // 1. 게시글 제거 함수
+    _handleDeletePost = () => {
+        _handleBulletinBoardsPostDelete({...this.state}, this._onSetState);
+        if(this.state.isDeleted){
+            // 게시글이 게시판 목록에서 출력중일 때
+            if(this.state.isBoardRoot)
+                this.state._refresher();           
+                             
+            // 게시글이 Contents 내부에서 출력중일 때
+            else{
+                this.navigation.pop(2);
+                _refresher();}
+        }
+    }
+
     // 렌더 함수 시작
     render(){ 
         //내 글이거나 관리자 모드일 때
+        {console.log(this.state)}
         if(this.state.ismine || this.state.admin){
             return (
                 <View style={this.state.style}>
@@ -90,11 +115,12 @@ class PostMenu extends Component{
                     }
                 >
                     <Menu.Item onPress={() => {
+                        this._closeMenu()
                         //게시글 삭제
                         { this.state.replyid == 0?
-                            //게시글일 떄
-                            _handleBulletinBoardsPostDelete({...this.state}, this._onSetState) :
-                            //댓글일 떄
+                            //게시글일 때
+                            this._handleDeletePost() :
+                            //댓글일 때
                             _handleDeleteReplies({...this.state}, this._onSetState)}}} title="Delete" />
         
                     <Menu.Item onPress={() => {

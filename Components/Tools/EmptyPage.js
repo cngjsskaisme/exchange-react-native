@@ -18,12 +18,16 @@ import { Button } from 'react-native-paper';
 class ErrorPage extends Component{
     static defaultProps = {
         What : '',
+        Message : '',
+        DeleteDescription: false,
     }
 
     constructor(props){
         super(props);
         this.state = {
             What : this.props.What,
+            Message : this.props.Message,
+            DeleteDescription : this.props.DeleteDescription,
         }
     }
 
@@ -31,12 +35,18 @@ class ErrorPage extends Component{
         return(
             <View style={styles.ErrorView}>
                 <View style={styles.Header}>
-                    <Icon name="mood" size={80} color="#a1a1a1" />
+                    <Icon name="mood" size={110} color="#a1a1a1" />
                     <TitleBold style={{fontSize:30}}>{this.state.What === ''? 'Nothing ' : 'No ' + this.state.What + ' '}here.</TitleBold>
                 </View>
-                <View>
-                    <ContentMedium style={{fontSize:20}}>Be the first person to leave</ContentMedium>
-                    <ContentMedium style={{fontSize:20, textAlign: 'center'}}>{this.state.what === ''? '': this.state.What + ' '}here!</ContentMedium>
+                <View style={styles.Body}>
+                    {this.state.DeleteDescription? 
+                        <View></View> :
+                        <View>
+                            <ContentMedium style={{fontSize:20}}>Be the first person to leave</ContentMedium>
+                            <ContentMedium style={{fontSize:20, textAlign: 'center'}}>{this.state.what === ''? '': this.state.What + ' '}here!</ContentMedium>
+                        </View>
+                    }
+                    <ContentMedium style={{fontSize:20, textAlign: 'center'}}>{this.state.Message}</ContentMedium>
                 </View>
             </View>
         );
@@ -46,17 +56,20 @@ class ErrorPage extends Component{
 const styles = StyleSheet.create({
     ErrorView: {
         display: 'flex',
+        height: '100%',
+        width: '100%',
         alignItems: 'center',
         paddingTop: 30,
         paddingBottom: 40,
     },
     Header: {
+        flex:0.5,
         justifyContent: 'flex-end',
         paddingBottom: 15,
         alignItems: 'center'
     },
     Body: {
-        
+        flex:0.5,
     }
 })
 

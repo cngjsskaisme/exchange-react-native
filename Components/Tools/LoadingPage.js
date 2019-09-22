@@ -44,6 +44,7 @@ class LoadingPage extends Component{
 const styles = StyleSheet.create({
     LoadingScreen: {
         display: 'flex',
+        width: '100%',
         height: '100%',
         flexDirection: 'column',
         alignItems: 'center',
