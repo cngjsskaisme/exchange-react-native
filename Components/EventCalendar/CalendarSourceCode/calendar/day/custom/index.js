@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {
   TouchableOpacity,
   Text,
+  View,
 } from 'react-native';
 import PropTypes from 'prop-types';
 
@@ -74,17 +75,29 @@ class Day extends Component {
       }
     }
 
+    let number = [];
+    number.push(<Text key={0} style={{color:'green', width: 60,
+
+    alignItems: 'center', paddingLeft: 10,
+      paddingRight: 10, fontWeight:'100'}}>2222</Text>);
+
     return (
+      <View>
+
+      
       <TouchableOpacity
         testID={this.props.testID}
-        style={containerStyle}
+        style={[containerStyle,]}
         onPress={this.onDayPress}
         onLongPress={this.onDayLongPress}
         activeOpacity={marking.activeOpacity}
         disabled={marking.disableTouchEvent}
       >
-        <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
+        <Text allowFontScaling={false} style={[textStyle,]}>{String(this.props.children)}</Text>
+        
       </TouchableOpacity>
+      {number}
+      </View>
     );
   }
 }
