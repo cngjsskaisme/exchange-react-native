@@ -19,6 +19,7 @@ import {server} from '../ServerLib/config';
 import ErrorPage from '../Tools/ErrorPage';
 import LoadingPage from '../Tools/LoadingPage';
 import ConsoleLog from '../Tools/ConsoleLog';
+import { _onGetBulletinBoardsLists } from '../ServerLib/ServerRequest'
 
 axios.defaults.timeout = 5000;
 
@@ -38,45 +39,23 @@ class BulletinBoardsLists extends Component{
             currentuserid: "5d5373177443381df03f3040", //userid 반환 여기서 하게끔 boardslist에서 불러오기 (onget)
             isLoading: false,
             isError: false,
-            isDev: false, 
-            
+            isDev: false //개발자 모드는 여기서 활성화
         }
     }
 
     // 데이터 요청 함수
-    // 1. 게시글 목록 불러오는 함수
-    _onGetBulletinBoardsLists = async () => {   
-        var url = server.serverURL + '/process/ShowBulletinBoardsList';
+    // 0. 함수로 내려보낼 SetState
+    _onSetState = (state) => {
         this.setState({
-            isLoading: true,
-            isError: false
+            ...state
         })
-        await axios.post(url) 
-            .then((response) => {       
-                this.setState({ 
-                boardslist: response.data.boardslist,
-                isLoading: false
-                }) 
-            }) 
-        .catch(( err ) => {
-            Alert.alert(
-                'Cannot connect to the server.',
-                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [{text: 'OK'}]
-              );
-            this.setState({
-                postslist: BulletinBoardsLists_Mock,
-                isError: true,
-                isDev: true // !!!!!!!!!!!!!!!!1 이 부분 지워라 지워라 !!!!!!!
-            })
-        });    
     }
 
     // 컴포넌트 마운트 시
     async componentDidMount(){
         // 일반 사용자 모드일 때
         if (!this.state.isDev)
-            await this._onGetBulletinBoardsLists(); 
+            await _onGetBulletinBoardsLists(this._onSetState); 
     }
 
     // FlatList의 RenderItem 함수
@@ -92,10 +71,10 @@ class BulletinBoardsLists extends Component{
                         isDev : this.state.isDev })}}>
                 <View style={styles.BulletinBoards}>
                     <View style={styles.BulletinBoardsName}>
-                        <TitleBold fontSize={20}>{item.boardname}</TitleBold>
+                        <TitleBold style= {{fontSize: 20}}>{item.boardname}</TitleBold>
                     </View>
                     <View style={styles.BulletinBoardsContents}>
-                        <MetaLight fontSize={14}>{item.contents}</MetaLight>
+                        <MetaLight style= {{fontSize: 14}}>{item.contents}</MetaLight>
                     </View>
                 </View>
             </TouchableRipple>
@@ -107,7 +86,6 @@ class BulletinBoardsLists extends Component{
 
     // 렌더 함수
     render(){  
-        
         return(
             <View>{
                 this.state.isDev ? 
@@ -122,17 +100,17 @@ class BulletinBoardsLists extends Component{
                 // 에러발생 했을 때
                     <View>
                         <ErrorPage/>
-                        <Button onPress={this._onGetBulletinBoardsLists}>Refresh</Button> 
+                        <Button onPress={() => _onGetBulletinBoardsLists(this._onSetState)}>Refresh</Button> 
                     </View> :
                 this.state.isLoading ?
                 // 로딩중일 때
-                    <LoadingPage/>:
+                        <LoadingPage What='Lists'/> :
                 // 게시판 목록을 보여줄 때
                     <FlatList 
                             data = {this.state.boardslist}
                             renderItem = {this._renderItem}
                             keyExtractor = {this._keyExtractor}
-                            onRefresh = {this._onGetBulletinBoardsLists}
+                            onRefresh = {() => _onGetBulletinBoardsLists(this._onSetState)}
                             refreshing = {this.state.isLoading}/>
 
             }</View>)

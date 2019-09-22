@@ -8,7 +8,7 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, FlatList, Alert, Image } from 'react-native';
-import { FAB, ActivityIndicator, Colors, Button } from 'react-native-paper'
+import { FAB, ActivityIndicator, Colors, Button, IconButton } from 'react-native-paper'
 import PropTypes from 'prop-types';
 import BulletinBoardsEntries from './BulletinBoardsEntries';
 import { BulletinBoardsEntries_Mock } from '../../Mockup_Datas/UnifiedEntries'
@@ -18,6 +18,10 @@ import {server} from '../ServerLib/config';
 import {ContentMedium, MetaLight, TitleBold} from '../Theming/Theme'
 import ErrorPage from '../Tools/ErrorPage';
 import LoadingPage from '../Tools/LoadingPage'
+import EmptyPage from '../Tools/EmptyPage'
+import { stringify } from 'querystring';
+import ConsoleLog from '../Tools/ConsoleLog';
+import { _onGetBulletinBoardsPost } from '../ServerLib/ServerRequest'
 
 axios.defaults.timeout = 5000;
 
@@ -25,6 +29,15 @@ class BulletinBoards extends Component{
     // 네비게이션 옵션
     static navigationOptions = ({ navigation }) => ({
         title: `${navigation.state.params.boardname}`,
+        headerRight: (
+            <IconButton
+                icon = 'search'
+                size={30}
+                onPress={() => {
+                    navigation.navigate('Search');
+                }}
+            />
+        ),
       });
     
     static defaultProp = {
@@ -32,12 +45,11 @@ class BulletinBoards extends Component{
         userid: 0,
         currentuserid: 0,
         boardname: '',
-        entrieslist: null,
+        entrieslist: [],
         isLoading: false,
+        isLoadingMore: false,
         isError: false,
         isDev: false,
-        postStartIndex: 0,
-        postEndIndex: 0
     }
 
     constructor(props){
@@ -47,76 +59,66 @@ class BulletinBoards extends Component{
             userid: this.props.navigation.getParam('userid'),
             currentuserid: this.props.navigation.getParam('currentuserid'),
             boardname: this.props.navigation.getParam('boardname'),
+            entrieslist: [],
             isLoading: false,
+            isLoadingMore: false,
             isError: false,
             isDev: this.props.navigation.getParam('isDev'), 
-
-            //데이터 관련. 불러올 첫/마지막 게시물의 index 번호 
-            postStartIndex: 0, 
-            postEndIndex: 0
         }
     }
     
     // 데이터 요청 함수
-    // 1. 게시글 목록 불러오는 함수
-    _onGetPostsLists = async () => {   
-        var url = server.serverURL + '/process/ShowBulletinBoard';
-        await this.setState({
-            isLoading: true,
-            isError: false,
-            postStartIndex: 0, 
-            postEndIndex: 2
-            /*
-            postStartIndex: this.state.postEndIndex,
-            postEndIndex: this.state.postStartIndex + 19 
-            */
-        }) 
-        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
-            postStartIndex: this.state.postStartIndex, postEndIndex: this.state.postEndIndex})
-            .then((response) => {       
-                this.setState({ 
-                entrieslist: response.data.postslist,
-                isLoading: false
-            }) 
-        }) 
-        .catch(( err ) => {
-            Alert.alert(
-                'Cannot connect to the server.',
-                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [{text: 'OK'}]
-              );
-            this.setState({
-                postslist: BulletinBoardsEntries_Mock,
-                isError: true,
-            })
-        });    
+    // 0. 함수로 내려보낼 SetState
+    _onSetState = (state) => {
+        this.setState({
+            ...state
+        })
+    }
+
+    // 1. BulletinBoardsEditEntry로 내려보낼 _refresher
+    _refresher = () => {
+        this.forceUpdate();
+        _onGetBulletinBoardsPost({...this.state}, this._onSetState, true);
     }
 
     //컴포넌트 마운트 시
     async componentDidMount(){
         // 일반 사용자 모드일 때 게시글 목록 불러오기
         if(!this.state.isDev)
-            await this._onGetPostsLists(); 
+            await _onGetBulletinBoardsPost({...this.state}, this._onSetState, true);
     }
 
     // Flatlist RenderItem 함수
     _renderItem = ({ item }) => {
-        return(
-            <BulletinBoardsEntries
-                key = {item.entryid}
-                boardid = {item.boardid}
-                userid = {item.userid}
-                entryid = {item.entryid}
-                username = {item.username}
-                profile = {item.profile}
-                likes = {item.likes}
-                date = {item.date}
-                ismine = {item.ismine}
-                title = {item.title}
-                contents = {item.contents}
-                isDev = {this.state.isDev}
-                style = {styles.BulletinBoardsEntries}/>
-        )
+        if(item.lastElement){
+            if(item.okToShow)
+                return(
+                    <View style={{paddingTop: 10, paddingBottom: 10}}>
+                        <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetState)}>Load More...</Button>
+                    </View>
+                )
+            else
+                return(<View></View>)
+        }
+        else
+            return(
+                <BulletinBoardsEntries
+                    key = {item.entryid}
+                    boardid = {item.boardid}
+                    userid = {item.userid}
+                    currentuserid = {this.state.currentuserid}
+                    entryid = {item.entryid}
+                    username = {item.username}
+                    profile = {item.profile}
+                    likes = {item.likes}
+                    date = {item.date}
+                    ismine = {item.ismine}
+                    title = {item.title}
+                    contents = {item.contents}
+
+                    isDev = {this.state.isDev}
+                    style = {styles.BulletinBoardsEntries}/>
+            )
     };
 
     // Flatlist keyExtractor 함수
@@ -127,7 +129,8 @@ class BulletinBoards extends Component{
     render(){ 
         return(
             // 게시판의 게시글들을 목록으로 보여주는 함수임.
-            <View>{
+            <View>
+            {
                 this.state.isDev ? 
                 // 개발자 모드일 때
                 <View>
@@ -150,29 +153,50 @@ class BulletinBoards extends Component{
                 // 에러발생 했을 때
                     <View>
                         <ErrorPage/>
-                        <Button onPress={this._onGetPostsLists}>Refresh</Button> 
+                        <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetState, true)}>Refresh</Button> 
                     </View> :
-                this.state.isLoading ?
+                this.state.isLoading?
                 // 로딩중일 때
-                    <LoadingPage/>:
+                    <LoadingPage What='Threads'/>:
+                this.state.entrieslist.length === 1?
+                // 게시글이 없을 때
+                    <View style={{width:'100%', height:'100%'}}>
+                        <EmptyPage What='Threads' /> 
+                        <FAB
+                        style={styles.Floating}
+                        icon='add'
+                        onPress={() => this.props.navigation.navigate('EntryEdit', { 
+                            boardid: this.state.boardid,
+                            userid: this.state.userid,
+                            currentuserid: this.state.currentuserid,
+                            username: this.state.username,
+                            profile: this.state.profile,
+                            
+                            _refresher: this._refresher})} />
+                    </View>:
                 // 게시판 목록을 보여줄 때, FlatList와 FAB 컴포넌트로 구성되어 있음
-                <View style={{width: '100%', height: '100%'}}>
-                    <FlatList 
-                            data = {this.state.entrieslist}
-                            extraData = {this.state}
-                            renderItem = {this._renderItem}
-                            keyExtractor = {this._keyExtractor}
-                            onRefresh = {this._onGetPostsLists}
-                            refreshing = {this.state.isLoading}
-                            onEndReached = {this._onGetPostsLists}/>
-                    <FAB
+                <View>
+                    <View style={{width: '100%', height: '100%'}}>
+                        <FlatList 
+                                data = {this.state.entrieslist}
+                                extraData = {this.state}
+                                renderItem = {this._renderItem}
+                                keyExtractor = {this._keyExtractor}
+                                onRefresh = {() => _onGetBulletinBoardsPost({...this.state}, this._onSetState, true)}
+                                refreshing = {this.state.isLoading}
+                        />
+                        <FAB
                             style={styles.Floating}
                             icon='add'
                             onPress={() => this.props.navigation.navigate('EntryEdit', { 
                                 boardid: this.state.boardid,
                                 userid: this.state.userid,
+                                currentuserid: this.state.currentuserid,
                                 username: this.state.username,
-                                profile: this.state.profile})} />        
+                                profile: this.state.profile,
+                                
+                                _refresher: this._refresher})} />        
+                    </View>
                 </View>
 
             }</View>)

@@ -19,6 +19,7 @@ import BulletinBoardsRepliesInput from './Replies/BulletinBoardsRepliesInput'
 import { Divider } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 
+
 class BulletinBoardsContent extends Component{
     static defaultProps = {
         boardid: 0,
@@ -33,6 +34,8 @@ class BulletinBoardsContent extends Component{
         title: "",
         contents: "",
         pictures: "",
+
+        commentslist: [],
 
         keyboardHeight:0,
         normalHeight: 0,
@@ -57,12 +60,20 @@ class BulletinBoardsContent extends Component{
             contents: this.props.navigation.getParam('contents'),
             pictures: this.props.navigation.getParam('pictures'),
 
+            commentslist: [],
+
             keyboardHeight: 0,
             normalHeight: 0,
             shortHeight: 0,
             isDev: this.props.navigation.getParam('isDev'),
             replyEditMode: false,
         }
+    }
+
+    //데이터 요청 시 함수
+    //0. 내려보낼 setState 함수
+    _onSetState = (state) => {
+        this.setState(state)
     }
 
     // 렌더 함수
@@ -95,6 +106,7 @@ class BulletinBoardsContent extends Component{
                             userid = {this.state.userid}
                             username = {this.state.username}
                             profile = {this.state.profile}
+                            
                             isDev = {this.state.isDev}/>
                     </View>
                 </ScrollView>
@@ -110,7 +122,8 @@ class BulletinBoardsContent extends Component{
                         username = {this.state.username}
                         profile = {this.state.profile}
                         
-                        replyEditMode = {this.state.replyEditMode}/>
+                        replyEditMode = {this.state.replyEditMode}
+                        _onGetComments = {this._onGetComments}/>
                 </KeyboardAvoidingView>
             </View>
         );
@@ -135,7 +148,7 @@ BulletinBoardsContent.propTypes = {
         flexDirection: 'column',
         flex: 1,
         height: '100%',
-        padding: 15
+        padding: 10
     },
     BottomInput: {
         position: 'absolute',

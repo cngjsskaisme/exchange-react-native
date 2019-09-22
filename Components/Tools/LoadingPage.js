@@ -4,7 +4,6 @@
 설명 : 추헌남
 다음을 Prop으로 받겠습니다 (받는 타입은 PropTypes에서 기술) :
     What - 무엇을 로딩중인지?
-    Plural - 단수형 복수형? true -> 단수형, false -> 복수형
     Message - 따로 추가할 메시지가 있는지?
 */
 
@@ -19,8 +18,15 @@ import PropTypes from 'prop-types';
 class LoadingPage extends Component{
     static defaultProps = {
         What: '',
-        Plural: false,
         Message: ''
+    }
+
+    constructor(props){
+        super(props);
+        this.state ={
+            What: this.props.What,
+            Message: this.props.Message,
+        }
     }
 
     render(){
@@ -29,7 +35,7 @@ class LoadingPage extends Component{
                     <View style={styles.LoadingScreen01}>
                         <ActivityIndicator animating= 'true' size = 'large'/>
                     </View>
-                    <ContentMedium style={styles.LoadingScreen02}>Things are loading...{"\n"}Please wait...</ContentMedium>    
+                    <ContentMedium style={styles.LoadingScreen02}>Loading{this.state.What!==''? ' ' + this.state.What : ''}...{"\n"}Wait Please... {this.state.Message!==''?"\n" + this.state.Message : ''}</ContentMedium>    
             </View>
         );
     }
@@ -43,7 +49,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     LoadingScreen01: {
-        flex: 5,
+        height: '50%',
         justifyContent: 'flex-end',
         paddingBottom: 20
     },

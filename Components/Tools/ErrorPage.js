@@ -12,7 +12,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { ContentMedium, TitleBold, MetaLight } from '../Theming/Theme';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Button } from 'react-native-paper';
 
 class ErrorPage extends Component{
@@ -20,7 +20,7 @@ class ErrorPage extends Component{
         return(
             <View style={styles.ErrorView}>
                 <View style={styles.Header}>
-                    <Icon name="exclamation-circle" size={70} color="#a1a1a1" />
+                    <Icon name="error" size={80} color="#a1a1a1" />
                     <TitleBold style={{fontSize:30}}>An error has occured.</TitleBold>
                 </View>
                 <View>

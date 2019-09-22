@@ -19,14 +19,57 @@ import axios from 'axios';
 import {server} from '../ServerLib/config';
 import ConsoleLog from '../Tools/ConsoleLog';
 import LoadingPage from '../Tools/LoadingPage';
+import { _handleBulletinBoardsPostSubmit } from '../ServerLib/ServerRequest'
 
 class BulletinBoardsEditEntry extends Component{
-    componentDidMount(){
+    static defaultProps = {
+        boardid: 0,
+        entryid: 0,
+        replyid: 0,
+        userid: 0,
+        currentuserid: 0,
+        username: '',
+        profile: '',
+        likes: 0,
+        date: '',
+        ismine: false,
+        title: '',
+        contents: '',
+        pictures: '',
+
+        isUploadDone : false,
+    }
+
+    constructor(props){
+        super(props);
+        this.state = {
+            boardid: this.props.navigation.getParam('boardid', 0),
+            entryid: this.props.navigation.getParam('entryid', 0),
+            replyid: this.props.navigation.getParam('entryid', 0),
+            userid: this.props.navigation.getParam('userid', 0),
+            currentuserid: this.props.navigation.getParam('currentuserid', 0),
+            username: this.props.navigation.getParam('username', ''),
+            profile: this.props.navigation.getParam('profile', ''),
+            likes: this.props.navigation.getParam('likes', 0),
+            date: this.props.navigation.getParam('date', ''),
+            ismine: this.props.navigation.getParam('ismine', false),
+            title: this.props.navigation.getParam('title', ''),
+            contents: this.props.navigation.getParam('contents', ''),
+            pictures: this.props.navigation.getParam('pictures', ''),
+
+            pictures: this.props.navigation.getParam('pictures', ''),
+            _refresher : this.props.navigation.getParam('_refresher', () => {}),
+        }
+        this._onSetState.bind(this);
+    }
+
+    /*componentDidMount(){
         setTimeout(() => {this.setState({
             boardid: this.props.navigation.getParam('boardid', 0),
             entryid: this.props.navigation.getParam('entryid', 0),
             replyid: this.props.navigation.getParam('entryid', 0),
             userid: this.props.navigation.getParam('userid', 0),
+            currentuserid: this.props.navigation.getParam('currentuserid', 0),
             username: this.props.navigation.getParam('username', ''),
             profile: this.props.navigation.getParam('profile', ''),
             likes: this.props.navigation.getParam('likes', 0),
@@ -36,32 +79,16 @@ class BulletinBoardsEditEntry extends Component{
             contents: this.props.navigation.getParam('contents', ''),
             pictures: this.props.navigation.getParam('pictures', ''),
         })}, 50);
-    }
+    }*/
 
 
-    //데이터 요청 시 함수
-    // 1. 게시글을 추가 or 수정하는 함수
-    _handleSubmit = async () => {
-        var url = server.serverURL + '/process/AddEditEntry';
+    // 데이터 요청 함수
+    // 0. 함수로 내려보낼 SetState
+    _onSetState = (state) => {
         this.setState({
-            isLoading: true,
-            isError: false
-        }) 
-        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
-            entryid: this.state.entryid, title: this.state.title, contents: this.state.contents}) 
-            .then((response) => {       
-                this.setState({
-                    isLoading: false
-                }) 
-            }) 
-        .catch(( err ) => {
-            Alert.alert(
-                'Cannot connect to the server.',
-                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [{text: 'OK'}]
-            );
-        });    
-}  
+            ...state
+        })
+    }
 
     //2. 댓글을 추가하는 함수 
     //onPress={this._handleAddComment.bind(this)} 
@@ -71,7 +98,7 @@ class BulletinBoardsEditEntry extends Component{
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
+        await axios.post(url, {userid: this.state.currentuserid, boardid: this.state.boardid, 
             entryid: this.state.entryid, contents: this.state.contents}) 
             .then((response) => {       
                 this.setState({
@@ -93,7 +120,7 @@ class BulletinBoardsEditEntry extends Component{
             isLoading: true,
             isError: false
         }) 
-        await axios.post(url, {userid: this.state.userid, boardid: this.state.boardid, 
+        await axios.post(url, {userid: this.state.currentuserid, boardid: this.state.boardid, 
             entryid: this.state.entryid, replyid: this.state.replyid, 
             contents: this.state.contents}) 
             .then((response) => {       
@@ -110,22 +137,37 @@ class BulletinBoardsEditEntry extends Component{
         });    
     }  
 
+    //4. 게시글 Submit 버튼 누를 시 제출 및 navigation.goBack() 및 부모 컴포넌트 새로고침
+    _onSubmitPressed = () => {
+        this.state._refresher();    
+        this.props.navigation.goBack();       
+    }
+
     // 렌더 함수   
     render() {
-        return(
+        if(this.state.isUploadDone)
+            return(
+                <View>
+                    {this._onSubmitPressed()}
+                </View>)
+        else return(
             <View>
-                {this.state === null ? 
-                    <LoadingPage/> :
+                {typeof this.state.currentuserid === 'undefined' || this.state.currentuserid === 0? 
                     <View>
-                    <TextInput
-                        placeholder='An awesome Title'
-                        value = {this.state.title}
-                        onChangeText={title => this.setState({ title })}/>
-                    <TextInput
-                        placeholder='Cool text for post (Optional)'
-                        value = {this.state.contents}
-                        onChangeText={contents => this.setState({ contents })}/>
-                    <Button onPress={this._handleSubmit.bind(this)}>Submit</Button> 
+                    <LoadingPage/>
+                    </View> :
+                    <View>
+                        <TextInput
+                            placeholder='An awesome Title'
+                            value = {this.state.title}
+                            onChangeText={title => this.setState({ title })}/>
+                        <TextInput
+                            placeholder='Cool text for post (Optional)'
+                            value = {this.state.contents}
+                            onChangeText={contents => this.setState({ contents })}/>
+                        <Button onPress={() => _handleBulletinBoardsPostSubmit({...this.state}, this._onSetState)}>Submit</Button>
+                        <View>
+                        </View>
                     </View>
                     }
             </View>

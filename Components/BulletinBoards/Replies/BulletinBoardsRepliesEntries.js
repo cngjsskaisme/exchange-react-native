@@ -15,6 +15,7 @@ import {ContentMedium, MetaLight, TitleBold} from '../../Theming/Theme'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ConsoleLog from '../../Tools/ConsoleLog';
 import { BulletinBoardsContext } from '../BulletinBoardsContext';
+import ViewMoreText from 'react-native-view-more-text';
 
 class BulletinBoardRepliesEntries extends Component{
     static defaultProps = {
@@ -80,27 +81,35 @@ class BulletinBoardRepliesEntries extends Component{
                         // 댓글 수정모드가 아닐 때
                         <View 
                         style={styles.RepliesEntry}>
-                        <View style={styles.RepliesEntryContents}>
-                            <ContentMedium>{this.state.contents}</ContentMedium>
-                        </View>
-                        <View style={styles.RepliesEntryMeta}>
-                            <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
-                        </View>
-                        <PostMenu
-                            ismine = {this.state.ismine}
-                            style = {styles.PostMenu}
-                            boardid = {this.state.boardid}
-                            entryid = {this.state.entryid}
-                            replyid = {this.state.replyid}
-                            userid = {this.state.userid}
-                            username = {this.state.username}
-                            profile = {this.state.profile}
-                            likes = {this.state.likes}
-                            date = {this.state.date}
-                            ismine = {this.state.ismine}
-                            title = {this.state.title}
-                            contents = {this.state.contents}
-                            pictures = {this.state.pictures}/>
+                            <View style={styles.RepliesEntryContents}>
+                                <ViewMoreText
+                                    numberOfLines = {5}
+                                    renderViewMore = {(onPress) => {return (<Text style = {{fontSize: 12, color: 'gray',}} onPress={onPress}>Read More...</Text>)}}
+                                    renderViewLess = {(onPress) => {return (<Text style = {{fontSize: 12, color: 'gray',}} onPress={onPress}>Read Less...</Text>)}}>
+                                    {this.state.contents}
+                                </ViewMoreText>
+                            </View>
+                            <View style={styles.RepliesEntryMeta}>
+                                <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
+                            </View>
+                            <PostMenu
+                                ismine = {this.state.ismine}
+                                style = {styles.PostMenu}
+                                boardid = {this.state.boardid}
+                                entryid = {this.state.entryid}
+                                replyid = {this.state.replyid}
+                                userid = {this.state.userid}
+                                currentuserid = {this.state.currentuserid}
+                                username = {this.state.username}
+                                profile = {this.state.profile}
+                                likes = {this.state.likes}
+                                date = {this.state.date}
+                                ismine = {this.state.ismine}
+                                title = {this.state.title}
+                                contents = {this.state.contents}
+                                pictures = {this.state.pictures}
+                                
+                                _onGetComments = {this.props._onGetComments}/>
                         </View>}
             </View>
         );
@@ -119,6 +128,7 @@ const styles = StyleSheet.create({
         top: 0,
     },
     RepliesEntry: {
+        paddingRight: 13,
         paddingBottom: 5
     },
     RepliesEntryContents: {

@@ -75,21 +75,28 @@ class BulletinBoardsEntries extends Component{
                     pictures: this.state.pictures,
                     isDev: this.state.isDev})}>
                 <View style={styles.BulletinBoardsEntries}>
-                    <Text style={styles.BulletinBoardsEntriesTitle}>{this.state.title}</Text> 
-                    <Text style={styles.BulletinBoardsEntriesContents}>  {this.state.contents} </Text>
+                    <Text 
+                        style={styles.BulletinBoardsEntriesTitle}
+                        numberOfLines= {3}
+                        ellipsizeMode= {'tail'}>{this.state.title}</Text> 
+                    <Text 
+                        style={styles.BulletinBoardsEntriesContents}
+                        numberOfLines = {5}
+                        ellipsizeMode = 'tail'>{this.state.contents}</Text>
                     <Text style={styles.BulletinBoardsEntriesMetadata}> written by {this.state.username} at {this.state.date}, {this.state.likes} Likes</Text>
                     <PostMenu 
                         ismine = {this.state.ismine}
                         boardid = {this.state.boardid}
                         entryid = {this.state.entryid}
-                        userid = {this.state.currentuserid}
+                        currentuserid = {this.state.currentuserid}
                         title = {this.state.title}
                         contents = {this.state.contents}
-                        style = {styles.PostMenu}/>
+                        style = {styles.PostMenu}
+                        
+                        _onGetPostsLists = {this.props._onGetPostsLists}/>
                 </View>
             </TouchableRipple>
         );
-        console.log(this.state.title)
     }
 }
 
@@ -115,22 +122,18 @@ const styles = StyleSheet.create({
     },
     BulletinBoardsEntriesTitle:{
         display: 'flex',
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        flex: 3,
         width: '80%',
         fontSize: 17,
         fontWeight: 'bold',
-        paddingBottom: 5
+        paddingBottom: 10
     },
     BulletinBoardsEntriesContents:{
-        flex: 5,
         fontSize: 14,
-        width: '75%',
+        width: '95%',
+        paddingLeft: 2,
         paddingBottom: 10
     },
     BulletinBoardsEntriesMetadata:{
-        flex: 2,
         fontSize: 12,
         color: 'gray',
         textAlign: "right",
