@@ -63,6 +63,13 @@ const TabNavigator = createBottomTabNavigator(
         tabBarIcon : ({tintColor}) => (<Icon name="calendar" color={tintColor} size = {20}/>)
       }
     },
+    Settings : {
+      screen : SettingsStack,
+      navigationOptions : {
+        tabBarLabel : 'Settings',
+        tabBarIcon : ({tintColor}) => (<Icon name="cog" color={tintColor} size = {20}/>)
+      }
+    },
     CourseEvaluation : {
       screen : CourseEvaluation,
       navigationOptions : {
@@ -70,12 +77,12 @@ const TabNavigator = createBottomTabNavigator(
         tabBarIcon : ({tintColor}) => (<Icon name="star" color={tintColor} size = {20}/>)
       }
     },
-    Settings : {
-      screen : SettingsStack,
+    Test : {
+      screen : Test,
       navigationOptions : {
-        tabBarLabel : 'Settings',
-        tabBarIcon : ({tintColor}) => (<Icon name="cog" color={tintColor} size = {20}/>)
-      },
+        tabBarLabel : 'Test',
+        tabBarIcon : ({tintColor}) => (<Icon name="star" color={tintColor} size = {20}/>)
+      }
     },
   }
 );

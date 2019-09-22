@@ -63,13 +63,11 @@ const styles = StyleSheet.create({
         paddingBottom: 40,
     },
     Header: {
-        flex:0.5,
         justifyContent: 'flex-end',
         paddingBottom: 15,
         alignItems: 'center'
     },
     Body: {
-        flex:0.5,
     }
 })
 

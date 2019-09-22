@@ -3,7 +3,7 @@ import { BulletinBoardsEntries_Mock } from '../../../Mockup_Datas/UnifiedEntries
 import axios from 'axios'; 
 import {server} from '../config';
 
-export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = false, searchquery = "", language = " ") => {   
+export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = false, searchquery = "", language = "", isMain = false) => {   
     var url = server.serverURL + '/process/ShowBulletinBoard';
     // 새로고침인 경우 isLoading 활성화 후 모든 목록 다시 받기
     if(isRefresh){
@@ -16,6 +16,13 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = 
             isSearching: true,
         }) 
     }
+    
+    // 메인 스크린일 경우 5개만 가져오기
+    if(isMain) {
+        postStartIndex= 0;
+        postEndIndex= 4;
+    }
+
     // 새로고침이 아닌 경우 isLoadingMore 활성화 후 일부 목록만 추가로 이어 받기
     else{
         if(state.entrieslist.length == 0)
@@ -41,21 +48,30 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = 
                 state.entrieslist.splice(state.entrieslist.findIndex((element) => {return element.entryid == 'lastlastlast'}), 1)
                 state.entrieslist.push(...response.data.postslist)
             }
-            {state.entrieslist.length % 20 == 0  && response.data.length != 0 && state.entrieslist.length != 0? // % 20으로 나눈 이유는 왜 인지 알 거 같지?
-                // 게시글 개수가 20개가 꽉 찼을 떄 Load More 버튼 표시 (이후 반환받는 Entry가 비어있을 때에는 다음 처리)
-                state.entrieslist.push({lastElement:true, okToShow: true, entryid: 'lastlastlast'}) :
-                // 게시글 개수가 20개가 안될 떄
-                state.entrieslist.push({lastElement:true, okToShow: false, entryid: 'lastlastlast'})
+
+            if(isMain){
+                _onSetState({
+                    entrieslist: state.entrieslist,
+                    isLoading: false,
+                    isError: false,
+                })
             }
-            _onSetState({ 
-                entrieslist: state.entrieslist,
-                isLoading: false,
-                isLoadingMore: false,
-                // 검색 기능용
-                isSearching: false,
-                isSearched: true,
-                isEmpty: state.entrieslist.length == 1? true : false,
-            }) ;
+            else{
+                {state.entrieslist.length % 20 == 0  && response.data.length != 0 && state.entrieslist.length != 0? // % 20으로 나눈 이유는 왜 인지 알 거 같지?
+                    // 게시글 개수가 20개가 꽉 찼을 떄 Load More 버튼 표시 (이후 반환받는 Entry가 비어있을 때에는 다음 처리)
+                    state.entrieslist.push({lastElement:true, okToShow: true, entryid: 'lastlastlast'}) :
+                    // 게시글 개수가 20개가 안될 떄
+                    state.entrieslist.push({lastElement:true, okToShow: false, entryid: 'lastlastlast'})
+                }
+                _onSetState({ 
+                    entrieslist: state.entrieslist,
+                    isLoading: false,
+                    isLoadingMore: false,
+                    // 검색 기능용
+                    isSearching: false,
+                    isSearched: true,
+                    isEmpty: state.entrieslist.length == 1? true : false,
+                }) ; }
     }) 
     .catch(( err ) => {
         Alert.alert(
@@ -64,8 +80,8 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = 
             [{text: 'OK'}]
           );
         _onSetState({
-            postslist: BulletinBoardsEntries_Mock,
             isError: true,
+            isLoading: false,
         })
     });    
 }
