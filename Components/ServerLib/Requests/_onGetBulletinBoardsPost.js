@@ -4,7 +4,16 @@ import axios from 'axios';
 import {server} from '../config';
 
 export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = false, searchquery = "", language = "", isMain = false) => {   
-    var url = server.serverURL + '/process/ShowBulletinBoard';
+    
+    var url = " ";
+    
+    if(state.boardid == "notifications"){
+        url = server.serverURL + '/process/ShowNotification';
+    }
+    else{
+        url = server.serverURL + '/process/ShowBulletinBoard';
+    }
+    
     // 새로고침인 경우 isLoading 활성화 후 모든 목록 다시 받기
     if(isRefresh){
         postStartIndex= 0;
@@ -86,7 +95,6 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = 
     });    
 }
 
-
 /* 
 27번 줄 search: search 에서 search에 string 값을 입력하면 
 해당 문자열과 일치하거나 해당 문자열을 포함하는 게시글 제목/내용/사용자 명 검색. 대소문자 무관. 아무런 값도 없을 시 전체 목록 전달
@@ -99,3 +107,4 @@ language: 공지사항의 제목 및 내용을 사용자가 요청한 언어(영
 중국어로 요청 시: language: "zh" 
 로 작성하면 된다.
 */
+
