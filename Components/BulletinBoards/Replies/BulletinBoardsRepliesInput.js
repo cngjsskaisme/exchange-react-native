@@ -50,7 +50,6 @@ class BulletinBoardsRepliesInput extends Component{
 
     //렌더 함수
     render(){
-        console.log(this.state)
         return(
             // Text 입력을 위한 TextInput 컴포넌트와 아이콘 버튼으로 구성
             <View style={styles.Container}>

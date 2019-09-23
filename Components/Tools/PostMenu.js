@@ -41,6 +41,7 @@ class PostMenu extends Component{
         isDeleted: false,
 
         _refresher: () => {},
+        _onSetState: () => {},
     }
     constructor(props){
         super(props);
@@ -66,6 +67,7 @@ class PostMenu extends Component{
             isDeleted: false,
 
             _refresher: this.props._refresher,
+            _onSetState: this.props._onSetState,
         }
     }
 
@@ -82,24 +84,25 @@ class PostMenu extends Component{
     }
 
     // 1. 게시글 제거 함수
-    _handleDeletePost = () => {
-        _handleBulletinBoardsPostDelete({...this.state}, this._onSetState);
-        if(this.state.isDeleted){
-            // 게시글이 게시판 목록에서 출력중일 때
-            if(this.state.isBoardRoot)
-                this.state._refresher();           
-                             
-            // 게시글이 Contents 내부에서 출력중일 때
-            else{
-                this.navigation.pop(2);
-                _refresher();}
-        }
+    _handleDeletePost = async () => {
+        await _handleBulletinBoardsPostDelete({...this.state}, this._onSetState)
+        .then(() => {
+            if(this.state.isDeleted){
+                // 게시글이 게시판 목록에서 출력중일 때
+                if(this.state.isBoardRoot)
+                    this.state._refresher();           
+                                 
+                // 게시글이 Contents 내부에서 출력중일 때
+                else{
+                    this.props.navigation.goBack();
+                    this.state._refresher();}
+            }
+        })
     }
 
     // 렌더 함수 시작
     render(){ 
         //내 글이거나 관리자 모드일 때
-        {console.log(this.state)}
         if(this.state.ismine || this.state.admin){
             return (
                 <View style={this.state.style}>
@@ -143,7 +146,11 @@ class PostMenu extends Component{
                                 ismine: this.state.ismine,
                                 title: this.state.title,
                                 contents: this.state.contents,
-                                pictures: this.state.pictures}, 500) :
+                                pictures: this.state.pictures,
+                                
+                                isBoardRoot: this.state.isBoardRoot,
+                                _refresher: this.state._refresher,
+                                _onSetState: this.state._onSetState,}, 500) :
                             // 댓글 수정
                             {}
                             }

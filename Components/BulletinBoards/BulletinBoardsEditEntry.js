@@ -38,6 +38,10 @@ class BulletinBoardsEditEntry extends Component{
         pictures: '',
 
         isUploadDone : false,
+        isEditing: false,
+
+        _refresher: () => {},
+        _onSetState: () => {},
     }
 
     constructor(props){
@@ -57,30 +61,12 @@ class BulletinBoardsEditEntry extends Component{
             contents: this.props.navigation.getParam('contents', ''),
             pictures: this.props.navigation.getParam('pictures', ''),
 
-            pictures: this.props.navigation.getParam('pictures', ''),
             _refresher : this.props.navigation.getParam('_refresher', () => {}),
+            _onSetState: this.props.navigation.getParam('_onSetState', () => {}),
+            isEditing: this.props.navigation.getParam('isEditing', false),
         }
         this._onSetState.bind(this);
     }
-
-    /*componentDidMount(){
-        setTimeout(() => {this.setState({
-            boardid: this.props.navigation.getParam('boardid', 0),
-            entryid: this.props.navigation.getParam('entryid', 0),
-            replyid: this.props.navigation.getParam('entryid', 0),
-            userid: this.props.navigation.getParam('userid', 0),
-            currentuserid: this.props.navigation.getParam('currentuserid', 0),
-            username: this.props.navigation.getParam('username', ''),
-            profile: this.props.navigation.getParam('profile', ''),
-            likes: this.props.navigation.getParam('likes', 0),
-            date: this.props.navigation.getParam('date', ''),
-            ismine: this.props.navigation.getParam('ismine', false),
-            title: this.props.navigation.getParam('title', ''),
-            contents: this.props.navigation.getParam('contents', ''),
-            pictures: this.props.navigation.getParam('pictures', ''),
-        })}, 50);
-    }*/
-
 
     // 데이터 요청 함수
     // 0. 함수로 내려보낼 SetState
@@ -165,7 +151,29 @@ class BulletinBoardsEditEntry extends Component{
                             placeholder='Cool text for post (Optional)'
                             value = {this.state.contents}
                             onChangeText={contents => this.setState({ contents })}/>
-                        <Button onPress={() => _handleBulletinBoardsPostSubmit({...this.state}, this._onSetState)}>Submit</Button>
+                        <Button onPress={() => {
+                            _handleBulletinBoardsPostSubmit({...this.state}, this._onSetState);
+                            // 만약 수정 모드일 경우
+                            if(this.state.isEditing)
+                                // 만약 수정 모드인데 게시판에서 했을 경우
+                                if(this.state.isBoardRoot)
+                                    this.state._refresher
+                                // 게시글 내부에서 했을 경우
+                                else this.state._onSetState({
+                                    boardid: this.state.boardid,
+                                    entryid: this.state.entryid,
+                                    replyid: this.state.replyid,
+                                    userid: this.state.userid,
+                                    currentuserid: this.state.currentuserid,
+                                    username: this.state.username,
+                                    profile: this.state.profile,
+                                    likes: this.state.likes,
+                                    date: this.state.date,
+                                    ismine: this.state.ismine,
+                                    title: this.state.title,
+                                    contents: this.state.contents,
+                                    pictures: this.state.pictures,
+                                })}}>Submit</Button>
                         <View>
                         </View>
                     </View>

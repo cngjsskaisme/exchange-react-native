@@ -27,7 +27,7 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = 
     }
     
     // 메인 스크린일 경우 5개만 가져오기
-    if(isMain) {
+    else if(isMain) {
         postStartIndex= 0;
         postEndIndex= 4;
     }
@@ -66,21 +66,21 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = 
                 })
             }
             else{
-                {state.entrieslist.length % 20 == 0  && response.data.length != 0 && state.entrieslist.length != 0? // % 20으로 나눈 이유는 왜 인지 알 거 같지?
-                    // 게시글 개수가 20개가 꽉 찼을 떄 Load More 버튼 표시 (이후 반환받는 Entry가 비어있을 때에는 다음 처리)
-                    state.entrieslist.push({lastElement:true, okToShow: true, entryid: 'lastlastlast'}) :
-                    // 게시글 개수가 20개가 안될 떄
-                    state.entrieslist.push({lastElement:true, okToShow: false, entryid: 'lastlastlast'})
-                }
-                _onSetState({ 
-                    entrieslist: state.entrieslist,
-                    isLoading: false,
-                    isLoadingMore: false,
-                    // 검색 기능용
-                    isSearching: false,
-                    isSearched: true,
-                    isEmpty: state.entrieslist.length == 1? true : false,
-                }) ; }
+                    {response.data.postslist.length != 0 && state.entrieslist.length % 20 == 0 ? // % 20으로 나눈 이유는 왜 인지 알 거 같지?
+                        // 게시글 개수가 20개가 꽉 찼을 떄 Load More 버튼 표시 (이후 반환받는 Entry가 비어있을 때에는 다음 처리)
+                        state.entrieslist.push({lastElement:true, okToShow: true, entryid: 'lastlastlast'}) :
+                        // 게시글 개수가 20개가 안될 떄
+                        state.entrieslist.push({lastElement:true, okToShow: false, entryid: 'lastlastlast'})
+                    }
+                    _onSetState({ 
+                        entrieslist: state.entrieslist,
+                        isLoading: false,
+                        isLoadingMore: false,
+                        // 검색 기능용
+                        isSearching: false,
+                        isSearched: true,
+                        isEmpty: state.entrieslist.length == 1? true : false,
+                    }) ; }
     }) 
     .catch(( err ) => {
         Alert.alert(

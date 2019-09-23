@@ -41,6 +41,7 @@ class BulletinBoardsContent extends Component{
         normalHeight: 0,
         shortHeight: 0,
         isDev: false,
+        _refresher: () => {},
         replyEditMode: false,
     }
     
@@ -66,6 +67,7 @@ class BulletinBoardsContent extends Component{
             normalHeight: 0,
             shortHeight: 0,
             isDev: this.props.navigation.getParam('isDev'),
+            _refresher: this.props.navigation.getParam('_refresher'),
             replyEditMode: false,
         }
     }
@@ -98,6 +100,10 @@ class BulletinBoardsContent extends Component{
                             title = {this.state.title}
                             contents = {this.state.contents}
                             style = {styles.PostMenu}
+
+                            isBoardRoot = {false}
+                            _refresher = {this.state._refresher}
+                            _onSetState = {this.state._onSetState}
                             />
                     <View style={styles.EntryReplies}>
                         <BulletinBoardsReplies
