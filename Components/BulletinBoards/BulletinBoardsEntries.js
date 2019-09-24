@@ -73,7 +73,9 @@ class BulletinBoardsEntries extends Component{
                     title: this.state.title,
                     contents: this.state.contents,
                     pictures: this.state.pictures,
-                    isDev: this.state.isDev})}>
+                    isDev: this.state.isDev,
+                    
+                    _refresher: this.state._refresher})}>
                 <View style={styles.BulletinBoardsEntries}>
                     <Text 
                         style={styles.BulletinBoardsEntriesTitle}
