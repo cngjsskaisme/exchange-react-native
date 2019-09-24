@@ -5,7 +5,8 @@ import {
   StyleSheet
 } from 'react-native';
 //import {Agenda} from 'react-native-calendars';
-import Agenda from './CalendarSourceCode/agenda/index'
+import Agenda from './CalendarSourceCode/agenda/index';
+import {EventEntries} from './CalendarEventEntries'
 
 export default class EventCalendar extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ export default class EventCalendar extends Component {
     
     return (
       <Agenda
+        
         /*
         items={{
           '2019-09-22': [{name: 'item 1 - any js object'}],
@@ -50,6 +52,40 @@ export default class EventCalendar extends Component {
       for (let i = -15; i < 85; i++) {
         const time = day.timestamp + i * 24 * 60 * 60 * 1000;
         const strTime = this.timeToString(time);
+        for (let m = 0; m < EventEntries.length; m++) {
+          if(strTime == EventEntries[m].Date){
+            this.state.items[strTime] = [];
+            for (let j = 0; j < EventEntries[m].Events.length; j++) {
+              this.state.items[strTime].push({
+                name: 'Item for ' + strTime + ' ' + EventEntries[0].Date + ' ' + strTime + ' ' + EventEntries[0].Events.length,
+                height: Math.max(50, Math.floor(Math.random() * 150))
+              });
+            }
+          }
+        }
+        if (!this.state.items[strTime]) {
+          this.state.items[strTime] = [];
+          const numItems = Math.floor(Math.random() * 5);
+          
+        }
+      }
+      //console.log(this.state.items);
+      const newItems = {};
+      Object.keys(this.state.items).forEach(key => {newItems[key] = this.state.items[key];});
+      this.setState({
+        items: newItems
+      });
+    }, 1000);
+    // console.log(`Load Items for ${day.year}-${day.month}`);
+  }
+
+/*
+  loadItems(day) {
+    setTimeout(() => {
+      for (let i = -15; i < 85; i++) {
+        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+        const strTime = this.timeToString(time);
+
         if (!this.state.items[strTime]) {
           this.state.items[strTime] = [];
           const numItems = Math.floor(Math.random() * 5);
@@ -70,7 +106,7 @@ export default class EventCalendar extends Component {
     }, 1000);
     // console.log(`Load Items for ${day.year}-${day.month}`);
   }
-
+*/
   renderItem(item) {
     return (
       <View style={[styles.item, {height: item.height}]}><Text>{item.name}</Text></View>
