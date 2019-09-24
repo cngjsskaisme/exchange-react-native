@@ -14,8 +14,11 @@ import { TextInput, IconButton, Colors } from 'react-native-paper'
 import axios from 'axios'; 
 import {server} from '../../ServerLib/config';
 import { _onAddBulletinBoardsReplies } from '../../ServerLib/ServerRequest'
+import BulletinBoardsContext from '../BulletinBoardsContext';
 
 class BulletinBoardsRepliesInput extends Component{
+    static contextType = BulletinBoardsContext;
+
     static defaultProps = {
         boardid: 0,
         entryid: 0,
@@ -41,11 +44,20 @@ class BulletinBoardsRepliesInput extends Component{
         }
     }
 
+    componentDidMount(){
+        const context = this.context.BulletinBoards
+    }
 
     // 데이터 요청 시 함수
     // 0. 내려보낼 _onSetState 함수
     _onSetState = (state) => {
         this.setState(state)
+    }
+
+    // 1. 댓글 등록 시 처리할 _onSubmitReplies 함수
+    _onSubmitReplies = async () => {
+        await _onAddBulletinBoardsReplies({...this.state}, this._onSetState)
+        .then(this.context.BulletinBoards._setContextState({isReplySubmitted : true,}))
     }
 
     //렌더 함수
@@ -79,7 +91,7 @@ class BulletinBoardsRepliesInput extends Component{
                             icon="arrow-upward"
                             style= {styles.Button}
                             size={15}
-                            onPress={() => _onAddBulletinBoardsReplies({...this.state}, this._onSetState)}/>
+                            onPress={this._onSubmitReplies}/>
                     </View>}
             </View>
         );

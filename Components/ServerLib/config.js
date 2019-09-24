@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native';
 
 // server 연결 관련 
 const server = {
-  serverURL: "http://172.16.87.230:3000",
+  serverURL: "http://sususerver.ddns.net:3000",
 }; 
 
 //참고: https://medium.com/@njwest/building-a-react-native-jwt-client-api-requests-and-asyncstorage-d1a20ab60cf4 

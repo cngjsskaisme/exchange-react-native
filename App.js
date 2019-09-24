@@ -12,10 +12,9 @@ import BulletinBoardsEditEntry from "./Components/BulletinBoards/BulletinBoardsE
 import BulletinBoardsLists from "./Components/BulletinBoards/BulletinBoardsLists";
 import CourseEvaluation from './Components/Course_Evaluation/CourseEvaluation';
 import CalendarScreen from './Components/EventCalendar/EventCalendar'
-import BulletinBoardsMain from "./Components/BulletinBoards/BulletinBoardsMain";
 import BulletinBoardsSearch from "./Components/BulletinBoards/BulletinBoardsSearch";
-
-import  Test from './Components/Course_Evaluation/screen/Test'
+import BulletinBoardsContext from "./Components/BulletinBoards/BulletinBoardsContext";
+import { Input } from "react-native-elements";
 
 
 const MainStack = createStackNavigator({
@@ -27,7 +26,6 @@ const SettingsStack = createStackNavigator({
 });
 
 const BulletinBoardsStack = createStackNavigator({
-  BulletinBoardsMain: BulletinBoardsMain,
   BulletinBoardsLists: BulletinBoardsLists,
   BulletinBoards: BulletinBoards,
   Post: BulletinBoardsContent,
@@ -80,18 +78,6 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
-/*
-const TabNavigator = createBottomTabNavigator(
-  {
-    Main: MainStack,
-    BulletinBoards: BulletinBoardsStack,
-    TimeTables : TimeTablesStack,
-    Settings: SettingsStack,
-    CourseEvaluation : CourseEvaluation,
-  }
-);
-*/
-
 const AppContainer = createAppContainer(TabNavigator);
 
 const theme = {
@@ -105,11 +91,30 @@ const theme = {
   }
 };
 
+
 export default class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      BulletinBoards: {
+        currentuserid : '5d5373177443381df03f3040',
+        isDev : false,
+        isReplyEditMode : false,
+        isReplySubmitted : false,
+        
+        checker: 'context is working',
+        
+        _toggleDevMode : this._toggleDevMode,
+        _setContextState: (input) => { this.setState({BulletinBoards: {...this.state.BulletinBoards, ...input}})},
+      },
+    }
+  }
   render() {
     return (
       <PaperProvider>
-        <AppContainer />
+        <BulletinBoardsContext.Provider value={this.state}>
+          <AppContainer /> 
+        </BulletinBoardsContext.Provider>
       </PaperProvider>
     );
   }

@@ -33,6 +33,7 @@ class BulletinBoardRepliesEntries extends Component{
         pictures: "",
 
         replyEditMode: false, //PostMenu 컴포넌트에 있는 replyEditMode를 활용
+        _refresherReplies: () => {},
     }
 
     constructor(props){
@@ -52,6 +53,7 @@ class BulletinBoardRepliesEntries extends Component{
             pictures: this.props.pictures,
 
             replyEditMode: this.props.replyEditMode, 
+            _refresherReplies : this.props._refresherReplies,
         }       
     }
 
@@ -107,7 +109,9 @@ class BulletinBoardRepliesEntries extends Component{
                                 ismine = {this.state.ismine}
                                 title = {this.state.title}
                                 contents = {this.state.contents}
-                                pictures = {this.state.pictures}/>
+                                pictures = {this.state.pictures}
+                                
+                                _refresherReplies = {this.state._refresherReplies}/>
                         </View>}
             </View>
         );

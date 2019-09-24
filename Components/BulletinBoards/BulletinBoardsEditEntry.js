@@ -39,6 +39,7 @@ class BulletinBoardsEditEntry extends Component{
 
         isUploadDone : false,
         isEditing: false,
+        isBoardRoot: true,
 
         _refresher: () => {},
         _onSetState: () => {},
@@ -64,6 +65,7 @@ class BulletinBoardsEditEntry extends Component{
             _refresher : this.props.navigation.getParam('_refresher', () => {}),
             _onSetState: this.props.navigation.getParam('_onSetState', () => {}),
             isEditing: this.props.navigation.getParam('isEditing', false),
+            isBoardRoot: this.props.navigation.getParam('isBoardRoot', true),
         }
         this._onSetState.bind(this);
     }
@@ -76,65 +78,47 @@ class BulletinBoardsEditEntry extends Component{
         })
     }
 
-    //2. 댓글을 추가하는 함수 
-    //onPress={this._handleAddComment.bind(this)} 
-    _handleAddComment = async () => {
-        var url = server.serverURL + '/process/AddComment';
-        this.setState({
-            isLoading: true,
-            isError: false
-        }) 
-        await axios.post(url, {userid: this.state.currentuserid, boardid: this.state.boardid, 
-            entryid: this.state.entryid, contents: this.state.contents}) 
-            .then((response) => {       
-                this.setState({
-                isLoading: false
-                }) 
-            }) 
-        .catch(( err ) => {
-            Alert.alert(
-                'Cannot connect to the server.',
-                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [{text: 'OK'}]
-              );
-        });    
-    } 
-    //3. 댓글을 수정하는 함수
-    _handleEditComment = async () => {
-        var url = server.serverURL + '/process/EditComment';
-        this.setState({
-            isLoading: true,
-            isError: false
-        }) 
-        await axios.post(url, {userid: this.state.currentuserid, boardid: this.state.boardid, 
-            entryid: this.state.entryid, replyid: this.state.replyid, 
-            contents: this.state.contents}) 
-            .then((response) => {       
-                this.setState({
-                isLoading: false
-                }) 
-            }) 
-        .catch(( err ) => {
-            Alert.alert(
-                'Cannot connect to the server.',
-                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [{text: 'OK'}]
-              );
-        });    
-    }  
-
-    //4. 게시글 Submit 버튼 누를 시 제출 및 navigation.goBack() 및 부모 컴포넌트 새로고침
+    //1. 게시글 Submit 버튼 누를 시 제출 및 navigation.goBack() 및 부모 컴포넌트 새로고침
     _onSubmitPressed = () => {
         this.state._refresher();    
         this.props.navigation.goBack();       
     }
 
+    //2. 게시글 Modify 발생 시 제출 및 게시글을 보고 있는 위치에 따른 새로고침
+    _onModifyPressed = () => {
+        // 만약 수정 모드인데 게시판에서 했을 경우
+        if(this.state.isBoardRoot)
+            this.state._refresher();
+
+        // 게시글 내부에서 했을 경우
+        else {
+            this.state._refresher();
+            this.state._onSetState({
+                boardid: this.state.boardid,
+                entryid: this.state.entryid,
+                currentuserid: this.state.currentuserid,
+                profile: this.state.profile,
+                ismine: this.state.ismine,
+                title: this.state.title,
+                contents: this.state.contents,
+                pictures: this.state.pictures,
+        });}
+            this.props.navigation.goBack();
+    }
+
     // 렌더 함수   
     render() {
-        if(this.state.isUploadDone)
+        // 수정 모드가 아니고 새로운 글을 작성했을 때 등록이 완료된 경우
+        if(!this.state.isEditing && this.state.isUploadDone)
             return(
                 <View>
                     {this._onSubmitPressed()}
+                </View>)
+        // 수정 모드인 데 새로운 글을 작성했을 때 등록이 완료된 경우
+        else if(this.state.isEditing && this.state.isUploadDone)
+            return(
+                <View>
+                    {this._onModifyPressed()}
                 </View>)
         else return(
             <View>
@@ -152,28 +136,7 @@ class BulletinBoardsEditEntry extends Component{
                             value = {this.state.contents}
                             onChangeText={contents => this.setState({ contents })}/>
                         <Button onPress={() => {
-                            _handleBulletinBoardsPostSubmit({...this.state}, this._onSetState);
-                            // 만약 수정 모드일 경우
-                            if(this.state.isEditing)
-                                // 만약 수정 모드인데 게시판에서 했을 경우
-                                if(this.state.isBoardRoot)
-                                    this.state._refresher
-                                // 게시글 내부에서 했을 경우
-                                else this.state._onSetState({
-                                    boardid: this.state.boardid,
-                                    entryid: this.state.entryid,
-                                    replyid: this.state.replyid,
-                                    userid: this.state.userid,
-                                    currentuserid: this.state.currentuserid,
-                                    username: this.state.username,
-                                    profile: this.state.profile,
-                                    likes: this.state.likes,
-                                    date: this.state.date,
-                                    ismine: this.state.ismine,
-                                    title: this.state.title,
-                                    contents: this.state.contents,
-                                    pictures: this.state.pictures,
-                                })}}>Submit</Button>
+                            _handleBulletinBoardsPostSubmit({...this.state}, this._onSetState);}}>Submit</Button>
                         <View>
                         </View>
                     </View>

@@ -17,9 +17,11 @@ import EmptyPage from '../../Tools/EmptyPage'
 import LoadingPage from '../../Tools/LoadingPage'
 import ConsoleLog from '../../Tools/ConsoleLog';
 import { _onGetBulletinBoardsReplies } from '../../ServerLib/ServerRequest'
-
+import BulletinBoardsContext from '../BulletinBoardsContext';
 
 class BulletinBoardsReplies extends Component{
+    static contextType = BulletinBoardsContext
+
     static defaultProps = {
         boardid: 0,
         entryid: 0,
@@ -35,6 +37,9 @@ class BulletinBoardsReplies extends Component{
 
         isLoading: true,
         isDev: false,
+
+        _toggleSibling: () => {},
+        repliesSiblingCommunicator: false,
         replyEditMode: false,
     }
 
@@ -55,7 +60,6 @@ class BulletinBoardsReplies extends Component{
 
             isLoading: true,
             isDev: this.props.isDev,
-            replyEditMode: false,
         }
     }
 
@@ -63,6 +67,11 @@ class BulletinBoardsReplies extends Component{
     // 0. 내려보낼 _onSetState 함수
     _onSetState = (state) => {
         this.setState(state)
+    }
+
+    // 1. 댓글 목록 새로고침 시 내려보낼 _refresherReplies 함수
+    _refresherReplies = () => {
+        _onGetBulletinBoardsReplies({...this.state}, this._onSetState);
     }
 
     //컴포넌트 마운트 시
@@ -95,7 +104,8 @@ class BulletinBoardsReplies extends Component{
                 contents = {item.contents}
                 pictures = {item.pictures}
                 
-                replyEditMode = {this.state.replyEditMode}/>
+                replyEditMode = {this.state.replyEditMode}
+                _refresherReplies = {this._refresherReplies}/>
             </View>
         )
     };
@@ -105,6 +115,11 @@ class BulletinBoardsReplies extends Component{
 
     // 페이지 렌더 함수
     render(){
+        // BulletinBoardsRepliesInput 에서 Submit 버튼이 눌렸을 때 댓글 목록 새로고침
+        if (this.context.BulletinBoards.isReplySubmitted){
+            this.context.BulletinBoards._setContextState({isReplySubmitted : false,})
+            _onGetBulletinBoardsReplies({...this.state}, this._onSetState); }
+
         return(
             <View>
                 {this.state.isLoading ?

@@ -24,6 +24,10 @@ import { _onGetBulletinBoardsLists } from '../ServerLib/ServerRequest'
 axios.defaults.timeout = 5000;
 
 class BulletinBoardsLists extends Component{
+    static navigationOptions = ({ navigation }) => ({
+        title: 'Thread Lists',
+      });
+
     static defaultProp = {
         boardslist: null,
         currentuserid: 0,

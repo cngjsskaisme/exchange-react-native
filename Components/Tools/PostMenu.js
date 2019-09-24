@@ -37,10 +37,11 @@ class PostMenu extends Component{
         visible: false,
         style: {},
 
-        isBoardRoot: false,
+        isBoardRoot: true,
         isDeleted: false,
 
         _refresher: () => {},
+        _refresherReplies: () => {},
         _onSetState: () => {},
     }
     constructor(props){
@@ -67,12 +68,15 @@ class PostMenu extends Component{
             isDeleted: false,
 
             _refresher: this.props._refresher,
+            _refresherReplies: this.props._refresherReplies,
             _onSetState: this.props._onSetState,
         }
     }
 
     static contextType = BulletinBoardsContext;
 
+
+    // 메뉴 버튼을 토글하는 함수들
     _openMenu = () => this.setState({ visible: true });
 
     _closeMenu = () => this.setState({ visible: false }); 
@@ -148,8 +152,11 @@ class PostMenu extends Component{
                                 contents: this.state.contents,
                                 pictures: this.state.pictures,
                                 
+                                //isBoardRoot는 해당 게시글이 게시판 목록에 있는지, 글 보기 상태에 있는지 알려줌
                                 isBoardRoot: this.state.isBoardRoot,
+                                isEditing: true,
                                 _refresher: this.state._refresher,
+                                _refresherReplies: this.state._refresherReplies,
                                 _onSetState: this.state._onSetState,}, 500) :
                             // 댓글 수정
                             {}
@@ -157,15 +164,19 @@ class PostMenu extends Component{
                         }
                     } title="Modify" />
 
-                    <Menu.Item onPress={ () =>
-                        //게시글 신고
-                        this._handleAddReport({...this.state}, this._onSetState)} title="Report" />
+                    <Menu.Item onPress={ () =>{
+                        // 신고
+                        this._closeMenu();
+                        _handleAddReport({...this.state}, this._onSetState);
+                    }} title="Report" />
 
                     <Divider />
 
-                    <Menu.Item onPress={ () =>
-                        //게시글 좋아요
-                        this._handleLikeIncrease({...this.state}, this._onSetState)} title="Like this!" />
+                    <Menu.Item onPress={ () =>{
+                        // 좋아요
+                        this._closeMenu();
+                        this._handleLikeIncrease({...this.state}, this._onSetState);
+                    }} title="Like this!" />
                 </Menu>
             </View>);
         }

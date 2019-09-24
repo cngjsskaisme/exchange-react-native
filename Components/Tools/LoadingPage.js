@@ -35,7 +35,7 @@ class LoadingPage extends Component{
                     <View style={styles.LoadingScreen01}>
                         <ActivityIndicator animating= 'true' size = 'large'/>
                     </View>
-                    <ContentMedium style={styles.LoadingScreen02}>Loading{this.state.What!==''? ' ' + this.state.What : ''}...{"\n"}Wait Please... {this.state.Message!==''?"\n" + this.state.Message : ''}</ContentMedium>    
+                    <ContentMedium style={styles.LoadingScreen02}>Loading{this.state.What!==''? ' ' + this.state.What : ''}...{"\n"}Please Wait... {this.state.Message!==''?"\n" + this.state.Message : ''}</ContentMedium>    
             </View>
         );
     }

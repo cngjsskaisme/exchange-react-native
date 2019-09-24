@@ -8,20 +8,18 @@
 
 import React from 'react';
 
-export const context = {
-    main: {
-        currentuserid: 0,
-        isDev: false,
-        isReplyEditMode: false,
+export const defaultContext = {
+    currentuserid: 0,
+    isDev: false,
+    isReplyEditMode: false,
 
-        checker: 'context is working',
-        _toggleChecker: () => {},
+    checker: '',
+    _toggleChecker: () => {},
 
-        _toggleDevMode: () => {},
-        _toggleReplyEditMode: () => {},
-    }
+    _toggleDevMode: () => {},
+    _toggleReplyEditMode: () => {},
 }
 
-export const BulletinBoardsContext = React.createContext(
-    context.main // 기본값
-  );
+const BulletinBoardsContext = React.createContext();
+
+export default BulletinBoardsContext
