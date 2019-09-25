@@ -112,7 +112,7 @@ class EvaluationList extends Component {
   //data request function - start 
   // 1. Get 20 elements from 'courseslist' array whoose start/end indexes are courseliststartindex/courselistendindex
     _handleGetCoursesList = async () => {
-      var url = server.serverURL + '/process/ShowCoursesList'; 
+      var url = server.serverURL + '/process/CourseEvaluation/ShowCoursesList'; 
       this.setState({
         isLoading: true,
       }); 

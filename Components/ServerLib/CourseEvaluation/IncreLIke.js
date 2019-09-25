@@ -26,11 +26,11 @@ _handleIncreLike = async () => {
   var likepresssed = true; 
 
   if(likepresssed){
-    var url = server.serverURL + '/process/DecreLikeCourseEvaluationComment';
+    var url = server.serverURL + '/process/CourseEvaluation/DecreLikeCourseEvaluationComment';
   } 
   else{ 
     
-    var url = server.serverURL + '/process/IncreLikeCourseEvaluationComment';
+    var url = server.serverURL + '/process/CourseEvaluation/IncreLikeCourseEvaluationComment';
   }    
   await this.setState({
     isLoading: true

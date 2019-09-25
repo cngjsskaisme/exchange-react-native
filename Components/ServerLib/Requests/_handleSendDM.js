@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../config';
 
 export default _handleSendDM = async(state, _onSetState) => {
-    var url = server.serverURL + '/process/SendDM';  
+    var url = server.serverURL + '/process/BulletinBoards/SendDM';  
 
     _onSetState({
         isLoading: true,

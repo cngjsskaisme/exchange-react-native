@@ -68,7 +68,7 @@ class EvaluationScreen extends Component {
     userid: specifies current userid. located: x. (헌남 also didn't do this part.)
   */ 
    _handleGetCommentsList = async () => {
-    var url = server.serverURL + '/process/ShowCommentsList';  
+    var url = server.serverURL + '/process/CourseEvaluation/ShowCommentsList';  
     
     await this.setState({
       isLoading: true
