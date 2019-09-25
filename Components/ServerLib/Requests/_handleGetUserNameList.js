@@ -13,9 +13,9 @@ export default _handleGetUserNameList = async(state, _onSetState) => {
     await axios.post(url,{search: "ad"}) 
         .then((response) => {       
             this.setState({ 
-              isLoading: false 
+              isLoading: false,
               usernamelist: response.data.usernamelist
-            });  
+            })
         }) 
         .catch(( err ) => {
             Alert.alert(

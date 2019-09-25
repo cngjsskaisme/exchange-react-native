@@ -115,7 +115,8 @@ class EvaluationList extends Component {
       var url = server.serverURL + '/process/ShowCoursesList'; 
       this.setState({
         isLoading: true,
-      });
+      }); 
+      
       await axios.post(url, {coursesliststartindex: this.state.CourseslistStartIndex, 
         courseslistendindex: this.state.CourseslistEndIndex, search: this.state.search}) 
           .then((response) => {       

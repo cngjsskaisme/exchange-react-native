@@ -231,7 +231,7 @@ class EvaluationScreen extends Component {
                     userid = {l.userid}
                     Star={l.rating} 
                     ismine = {l.ismine}
-                    NumberLike = {5}
+                    NumberLike = {l.likes}
                   /> 
                   ))
               }
