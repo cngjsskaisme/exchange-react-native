@@ -101,8 +101,15 @@ export default class App extends React.Component {
         isDev : false,
         isReplyEditMode : false,
         isReplySubmitted : false,
-        
-        checker: 'context is working',
+
+        // 댓글 관련 context
+        boardid: 0,
+        entryid: 0,
+        replyid: 0,
+
+        // 댓글 수정 중일 때
+        currentReplyEditId : '',
+        currentReplyEditContents: '',
         
         _toggleDevMode : this._toggleDevMode,
         _setContextState: (input) => { this.setState({BulletinBoards: {...this.state.BulletinBoards, ...input}})},

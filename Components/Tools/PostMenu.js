@@ -14,7 +14,7 @@ import { withNavigation } from 'react-navigation'
 import PropTypes from 'prop-types'; 
 import axios from 'axios';
 import {server} from '../ServerLib/config';
-import { BulletinBoardsContext } from '../BulletinBoards/BulletinBoardsContext'; 
+import BulletinBoardsContext from '../BulletinBoards/BulletinBoardsContext'; 
 import ConsoleLog from './ConsoleLog';
 import { _handleBulletinBoardsPostDelete, _handleDeleteReplies, _handleAddReport, _handleLikeIncrease } from '../ServerLib/ServerRequest'
 
@@ -40,9 +40,11 @@ class PostMenu extends Component{
         isBoardRoot: true,
         isDeleted: false,
 
-        _refresher: () => {},
+        _refresherBulletinBoards: () => {},
         _refresherReplies: () => {},
-        _onSetState: () => {},
+        _onSetStateBoardsContent: () => {},
+        _onSetStateBoardsEntries : () => {},
+        _onSetStateRepliesEntries: () => {},
     }
     constructor(props){
         super(props);
@@ -67,14 +69,15 @@ class PostMenu extends Component{
             isBoardRoot: this.props.isBoardRoot,
             isDeleted: false,
 
-            _refresher: this.props._refresher,
+            _refresherBulletinBoards: this.props._refresherBulletinBoards,
             _refresherReplies: this.props._refresherReplies,
-            _onSetState: this.props._onSetState,
+            _onSetStateBoardsContent: this.props._onSetStateBoardsContent,
+            _onSetStateBoardsEntries : this.props._onSetStateBoardsEntries,
+            _onSetStateRepliesEntries : this.props._onSetStateRepliesEntries
         }
     }
 
     static contextType = BulletinBoardsContext;
-
 
     // 메뉴 버튼을 토글하는 함수들
     _openMenu = () => this.setState({ visible: true });
@@ -83,27 +86,35 @@ class PostMenu extends Component{
 
     // 데이터 요청 함수
     // 0. 내려보내기 위한 _onSetState 함수
-    _onSetState = (state) => {
+    _onSetStatePostMenu = (state) => {
         this.setState(state)
     }
 
     // 1. 게시글 제거 함수
     _handleDeletePost = async () => {
-        await _handleBulletinBoardsPostDelete({...this.state}, this._onSetState)
-        .then(() => {
-            if(this.state.isDeleted){
-                // 게시글이 게시판 목록에서 출력중일 때
-                if(this.state.isBoardRoot)
-                    this.state._refresher();           
-                                 
-                // 게시글이 Contents 내부에서 출력중일 때
-                else{
-                    this.props.navigation.goBack();
-                    this.state._refresher();}
-            }
-        })
+        await _handleBulletinBoardsPostDelete({...this.state}, this._onSetStatePostMenu)
+        if(this.state.isDeleted){
+            // 게시글이 게시판 목록에서 출력중일 때
+            if(this.state.isBoardRoot)
+                this.state._refresherBulletinBoards();           
+                                
+            // 게시글이 Contents 내부에서 출력중일 때
+            else{
+                await this.state._refresherBulletinBoards();
+                this.props.navigation.goBack();}
+        }
     }
 
+    // 2. 댓글 제거 함수
+    _onDeleteReplies = async () => {       
+        await _handleDeleteReplies({
+            boardid : this.state.boardid,
+            entryid : this.state.entryid,
+            replyid : this.state.replyid,
+        }, this.state._onSetStateBoardsContent)
+        this.state._refresherReplies()
+    }
+    
     // 렌더 함수 시작
     render(){ 
         //내 글이거나 관리자 모드일 때
@@ -128,14 +139,13 @@ class PostMenu extends Component{
                             //게시글일 때
                             this._handleDeletePost() :
                             //댓글일 때
-                            _handleDeleteReplies({...this.state}, this._onSetState)}}} title="Delete" />
+                            this._onDeleteReplies()}}} title="Delete" />
         
                     <Menu.Item onPress={() => {
                         //글 수정
                         this._closeMenu();
                         // 게시글 수정, 댓글 수정 기능을 서로 분리 (예정) 
-                        { //this.state.replyid == 0 ?
-                            true ?
+                        {   this.state.replyid == 0 ?
                             // 게시글 수정
                             this.props.navigation.navigate('EntryEdit', {
                                 boardid: this.state.boardid,
@@ -155,33 +165,80 @@ class PostMenu extends Component{
                                 //isBoardRoot는 해당 게시글이 게시판 목록에 있는지, 글 보기 상태에 있는지 알려줌
                                 isBoardRoot: this.state.isBoardRoot,
                                 isEditing: true,
-                                _refresher: this.state._refresher,
+                                _refresherBulletinBoards: this.state._refresherBulletinBoards,
                                 _refresherReplies: this.state._refresherReplies,
-                                _onSetState: this.state._onSetState,}, 500) :
+                                _onSetStateBoardsContent: this.state._onSetStateBoardsContent,
+                                _onSetStatePostMenu: this._onSetStatePostMenu,}, 500) :
                             // 댓글 수정
-                            {}
+                                this.context.BulletinBoards._setContextState({isReplyEditMode : true, currentReplyEditId : this.state.replyid})
                             }
                         }
                     } title="Modify" />
 
                     <Menu.Item onPress={ () =>{
-                        // 신고
+                        //신고
                         this._closeMenu();
-                        _handleAddReport({...this.state}, this._onSetState);
+                        _handleAddReport({...this.state}, this._onSetStatePostMenu);
                     }} title="Report" />
 
                     <Divider />
 
-                    <Menu.Item onPress={ () =>{
+                    <Menu.Item onPress={ async () =>{
                         // 좋아요
                         this._closeMenu();
-                        this._handleLikeIncrease({...this.state}, this._onSetState);
-                    }} title="Like this!" />
+                        await _handleLikeIncrease({...this.state}, this._onSetStatePostMenu);
+                        if(this.state.replyid == 0){
+                            // 게시글이 게시판 목록에서 출력중일 때
+                            if(this.state.isBoardRoot)
+                                this.state._onSetStateBoardsEntries({
+                                    boardid: this.state.boardid,
+                                    entryid: this.state.entryid,
+                                    currentuserid: this.state.currentuserid,
+                                    profile: this.state.profile,
+                                    ismine: this.state.ismine,
+                                    title: this.state.title,
+                                    contents: this.state.contents,
+                                    pictures: this.state.pictures,
+                                    likes: this.state.likes
+                                })      
+                                                
+                            // 게시글이 Contents 내부에서 출력중일 때
+                            else{
+                                this.state._onSetStateBoardsContent({
+                                    boardid: this.state.boardid,
+                                    entryid: this.state.entryid,
+                                    currentuserid: this.state.currentuserid,
+                                    profile: this.state.profile,
+                                    ismine: this.state.ismine,
+                                    title: this.state.title,
+                                    contents: this.state.contents,
+                                    pictures: this.state.pictures,
+                                    likes: this.state.likes
+                                })
+                                await this.state._refresherBulletinBoards();
+                            }
+                        }
+                        else{
+                            this.state._onSetStateRepliesEntries(
+                                {
+                                    boardid: this.state.boardid,
+                                    entryid: this.state.entryid,
+                                    currentuserid: this.state.currentuserid,
+                                    profile: this.state.profile,
+                                    ismine: this.state.ismine,
+                                    title: this.state.title,
+                                    contents: this.state.contents,
+                                    pictures: this.state.pictures,
+                                    likes: this.state.likes
+                                }
+                            )
+                        }
+                    }} title="Like!" />
                 </Menu>
             </View>);
         }
         else{ 
-            //내 글이 아닐 때
+            //내 글이 아닐 때 (아직 작업 안함)
             return (
                 <View style={this.state.style}>
                 <Menu
@@ -195,9 +252,9 @@ class PostMenu extends Component{
                     />
                     }
                 >
-                    <Menu.Item onPress={() => this._handleAddReport({...this.state}, this._onSetState)} title="Report" />
+                    <Menu.Item onPress={() => this._handleAddReport({...this.state}, this._onSetStatePostMenu)} title="Report" />
                     <Divider />
-                    <Menu.Item onPress={() => this._handleLikeIncrease({...this.state}, this._onSetState)} title="Like this!" />
+                    <Menu.Item onPress={() => this._handleLikeIncrease({...this.state}, this._onSetStatePostMenu)} title="Like this!" />
                 </Menu>
             </View>);
         }

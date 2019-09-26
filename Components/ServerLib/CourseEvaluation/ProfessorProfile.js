@@ -5,7 +5,7 @@
 
 
 _handleProfessorProfile = async () => {
-    var url = server.serverURL + '/process/ShowProfessorProfile';  
+    var url = server.serverURL + '/process/CourseEvaluation/ShowProfessorProfile';  
     
     await this.setState({
       isLoading: true

@@ -32,27 +32,34 @@ class BulletinBoardsEntries extends Component{
         title: '',
         contents: '',
         
-        _refresher: () => {}
+        _refresherBulletinBoards: () => {}
     }
 
     constructor(props){
         super(props)
         this.state = {
-            boardid: props.boardid,
-            entryid: props.entryid, 
-            userid: props.userid,
-            currentuserid: props.currentuserid,
-            username: props.username,
-            profile: props.profile,
-            likes: props.likes,
-            date: props.date,
-            ismine: props.ismine,
-            title: props.title,
-            contents: props.contents,
-            isDev: props.isDev,
+            boardid: this.props.boardid,
+            entryid: this.props.entryid, 
+            userid: this.props.userid,
+            currentuserid: this.props.currentuserid,
+            username: this.props.username,
+            profile: this.props.profile,
+            likes: this.props.likes,
+            date: this.props.date,
+            ismine: this.props.ismine,
+            title: this.props.title,
+            contents: this.props.contents,
+            isDev: this.props.isDev,
 
-            _refresher: this.props._refresher,
+            _refresherBulletinBoards: this.props._refresherBulletinBoards,
         }
+    }
+
+    _onSetStateBoardsEntries = (state) => {
+        console.log(state)
+        this.setState({
+            ...state
+        })
     }
 
     // 렌더 함수
@@ -75,7 +82,7 @@ class BulletinBoardsEntries extends Component{
                     pictures: this.state.pictures,
                     isDev: this.state.isDev,
                     
-                    _refresher: this.state._refresher})}>
+                    _refresherBulletinBoards: this.state._refresherBulletinBoards})}>
                 <View style={styles.BulletinBoardsEntries}>
                     <Text 
                         style={styles.BulletinBoardsEntriesTitle}
@@ -96,7 +103,8 @@ class BulletinBoardsEntries extends Component{
                         style = {styles.PostMenu}
                         
                         isBoardRoot = {true}
-                        _refresher= {this.state._refresher}/>
+                        _onSetStateBoardsEntries = {this._onSetStateBoardsEntries}
+                        _refresherBulletinBoards= {this.state._refresherBulletinBoards}/>
                 </View>
             </TouchableRipple>
         );

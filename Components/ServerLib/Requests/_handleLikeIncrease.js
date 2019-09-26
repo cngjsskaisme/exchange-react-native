@@ -4,35 +4,18 @@ import {server} from '../config';
 
 export default _handleLikeIncrease = async(state, _onSetState) => {
     
-    let isentry = true;
-    let likespressed = false;
-
-    if(isentry){ 
-
-        if(!(likespressed)){
-            var url = server.serverURL + '/process/IncreLikeEntry';
-        } 
-        else{
-            var url = server.serverURL + '/process/DecreLikeEntry';
-        } 
-    }
-    else{
-
-        if(!(likespressed)){
-            var url = server.serverURL + '/process/IncreLikeEntry';
-        } 
-        else{
-            var url = server.serverURL + '/process/DecreLikeEntry';
-        } 
-    }
+    const url = server.serverURL + '/process/BulletinBoards/FlipLikeEntry';
+      
     _onSetState({
         isLoading: true,
         isError: false
     }) 
-    await axios.post(url, {boardid: state.boardid, entryid: state.entryid, replyid: state.replyid, userid: state.userid}) 
+    await axios.post(url, {boardid: state.boardid, entryid: state.entryid, replyid: state.replyid, userid: state.currentuserid}) 
         .then((response) => {       
             _onSetState({
             isLoading: false,
+            likespressed: response.data.likesinfo[0].likespressed,
+            likes: response.data.likesinfo[0].likes 
             }) 
         }) 
         .catch(( err ) => {

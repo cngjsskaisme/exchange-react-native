@@ -3,13 +3,13 @@ import axios from 'axios';
 import {server} from '../config';
 
 export default _onGetBulletinBoardsReplies = async (state, _onSetState) => {   
-    var url = server.serverURL + '/process/ShowComments';
+    var url = server.serverURL + '/process/BulletinBoards/ShowComments';
     _onSetState({
         isLoading: true,
         isError: false,
 
-        commentstartindex: state.commentendindex,
-        commentendindex: state.commentstartindex + 19,
+        commentstartindex: 0,
+        commentendindex: 19,
     }) 
     await axios.post(url, {userid: state.userid, boardid: state.boardid, 
         entryid: state.entryid, 

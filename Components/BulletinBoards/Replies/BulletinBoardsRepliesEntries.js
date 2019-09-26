@@ -8,20 +8,23 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TextInput } from 'react-native';
-import { Button } from 'react-native-paper'
+import { IconButton } from 'react-native-paper'
 import PropTypes from 'prop-types';
 import PostMenu from '../../Tools/PostMenu';
 import {ContentMedium, MetaLight, TitleBold} from '../../Theming/Theme'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ConsoleLog from '../../Tools/ConsoleLog';
-import { BulletinBoardsContext } from '../BulletinBoardsContext';
+import BulletinBoardsContext from '../BulletinBoardsContext';
 import ViewMoreText from 'react-native-view-more-text';
 
 class BulletinBoardRepliesEntries extends Component{
+    static contextType = BulletinBoardsContext;
+
     static defaultProps = {
         boardid: 0,
         entryid: 0,
         replyid: 0,
+        currentuserid: 0,
         userid: 0,
         username: "",
         profile: "",
@@ -42,6 +45,7 @@ class BulletinBoardRepliesEntries extends Component{
             boardid: this.props.boardid,
             entryid: this.props.entryid,
             replyid: this.props.replyid,
+            currentuserid: this.props.currentuserid,
             userid: this.props.userid,
             username: this.props.username,
             profile: this.props.profile,
@@ -57,20 +61,26 @@ class BulletinBoardRepliesEntries extends Component{
         }       
     }
 
-    static contextType = BulletinBoardsContext;
+    // 0. 하위로 보낼 _onSetStateRepliesEntries
+    _onSetStateRepliesEntries = (state) => {
+        this.setState({
+            ...state
+        })
+    }
 
     // 렌더 함수 시작
     render(){
-        const { isReplyEditMode, checker, _toggleChecker } = this.context
+        if(this.context.BulletinBoards.currentReplyEditId == this.state.replyid && this.context.BulletinBoards.isReplyEditMode && this.context.BulletinBoards.currentReplyEditContents == '')
+            this.context.BulletinBoards._setContextState({currentReplyEditContents : this.state.contents})
+
         return(
             // BulletinBoardsContent에서 보여지는 각 댓글 칸의 디자인을 구현
             // 댓글의 내용과 PostMenu 컴포넌트로 구성됨
             // 댓글 수정 기능도 포함되어 있음
             <View key={this.state.replyid}>
-                {isReplyEditMode ?
+                {this.context.BulletinBoards.isReplyEditMode && this.context.BulletinBoards.currentReplyEditId == this.state.replyid ?
                         // 댓글 수정모드일 때
-                        <View 
-                        style={styles.RepliesEntry}>
+                        <View style={styles.RepliesEntry}>
                             <View style={styles.RepliesEntryContents}>
                             <MetaLight>(You're editing here)</MetaLight>
                             <ContentMedium>{this.state.contents}</ContentMedium>
@@ -78,7 +88,12 @@ class BulletinBoardRepliesEntries extends Component{
                             <View style={styles.RepliesEntryMeta}>
                                 <MetaLight>by {this.state.username}, {this.state.date}, {this.state.likes} Likes</MetaLight>
                             </View>
-                            <Icon name="pencil-alt" size={20} color="#a1a1a1" /> 
+                            <IconButton
+                                icon="clear"
+                                size={18}
+                                style = {styles.ClearMenu}
+                                onPress={() => this.context.BulletinBoards._setContextState({isReplyEditMode : true, currentReplyEditId : 0, currentReplyEditContents : ''})}
+                            />
                         </View>:
                         // 댓글 수정모드가 아닐 때
                         <View 
@@ -87,7 +102,7 @@ class BulletinBoardRepliesEntries extends Component{
                                 <ViewMoreText
                                     numberOfLines = {5}
                                     renderViewMore = {(onPress) => {return (<Text style = {{fontSize: 12, color: 'gray',}} onPress={onPress}>Read More...</Text>)}}
-                                    renderViewLess = {(onPress) => {return (<Text style = {{fontSize: 12, color: 'gray',}} onPress={onPress}>Read Less...</Text>)}}>
+                                    renderViewLess = {(onPress) => {return (<Text style = {{fontSize: 12, color: 'gray',}} onPress={onPress}>Hide</Text>)}}>
                                     {this.state.contents}
                                 </ViewMoreText>
                             </View>
@@ -111,6 +126,8 @@ class BulletinBoardRepliesEntries extends Component{
                                 contents = {this.state.contents}
                                 pictures = {this.state.pictures}
                                 
+                                _onSetStateRepliesEntries = {this._onSetStateRepliesEntries}
+                                _refresherBulletinBoards = {this.state._refresherBulletinBoards}
                                 _refresherReplies = {this.state._refresherReplies}/>
                         </View>}
             </View>
@@ -128,6 +145,14 @@ const styles = StyleSheet.create({
         margin: 0,
         right: 0,
         top: 0,
+    },
+    ClearMenu: {
+        position: 'absolute',
+        margin: 0,
+        paddingTop: 10,
+        paddingRight: 10,
+        right: 5,
+        top: 5,
     },
     RepliesEntry: {
         paddingRight: 13,

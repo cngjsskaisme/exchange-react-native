@@ -3,12 +3,12 @@ import axios from 'axios';
 import {server} from '../config';
 
 export default _handleDeleteReplies = async(state, _onSetState) => {
-    var url = server.serverURL + '/process/DeleteComment';
+    var url = server.serverURL + '/process/BulletinBoards/DeleteComment';
     _onSetState({
         isLoading: true,
         isError: false
     }) 
-    await axios.post(url, { boardid: "board1", entryid: "5d75a757d47cdf78a5ce79d1", replyid: "5d78f145a039958385f9c75d"}) 
+    await axios.post(url, { boardid: state.boardid, entryid: state.entryid, replyid: state.replyid}) 
         .then((response) => {       
             _onSetState({
             isLoading: false

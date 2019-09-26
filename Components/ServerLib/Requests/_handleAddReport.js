@@ -3,13 +3,13 @@ import axios from 'axios';
 import {server} from '../config';
 
 export default _handleAddReport = async(state, _onSetState) => {
-    var url = server.serverURL + '/process/AddReport';
+    var url = server.serverURL + '/process/BulletinBoards/AddReport';
     _onSetState({
         isLoading: true,
         isError: false
     }) 
     await axios.post(url, {title: state.title, contents: state.contents, userid: state.currentuserid, boardid: state.boardid, 
-        entryid: state.entryid, commentid: state.replyid }) 
+        entryid: state.entryid, commentid: state.replyid, parentcommentid: state.parentreplyid }) 
         .then((response) => {       
             _onSetState({
             isLoading: false

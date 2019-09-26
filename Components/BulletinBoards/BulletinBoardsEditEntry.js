@@ -40,8 +40,9 @@ class BulletinBoardsEditEntry extends Component{
         isUploadDone : false,
         isEditing: false,
         isBoardRoot: true,
+        isLoading: false,
 
-        _refresher: () => {},
+        _refresherBulletinBoards: () => {},
         _onSetState: () => {},
     }
 
@@ -62,65 +63,67 @@ class BulletinBoardsEditEntry extends Component{
             contents: this.props.navigation.getParam('contents', ''),
             pictures: this.props.navigation.getParam('pictures', ''),
 
-            _refresher : this.props.navigation.getParam('_refresher', () => {}),
-            _onSetState: this.props.navigation.getParam('_onSetState', () => {}),
+            _refresherBulletinBoards : this.props.navigation.getParam('_refresherBulletinBoards', () => {}),
+            _onSetStateBoardsContent: this.props.navigation.getParam('_onSetStateBoardsContent', () => {}),
+            _onSetStatePostMenu: this.props.navigation.getParam('_onSetStatePostMenu', () => {}),
             isEditing: this.props.navigation.getParam('isEditing', false),
             isBoardRoot: this.props.navigation.getParam('isBoardRoot', true),
+            isLoading: false,
         }
-        this._onSetState.bind(this);
     }
 
     // 데이터 요청 함수
     // 0. 함수로 내려보낼 SetState
-    _onSetState = (state) => {
+    _onSetStateEditEntry = (state) => {
         this.setState({
             ...state
         })
     }
 
-    //1. 게시글 Submit 버튼 누를 시 제출 및 navigation.goBack() 및 부모 컴포넌트 새로고침
-    _onSubmitPressed = () => {
-        this.state._refresher();    
-        this.props.navigation.goBack();       
-    }
+    //1. 게시글 수정 및 등록에 대한 처리 함수
+    _onPress = async () => {
+        await _handleBulletinBoardsPostSubmit({...this.state}, this._onSetStateEditEntry)
+        // 수정 모드가 아니고 새로운 글을 작성했을 때 등록이 완료된 경우
+        if(!this.state.isEditing && this.state.isUploadDone){
+            await this.state._refresherBulletinBoards();    
+            this.props.navigation.goBack();}
 
-    //2. 게시글 Modify 발생 시 제출 및 게시글을 보고 있는 위치에 따른 새로고침
-    _onModifyPressed = () => {
-        // 만약 수정 모드인데 게시판에서 했을 경우
-        if(this.state.isBoardRoot)
-            this.state._refresher();
+        // 수정 모드인데 새로운 글을 작성했을 때 등록이 완료되고,
+        if(this.state.isEditing && this.state.isUploadDone)
 
-        // 게시글 내부에서 했을 경우
-        else {
-            this.state._refresher();
-            this.state._onSetState({
-                boardid: this.state.boardid,
-                entryid: this.state.entryid,
-                currentuserid: this.state.currentuserid,
-                profile: this.state.profile,
-                ismine: this.state.ismine,
-                title: this.state.title,
-                contents: this.state.contents,
-                pictures: this.state.pictures,
-        });}
+            // 게시판에서 수정했을 경우
+            if(this.state.isBoardRoot)
+                await this.state._refresherBulletinBoards();
+
+            // 게시글 내부에서 수정했을 경우
+            else {
+                await this.state._refresherBulletinBoards();
+                await this.state._onSetStatePostMenu({
+                    boardid: this.state.boardid,
+                    entryid: this.state.entryid,
+                    currentuserid: this.state.currentuserid,
+                    profile: this.state.profile,
+                    ismine: this.state.ismine,
+                    title: this.state.title,
+                    contents: this.state.contents,
+                    pictures: this.state.pictures,
+                })
+                await this.state._onSetStateBoardsContent({
+                    boardid: this.state.boardid,
+                    entryid: this.state.entryid,
+                    currentuserid: this.state.currentuserid,
+                    profile: this.state.profile,
+                    ismine: this.state.ismine,
+                    title: this.state.title,
+                    contents: this.state.contents,
+                    pictures: this.state.pictures,
+            });}
             this.props.navigation.goBack();
     }
 
     // 렌더 함수   
     render() {
-        // 수정 모드가 아니고 새로운 글을 작성했을 때 등록이 완료된 경우
-        if(!this.state.isEditing && this.state.isUploadDone)
-            return(
-                <View>
-                    {this._onSubmitPressed()}
-                </View>)
-        // 수정 모드인 데 새로운 글을 작성했을 때 등록이 완료된 경우
-        else if(this.state.isEditing && this.state.isUploadDone)
-            return(
-                <View>
-                    {this._onModifyPressed()}
-                </View>)
-        else return(
+        return(
             <View>
                 {typeof this.state.currentuserid === 'undefined' || this.state.currentuserid === 0? 
                     <View>
@@ -135,8 +138,7 @@ class BulletinBoardsEditEntry extends Component{
                             placeholder='Cool text for post (Optional)'
                             value = {this.state.contents}
                             onChangeText={contents => this.setState({ contents })}/>
-                        <Button onPress={() => {
-                            _handleBulletinBoardsPostSubmit({...this.state}, this._onSetState);}}>Submit</Button>
+                        <Button onPress={this._onPress}>Submit</Button>
                         <View>
                         </View>
                     </View>
