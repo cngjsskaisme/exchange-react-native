@@ -1,22 +1,82 @@
+// EventEntries[1].Date
 export const EventEntries = [
     {
-        Date : '2019-09-25',
+        Date : '2019-09-28',
         Events : [
-            {text : 'School Event', eventID : '12'},
-            {text : 'University Event', eventID : '13'},
+            {
+                title : 'Teacher Day', 
+                typed : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Punreach Day', 
+                typed : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Crazy Day', 
+                typed : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Crazy Day', 
+                typed : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
             
         ]
     },
+
     {
-        Date : '2019-09-26',
+        Date : '2019-09-29',
         Events : [
-            {text : 'School Event', eventID : '12'},
-            {text : 'University Event', eventID : '13'},
-            {text : 'Hanyang Event', eventID : '14'},
+            {
+                title : 'University Festival', 
+                typed : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'HISA Culture Festival', 
+                typed : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Haksul Town exhibition', 
+                typed : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            
         ]
     },
+];
+
+export const EventInfo = [
     {
-        Date : '2019-09-27',
-        Events : []
+        eventID : 12,
+        Type : 'Info',
+        Name : 'Hahaha',
+        Description : 'hashhsakhjdjbhsdfbjasdjbfdakjs'
     },
+
 ];

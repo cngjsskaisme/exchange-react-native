@@ -27,6 +27,7 @@ export default class EventCalendar extends Component {
           '2019-09-24' : [],
         }}
         */
+        //dayComponent={CalendarDayComponent}
         items={this.state.items}
         loadItemsForMonth={this.loadItems.bind(this)}
         //current = {'2019-09-21'}
@@ -36,7 +37,7 @@ export default class EventCalendar extends Component {
         rowHasChanged={this.rowHasChanged.bind(this)}
         markingType={'custom'}
          markedDates={{
-            '2019-09-08': {textColor: '#666'},
+            '2019-09-08' : {},
             '2019-09-09': {textColor: '#666'},
             '2019-09-23' : {textColor : 'blue'}
         }}
@@ -57,7 +58,8 @@ export default class EventCalendar extends Component {
             this.state.items[strTime] = [];
             for (let j = 0; j < EventEntries[m].Events.length; j++) {
               this.state.items[strTime].push({
-                name: 'Item for ' + strTime + ' ' + EventEntries[0].Date + ' ' + strTime + ' ' + EventEntries[0].Events.length,
+                name : EventEntries[m].Events[j].title,
+                //name: 'Item for ' + strTime + ' ' + EventEntries[1].text + ' ' + strTime + ' ' + EventEntries[0].Events.length,
                 height: Math.max(50, Math.floor(Math.random() * 150))
               });
             }
