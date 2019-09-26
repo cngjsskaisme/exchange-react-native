@@ -29,10 +29,11 @@ export default _handleLikeIncrease = async(state, _onSetState) => {
         isLoading: true,
         isError: false
     }) 
-    await axios.post(url, {boardid: state.boardid, entryid: state.entryid, replyid: state.replyid, userid: state.userid}) 
+    await axios.post(url, {boardid: state.boardid, entryid: state.entryid, replyid: state.replyid, userid: state.currentuserid}) 
         .then((response) => {       
             _onSetState({
             isLoading: false,
+            likespressed: response.data.likesinfo[0].likespressed,
             }) 
         }) 
         .catch(( err ) => {

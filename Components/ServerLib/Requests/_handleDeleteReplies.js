@@ -8,7 +8,7 @@ export default _handleDeleteReplies = async(state, _onSetState) => {
         isLoading: true,
         isError: false
     }) 
-    await axios.post(url, { boardid: "board1", entryid: "5d75a757d47cdf78a5ce79d1", replyid: "5d78f145a039958385f9c75d"}) 
+    await axios.post(url, { boardid: state.boardid, entryid: state.entryid, replyid: state.replyid}) 
         .then((response) => {       
             _onSetState({
             isLoading: false

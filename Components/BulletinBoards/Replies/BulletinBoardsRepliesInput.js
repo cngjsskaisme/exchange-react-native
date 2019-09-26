@@ -57,7 +57,8 @@ class BulletinBoardsRepliesInput extends Component{
     // 1. 댓글 등록 시 처리할 _onSubmitReplies 함수
     _onSubmitReplies = async () => {
         await _onAddBulletinBoardsReplies({...this.state}, this._onSetState)
-        .then(this.context.BulletinBoards._setContextState({isReplySubmitted : true,}))
+        this.context.BulletinBoards._setContextState({isReplySubmitted : true,})
+        this.setState({contents: ''})
     }
 
     //렌더 함수
@@ -65,20 +66,20 @@ class BulletinBoardsRepliesInput extends Component{
         return(
             // Text 입력을 위한 TextInput 컴포넌트와 아이콘 버튼으로 구성
             <View style={styles.Container}>
-                {this.state.replyEditMode ? 
+                {this.context.BulletinBoards.replyEditMode ? 
                     <View>
                         <TextInput
                             style = {styles.TextInput}
                             label = 'Comment'
-                            onChangeText = {(contents) => {this.setState({contents})}}
-                            placeholder = {this.props.contents} // state 변경 전 prop으로 전달된 contents
-                            value = {this.state.contents}
+                            onChangeText = {(contents) => {this._setContextState({currentReplyEditContents : contents})}}
+                            placeholder = {this.context.BulletinBoards.currentReplyEditContents} // state 변경 전 prop으로 전달된 contents
+                            value = {this.context.BulletinBoards.currentReplyEditContents}
                             multiline = {true}/>                
                         <IconButton
                             icon="arrow-upward"
                             color={Colors.red500}
                             size={20}
-                            onPress={() => _onAddBulletinBoardsReplies({...this.state}, this._onSetState)}/>
+                            onPress={() => _onAddBulletinBoardsReplies({...this.state, contents: this.context.BulletinBoards.currentReplyEditContents}, this._onSetState)}/>
                     </View> :
                     <View style={styles.Container}>
                         <TextInput

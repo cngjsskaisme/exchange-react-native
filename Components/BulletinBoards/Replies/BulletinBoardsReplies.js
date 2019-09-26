@@ -25,6 +25,7 @@ class BulletinBoardsReplies extends Component{
     static defaultProps = {
         boardid: 0,
         entryid: 0,
+        currentuserid: 0,
         replyid: 0,
         userid: 0,
         username: '',
@@ -48,6 +49,7 @@ class BulletinBoardsReplies extends Component{
         this.state = {
             boardid: this.props.boardid,
             entryid: this.props.entryid,
+            currentuserid: this.props.currentuserid,
             replyid: this.props.replyid,
             userid: this.props.userid,
             username: this.props.username,
@@ -71,7 +73,7 @@ class BulletinBoardsReplies extends Component{
 
     // 1. 댓글 목록 새로고침 시 내려보낼 _refresherReplies 함수
     _refresherReplies = () => {
-        _onGetBulletinBoardsReplies({...this.state}, this._onSetState);
+          ({...this.state}, this._onSetState);
     }
 
     //컴포넌트 마운트 시
@@ -94,6 +96,7 @@ class BulletinBoardsReplies extends Component{
                 boardid = {item.boardid}
                 entryid = {item.entryid}
                 replyid = {item.replyid}
+                currentuserid = {this.state.currentuserid}
                 userid = {item.userid}
                 username = {item.username}
                 profile = {item.profile}

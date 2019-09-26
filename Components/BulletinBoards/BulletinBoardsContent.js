@@ -112,6 +112,7 @@ class BulletinBoardsContent extends Component{
                         <BulletinBoardsReplies
                             boardid = {this.state.boardid}
                             entryid = {this.state.entryid}
+                            currentuserid = {this.state.currentuserid}
                             userid = {this.state.userid}
                             username = {this.state.username}
                             profile = {this.state.profile}

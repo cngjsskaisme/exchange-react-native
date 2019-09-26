@@ -8,8 +8,8 @@ export default _onGetBulletinBoardsReplies = async (state, _onSetState) => {
         isLoading: true,
         isError: false,
 
-        commentstartindex: state.commentendindex,
-        commentendindex: state.commentstartindex + 19,
+        commentstartindex: 0,
+        commentendindex: 19,
     }) 
     await axios.post(url, {userid: state.userid, boardid: state.boardid, 
         entryid: state.entryid, 
