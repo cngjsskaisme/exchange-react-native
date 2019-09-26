@@ -10,19 +10,19 @@ export default _handleLikeIncrease = async(state, _onSetState) => {
     if(isentry){ 
 
         if(!(likespressed)){
-            var url = server.serverURL + '/process/IncreLikeEntry';
+            var url = server.serverURL + '/process/BulletinBoards/IncreLikeEntry';
         } 
         else{
-            var url = server.serverURL + '/process/DecreLikeEntry';
+            var url = server.serverURL + '/process/BulletinBoards/DecreLikeEntry';
         } 
     }
     else{
 
         if(!(likespressed)){
-            var url = server.serverURL + '/process/IncreLikeEntry';
+            var url = server.serverURL + '/process/BulletinBoards/IncreLikeEntry';
         } 
         else{
-            var url = server.serverURL + '/process/DecreLikeEntry';
+            var url = server.serverURL + '/process/BulletinBoards/DecreLikeEntry';
         } 
     }
     _onSetState({

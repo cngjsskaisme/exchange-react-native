@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../config';
 
 export default _onGetBulletinBoardsReplies = async (state, _onSetState) => {   
-    var url = server.serverURL + '/process/ShowComments';
+    var url = server.serverURL + '/process/BulletinBoards/ShowComments';
     _onSetState({
         isLoading: true,
         isError: false,
