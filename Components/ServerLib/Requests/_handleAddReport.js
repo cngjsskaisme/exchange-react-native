@@ -9,7 +9,7 @@ export default _handleAddReport = async(state, _onSetState) => {
         isError: false
     }) 
     await axios.post(url, {title: state.title, contents: state.contents, userid: state.currentuserid, boardid: state.boardid, 
-        entryid: state.entryid, commentid: state.replyid }) 
+        entryid: state.entryid, commentid: state.replyid, parentcommentid: state.parentreplyid }) 
         .then((response) => {       
             _onSetState({
             isLoading: false
