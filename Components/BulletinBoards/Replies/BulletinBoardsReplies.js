@@ -39,8 +39,6 @@ class BulletinBoardsReplies extends Component{
         isLoading: true,
         isDev: false,
 
-        _toggleSibling: () => {},
-        repliesSiblingCommunicator: false,
         replyEditMode: false,
     }
 
@@ -67,20 +65,20 @@ class BulletinBoardsReplies extends Component{
 
     // 데이터 요청 시 함수
     // 0. 내려보낼 _onSetState 함수
-    _onSetState = (state) => {
+    _onSetStateBoardsReplies = (state) => {
         this.setState(state)
     }
 
     // 1. 댓글 목록 새로고침 시 내려보낼 _refresherReplies 함수
-    _refresherReplies = () => {
-          ({...this.state}, this._onSetState);
+    _refresherReplies = async () => {
+        await _onGetBulletinBoardsReplies({...this.state}, this._onSetStateBoardsReplies);
     }
 
     //컴포넌트 마운트 시
     async componentDidMount(){
         // 일반 사용자 모드일 때
         if (!this.state.isDev)
-            await _onGetBulletinBoardsReplies({...this.state}, this._onSetState);
+            await _onGetBulletinBoardsReplies({...this.state}, this._onSetStateBoardsReplies);
         // 개발자 모드일 떄
         else{
             this.setState({commentslist : CommentEntries_Mock})
@@ -121,7 +119,7 @@ class BulletinBoardsReplies extends Component{
         // BulletinBoardsRepliesInput 에서 Submit 버튼이 눌렸을 때 댓글 목록 새로고침
         if (this.context.BulletinBoards.isReplySubmitted){
             this.context.BulletinBoards._setContextState({isReplySubmitted : false,})
-            _onGetBulletinBoardsReplies({...this.state}, this._onSetState); }
+            _onGetBulletinBoardsReplies({...this.state}, this._onSetStateBoardsReplies); }
 
         return(
             <View>

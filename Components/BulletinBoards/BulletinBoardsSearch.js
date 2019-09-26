@@ -80,13 +80,26 @@ class BulletinBoardsSearch extends Component{
 
     // 데이터 요청 함수
     // 0. 함수로 내려보낼 SetState
-    _onSetState = (state) => {
+    _onSetStateBoardsSearch = (state) => {
         this.setState({
             ...state
         })
     }
 
-    // 1. 검색 처리 함수
+    // 데이터 요청 함수
+    // 0. 함수로 내려보낼 SetState (검색페이지에서 사용용으로 Import된 함수)
+    _onSetStateBulletinBoards = (state) => {
+        this.setState({
+            ...state
+        })
+    }
+
+    // 1. BulletinBoardsEntries, BulletinBoardsEditEntry로 내려보낼 _refresher (검색페이지에서 사용용으로 Import된 함수)
+    _refresherBulletinBoards = async () => {
+        await _onGetBulletinBoardsPost({...this.state}, this._onSetStateBulletinBoards, true, this.state.query);
+    }
+
+    // 2. 검색 처리 함수
     _handleSearch = () => {
         // 검색문의 길이가 0일 때
         if(this.state.query.length === 0){
@@ -99,7 +112,7 @@ class BulletinBoardsSearch extends Component{
                 'Search Keyword should be at least more than 1 character !',
                 [{text: 'OK'}]
             );*/
-        _onGetBulletinBoardsPost({...this.state}, this._onSetState, true, this.state.query)
+        _onGetBulletinBoardsPost({...this.state}, this._onSetStateBoardsSearch, true, this.state.query)
     }
 
     // Flatlist RenderItem 함수
@@ -108,7 +121,7 @@ class BulletinBoardsSearch extends Component{
                 if(item.okToShow)
                     return(
                         <View style={{paddingTop: 10, paddingBottom: 10}}>
-                            <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetState, false, this.state.query)}>Load More...</Button>
+                            <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetStateBoardsSearch, false, this.state.query)}>Load More...</Button>
                         </View>
                     )
                 else
@@ -128,7 +141,9 @@ class BulletinBoardsSearch extends Component{
                         date = {item.date}
                         ismine = {item.ismine}
                         title = {item.title}
-                        contents = {item.contents}/>
+                        contents = {item.contents}
+                        
+                        _refresherBulletinBoards = {this._refresherBulletinBoards}/>
                 )
         };
     
@@ -136,7 +151,7 @@ class BulletinBoardsSearch extends Component{
     _keyExtractor = (item, index) => item.entryid.toString();
     
     // 컴포넌트가 모두 로드되는 시간 동안 잠시 대기 처리
-    waitAndRun = setTimeout(() => this.setState({isLoading: false}), 150)
+    waitAndRun = setTimeout(() => this.setState({isLoading: false}), 1000)
 
     // 렌더 함수
     render(){
@@ -178,7 +193,7 @@ class BulletinBoardsSearch extends Component{
                         extraData = {this.state}
                         renderItem = {this._renderItem}
                         keyExtractor = {this._keyExtractor}
-                        onRefresh = {() => _onGetBulletinBoardsPost({...this.state}, this._onSetState, true, this.state.query)}
+                        onRefresh = {() => _onGetBulletinBoardsPost({...this.state}, this._onSetStateBoardsSearch, true, this.state.query)}
                         refreshing = {this.state.isLoading}
                 />
             </View>

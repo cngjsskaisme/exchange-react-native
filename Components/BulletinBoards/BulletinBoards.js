@@ -61,15 +61,15 @@ class BulletinBoards extends Component{
     
     // 데이터 요청 함수
     // 0. 함수로 내려보낼 SetState
-    _onSetState = (state) => {
+    _onSetStateBulletinBoards = (state) => {
         this.setState({
             ...state
         })
     }
 
     // 1. BulletinBoardsEntries, BulletinBoardsEditEntry로 내려보낼 _refresher
-    _refresher = () => {
-        _onGetBulletinBoardsPost({...this.state}, this._onSetState, true);
+    _refresherBulletinBoards = async () => {
+        await _onGetBulletinBoardsPost({...this.state}, this._onSetStateBulletinBoards, true);
     }
 
     //컴포넌트 마운트 시
@@ -90,7 +90,7 @@ class BulletinBoards extends Component{
 
         // 일반 사용자 모드일 때 게시글 목록 불러오기
         if(!this.state.isDev)
-            await _onGetBulletinBoardsPost({...this.state}, this._onSetState, true);
+            await _onGetBulletinBoardsPost({...this.state}, this._onSetStateBulletinBoards, true);
     }
 
     // Flatlist RenderItem 함수
@@ -101,7 +101,7 @@ class BulletinBoards extends Component{
                     <View style={{paddingTop: 10, paddingBottom: 10}}>
                         {this.state.isLoadingMore?
                                 <ActivityIndicator animating= 'true' size = {30} /> :
-                            <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetState)}>Load More...</Button>}
+                            <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetStateBulletinBoards)}>Load More...</Button>}
                     </View>
                 )
             else
@@ -123,7 +123,7 @@ class BulletinBoards extends Component{
                     title = {item.title}
                     contents = {item.contents}
 
-                    _refresher = {this._refresher}
+                    _refresherBulletinBoards = {this._refresherBulletinBoards}
                     isDev = {this.state.isDev}/>
             )
     };
@@ -160,7 +160,7 @@ class BulletinBoards extends Component{
                 // 에러발생 했을 때
                     <View>
                         <ErrorPage/>
-                        <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetState, true)}>Refresh</Button> 
+                        <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetStateBulletinBoards, true)}>Refresh</Button> 
                     </View> :
                 this.state.isLoading?
                 // 로딩중일 때
@@ -179,7 +179,7 @@ class BulletinBoards extends Component{
                             username: this.state.username,
                             profile: this.state.profile,
                             
-                            _refresher: this._refresher})} />
+                            _refresherBulletinBoards: this._refresherBulletinBoards})} />
                     </View>:
                 // 게시판 목록을 보여줄 때, FlatList와 FAB 컴포넌트로 구성되어 있음
                 <View>
@@ -189,7 +189,7 @@ class BulletinBoards extends Component{
                                 extraData = {this.state}
                                 renderItem = {this._renderItem}
                                 keyExtractor = {this._keyExtractor}
-                                onRefresh = {() => _onGetBulletinBoardsPost({...this.state}, this._onSetState, true)}
+                                onRefresh = {() => _onGetBulletinBoardsPost({...this.state}, this._onSetStateBulletinBoards, true)}
                                 refreshing = {this.state.isLoading}
                         />
                         <FAB
@@ -202,7 +202,7 @@ class BulletinBoards extends Component{
                                 username: this.state.username,
                                 profile: this.state.profile,
                                 
-                                _refresher: this._refresher})} />        
+                                _refresherBulletinBoards: this._refresherBulletinBoards})} />        
                     </View>
                 </View>
 

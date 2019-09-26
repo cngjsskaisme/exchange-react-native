@@ -15,6 +15,7 @@ export default _handleLikeIncrease = async(state, _onSetState) => {
             _onSetState({
             isLoading: false,
             likespressed: response.data.likesinfo[0].likespressed,
+            likes: response.data.likesinfo[0].likes 
             }) 
         }) 
         .catch(( err ) => {

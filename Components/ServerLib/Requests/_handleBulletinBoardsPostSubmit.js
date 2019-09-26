@@ -6,16 +6,15 @@ export default _handleBulletinBoardsPostSubmit = async (state, _onSetState) => {
     var url = server.serverURL + '/process/BulletinBoards/AddEditEntry';
     _onSetState({
         isLoading: true,
-        isError: false
-    }) 
+        isError: false,
+    });
     await axios.post(url, {userid: state.currentuserid, boardid: state.boardid, 
         entryid: state.entryid, title: state.title, contents: state.contents}) 
         .then((response) => {       
-            if(response.data.msg === 'success')
-                _onSetState({
-                    isLoading: false,
-                    isUploadDone: true,
-                }) 
+            _onSetState({
+                isLoading: false,
+                isUploadDone: true,
+            });
         }) 
     .catch(( err ) => {
         Alert.alert(
@@ -23,5 +22,8 @@ export default _handleBulletinBoardsPostSubmit = async (state, _onSetState) => {
             'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
             [{text: 'OK'}]
         );
+        _onSetState({
+            isError: true,
+        })
     });  
 }  

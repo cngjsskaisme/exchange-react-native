@@ -41,7 +41,7 @@ class BulletinBoardsContent extends Component{
         normalHeight: 0,
         shortHeight: 0,
         isDev: false,
-        _refresher: () => {},
+        _refresherBulletinBoards: () => {},
         
         replyEditMode: false,
     }
@@ -68,15 +68,13 @@ class BulletinBoardsContent extends Component{
             normalHeight: 0,
             shortHeight: 0,
             isDev: this.props.navigation.getParam('isDev'),
-            _refresher: this.props.navigation.getParam('_refresher'),
-
-            replyEditMode: false,
+            _refresherBulletinBoards: this.props.navigation.getParam('_refresherBulletinBoards'),
         }
     }
 
     //데이터 요청 시 함수
     //0. 내려보낼 setState 함수
-    _onSetState = (state) => {
+    _onSetStateBoardsContent = (state) => {
         this.setState(state)
     }
 
@@ -105,8 +103,8 @@ class BulletinBoardsContent extends Component{
                             style = {styles.PostMenu}
 
                             isBoardRoot = {false}
-                            _refresher = {this.state._refresher}
-                            _onSetState = {this._onSetState}
+                            _refresherBulletinBoards = {this.state._refresherBulletinBoards}
+                            _onSetStateBoardsContent = {this._onSetStateBoardsContent}
                             />
                     <View style={styles.EntryReplies}>
                         <BulletinBoardsReplies

@@ -61,6 +61,13 @@ class BulletinBoardRepliesEntries extends Component{
         }       
     }
 
+    // 0. 하위로 보낼 _onSetStateRepliesEntries
+    _onSetStateRepliesEntries = (state) => {
+        this.setState({
+            ...state
+        })
+    }
+
     // 렌더 함수 시작
     render(){
         if(this.context.BulletinBoards.currentReplyEditId == this.state.replyid && this.context.BulletinBoards.isReplyEditMode && this.context.BulletinBoards.currentReplyEditContents == '')
@@ -95,7 +102,7 @@ class BulletinBoardRepliesEntries extends Component{
                                 <ViewMoreText
                                     numberOfLines = {5}
                                     renderViewMore = {(onPress) => {return (<Text style = {{fontSize: 12, color: 'gray',}} onPress={onPress}>Read More...</Text>)}}
-                                    renderViewLess = {(onPress) => {return (<Text style = {{fontSize: 12, color: 'gray',}} onPress={onPress}>Read Less...</Text>)}}>
+                                    renderViewLess = {(onPress) => {return (<Text style = {{fontSize: 12, color: 'gray',}} onPress={onPress}>Hide</Text>)}}>
                                     {this.state.contents}
                                 </ViewMoreText>
                             </View>
@@ -119,6 +126,8 @@ class BulletinBoardRepliesEntries extends Component{
                                 contents = {this.state.contents}
                                 pictures = {this.state.pictures}
                                 
+                                _onSetStateRepliesEntries = {this._onSetStateRepliesEntries}
+                                _refresherBulletinBoards = {this.state._refresherBulletinBoards}
                                 _refresherReplies = {this.state._refresherReplies}/>
                         </View>}
             </View>
