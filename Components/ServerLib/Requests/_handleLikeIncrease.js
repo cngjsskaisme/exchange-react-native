@@ -4,27 +4,8 @@ import {server} from '../config';
 
 export default _handleLikeIncrease = async(state, _onSetState) => {
     
-    let isentry = true;
-    let likespressed = false;
-
-    if(isentry){ 
-
-        if(!(likespressed)){
-            var url = server.serverURL + '/process/BulletinBoards/IncreLikeEntry';
-        } 
-        else{
-            var url = server.serverURL + '/process/BulletinBoards/DecreLikeEntry';
-        } 
-    }
-    else{
-
-        if(!(likespressed)){
-            var url = server.serverURL + '/process/BulletinBoards/IncreLikeEntry';
-        } 
-        else{
-            var url = server.serverURL + '/process/BulletinBoards/DecreLikeEntry';
-        } 
-    }
+    const url = server.serverURL + '/process/BulletinBoards/FlipLikeEntry';
+      
     _onSetState({
         isLoading: true,
         isError: false
