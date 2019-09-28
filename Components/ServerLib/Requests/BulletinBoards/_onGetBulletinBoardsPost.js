@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
-import { BulletinBoardsEntries_Mock } from '../../../Mockup_Datas/UnifiedEntries'
+import { BulletinBoardsEntries_Mock } from '../../../../Mockup_Datas/UnifiedEntries'
 import axios from 'axios'; 
-import {server} from '../config';
+import {server} from '../../config';
 
 export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = false, searchquery = "", language = "", isMain = false) => {   
     
