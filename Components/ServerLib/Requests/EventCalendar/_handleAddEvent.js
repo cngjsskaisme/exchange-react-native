@@ -2,13 +2,21 @@ import { Alert } from 'react-native';
 import axios from 'axios'; 
 import {server} from '../../config';
 
-export default _handleEditEvent = async(state, _onSetState) => {
-    var url = server.serverURL + '/process/EventCalendar/EditEvent';
+export default _handleAddEvent = async(state, _onSetState) => {
+    var url = server.serverURL + '/process/EventCalendar/AddEvent';
     _onSetState({
         isLoading: true,
         isError: false
     }) 
-    await axios.post(url,{eventid: "5d8d5074e168223dea014a1e", title: "Official& type1 test title3", contents: "Official& type1 test contents3"})  
+    await axios.post(url,{
+            userid: "5d5cac858f549f46e0b2a76f", 
+            startday: '2019-09-25', 
+            days: 4,
+            startindex: 0,
+            //endindex: 19,  
+            type: [],
+            //filter: " "
+        })   
         .then((response) => {       
             _onSetState({
             isLoading: false
@@ -21,11 +29,4 @@ export default _handleEditEvent = async(state, _onSetState) => {
                 [{text: 'OK'}]
             );
         });    
-} 
-
-/*  
-
-Edit an event whose id is 'eventid' in line 11. 
-It doesn't check whether requested user is qualified to edit. 
-Since, I thouth the menu would be different depending on accessed user is admin or not and user is qualified to edit the event or not  
-*/
+}

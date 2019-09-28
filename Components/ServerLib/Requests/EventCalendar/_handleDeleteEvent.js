@@ -25,7 +25,8 @@ export default _handleDeleteEvent = async(state, _onSetState) => {
     } 
 
 /* 
-
 Delete an event whose eventid(EventID) is requested. In this code, an event whose id is "5d8d5074e168223dea014a1e" 
-will be deleted 
+will be deleted  
+It doesn't check whether requested user is qualified to delete. 
+Since, I thouth the menu would be different depending on accessed user is admin or not and user is qualified to delete the event or not  
 */

@@ -25,7 +25,11 @@ export default _handleGetEventsList = async(state, _onSetState) => {
         });    
     } 
 
-/* 
+/*  
+MOST IMPORTANT THING     
+Whenever you send a date it should be like this: "2019-09-28", "YYYY-MM-DD" 
+If you are hard to make this form, tell me. Let's solve this problem together. 
+
 Show events between 'startday' and 'startday' + days -1 && that matches type, filter
 Ex. startday = 2019-09-01, days = 5, 
 Show events in: 2019-09-01, 2019-09-02, 2019-09-03, 2019-09-04 

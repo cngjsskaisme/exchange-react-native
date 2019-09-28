@@ -111,29 +111,30 @@ class EvaluationScreen extends Component {
   async componentDidMount(){  
     await this._handleGetCommentsList(); 
   }
-  
+  /*
   _handletest = async () => {
-    var url = server.serverURL + '/process/EventCalendar/EditEvent';  
+    var url = server.serverURL + '/process/EventCalendarRequest/MoveToEventCalendar';  
     
     await this.setState({
       isLoading: true
     });
     await axios.post(url, {
-       eventid: "000000000000000000000000", title: "Official& type1 test title3", contents: "Official& type1 test contents3"}) 
-        .then((response) => {       
-            this.setState({ 
-              isLoading: false
-            });  
-        }) 
-        .catch(( err ) => {
-            Alert.alert(
-                'Cannot connect to the server. Falling back to default option.',
-                'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-                [{text: 'OK'}]
-            ); 
-        });    
+       eventid: "5d8f1a97a671b46b00b174d2", 
+      }) 
+      .then((response) => {       
+          this.setState({ 
+            isLoading: false
+          });  
+      }) 
+      .catch(( err ) => {
+          Alert.alert(
+              'Cannot connect to the server. Falling back to default option.',
+              'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
+              [{text: 'OK'}]
+          ); 
+      });    
     }
-
+*/
     
 //data request function - end 
 
@@ -165,7 +166,6 @@ class EvaluationScreen extends Component {
                 <Text style={styles.name}>{SubjectName}</Text>
             </View>
           </View>
-
 
           <View style={styles.profileDetail}>
             <View style={styles.detailContent}>
@@ -258,7 +258,7 @@ class EvaluationScreen extends Component {
               <View style={styles.bottomPart}>  
                 <Button
                     title="More comments"
-                    onPress = {this._handletest.bind(this)}
+                    //onPress = {this._handletest.bind(this)}
                   /> 
               </View>
             </View>
