@@ -1,6 +1,6 @@
 import { Alert } from 'react-native';
 import axios from 'axios'; 
-import {server} from '../config';
+import {server} from '../../config';
 
 export default _handleBulletinBoardsPostDelete = async(state, _onSetState) => {
     var url = server.serverURL + '/process/BulletinBoards/DeleteEntry';

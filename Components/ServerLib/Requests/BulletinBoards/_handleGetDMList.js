@@ -1,17 +1,23 @@
 import { Alert } from 'react-native';
 import axios from 'axios'; 
-import {server} from '../config';
+import {server} from '../../config';
 
-export default _handleDeleteDM = async(state, _onSetState) => {
+export default _handleGetDMList = async(state, _onSetState) => {
+    var url = server.serverURL + '/process/BulletinBoards/ShowDMList';  
 
-    var url = server.serverURL + '/process/BulletinBoards/DeleteDM';
-    await this.setState({
-      isLoading: true
-    }); 
-    await axios.post(url,{userid: "5d5373177443381df03f3040", dmid: "5d8495276f22b805abffbc2e" }) 
+    _onSetState({
+        isLoading: true,
+        isError: false
+    })  
+
+    await axios.post(url, {
+        userid: "5d5373177443381df03f3040",
+        DMStartIndex: 0, 
+        DMEndIndex: 19
+      }) 
         .then((response) => {       
             this.setState({ 
-              isLoading: false 
+              isLoading: false
             });  
         }) 
         .catch(( err ) => {
@@ -21,4 +27,5 @@ export default _handleDeleteDM = async(state, _onSetState) => {
                 [{text: 'OK'}]
             ); 
         });    
-    }  
+} 
+   

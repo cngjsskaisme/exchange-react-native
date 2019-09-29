@@ -151,7 +151,7 @@ export default class EvaluationInput extends Component {
 
 */
 _handleAddComment = async () => {
-  var url = server.serverURL + '/process/CourseEvaluation/AddCourseEvaluationComment';  
+  var url = server.serverURL + '/process/CourseEvaluation/AddComment';  
   
   await this.setState({
     isLoading: true
