@@ -12,6 +12,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Surface, IconButton, Colors } from 'react-native-paper';
 import Icon1 from 'react-native-vector-icons/AntDesign';
+import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import PropTypes from 'prop-types';
 import { TitleBold, ContentMedium, MetaLight } from '../Theming/Theme';
 
@@ -21,37 +22,41 @@ class MainGuides extends Component{
             <View style={styles.containerParent}>
                 <Surface style={styles.container}>
                     <View style={styles.cardcontents}>
-                        <View style={styles.cardicons}>
-                            <Icon1 name="home" size={40} color="#a1a1a1" />
-                            <MetaLight fontSize={10}>Homepage</MetaLight>
+                        <View style={styles.cardiconsbar}>
+                            <View style={styles.cardicons}>
+                                <Icon1 name="home" size={40} color="#a1a1a1" />
+                                <MetaLight fontSize={10} style={{textAlign: 'center'}}>Homepage</MetaLight>
+                            </View>
+                            <View style={styles.cardicons}>
+                                <Icon1 name="edit" size={40} color="#a1a1a1" />
+                                <MetaLight fontSize={10} style={{textAlign: 'center'}}>Studyroom</MetaLight>
+                            </View>
+                            <View style={styles.cardicons}>
+                                <Icon1 name="layout" size={40} color="#a1a1a1" />
+                                <MetaLight fontSize={10} style={{textAlign: 'center'}}>Portal</MetaLight>
+                            </View>
+                            <View style={styles.cardicons}>
+                                <Icon1 name="notification" size={40} color="#a1a1a1" />
+                                <MetaLight fontSize={10} style={{textAlign: 'center'}}>Notice</MetaLight>
+                            </View>
                         </View>
-                        <View style={styles.cardicons}>
-                            <Icon1 name="edit" size={40} color="#a1a1a1" />
-                            <MetaLight fontSize={10}>Studyroom</MetaLight>
-                        </View>
-                        <View style={styles.cardicons}>
-                            <Icon1 name="layout" size={40} color="#a1a1a1" />
-                            <MetaLight fontSize={10}>Portal</MetaLight>
-                        </View>
-                        <View style={styles.cardicons}>
-                            <Icon1 name="notification" size={40} color="#a1a1a1" />
-                            <MetaLight fontSize={10}>Notice</MetaLight>
-                        </View>
-                        <View style={styles.cardicons}>
-                            <Icon1 name="bars" size={40} color="#a1a1a1" />
-                            <MetaLight fontSize={10}>Schedules</MetaLight>
-                        </View>
-                        <View style={styles.cardicons}>
-                            <Icon1 name="book" size={40} color="#a1a1a1" />
-                            <MetaLight fontSize={10}>Library</MetaLight>
-                        </View>
-                        <View style={styles.cardicons}>
-                            <Icon1 name="mail" size={40} color="#a1a1a1" />
-                            <MetaLight fontSize={10}>WebMail</MetaLight>
-                        </View>
-                        <View style={styles.cardicons}>
-                            <Icon1 name="home" size={40} color="#a1a1a1" />
-                            <MetaLight fontSize={10}>Menu</MetaLight>
+                        <View style={styles.cardiconsbar}>
+                            <View style={styles.cardicons}>
+                                <Icon1 name="bars" size={40} color="#a1a1a1" />
+                                <MetaLight fontSize={10} style={{textAlign: 'center'}}>Schedules</MetaLight>
+                            </View>
+                            <View style={styles.cardicons}>
+                                <Icon1 name="book" size={40} color="#a1a1a1" />
+                                <MetaLight fontSize={10} style={{textAlign: 'center'}}>Library</MetaLight>
+                            </View>
+                            <View style={styles.cardicons}>
+                                <Icon1 name="mail" size={40} color="#a1a1a1" />
+                                <MetaLight fontSize={10} style={{textAlign: 'center'}}>WebMail</MetaLight>
+                            </View>
+                            <View style={styles.cardicons}>
+                                <Icon2 name="silverware-fork-knife" size={40} color="#a1a1a1" />
+                                <MetaLight fontSize={10} style={{textAlign: 'center'}}>Menu</MetaLight>
+                            </View>
                         </View>
                     </View>
                 </Surface>
@@ -86,14 +91,20 @@ const styles = StyleSheet.create({
     },
     cardcontents: {
         display: "flex",
+        width: '100%',
+        height: '100%',
+        flexDirection: 'column',
+        alignContent: 'center',
+        justifyContent: 'center',
+    },
+    cardiconsbar:{
+        display: "flex",
         flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
+        paddingTop: '5%',
+        paddingBottom: '5%'
     },
     cardicons: {
-        display: 'flex',
-        alignItems: "center",
-        justifyContent: "center",
+        alignContent: 'center'
     },
   });
 

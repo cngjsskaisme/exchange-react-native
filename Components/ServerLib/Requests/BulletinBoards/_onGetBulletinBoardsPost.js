@@ -21,6 +21,10 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = 
     
     // 메인 스크린일 경우 5개만 가져오기
     else if(isMain) {
+        state.entrieslist.splice(0, state.entrieslist.length)
+        state.entrieslist.push({isLoading: true, isError: false})
+        state.entrieslist.push({isLoading: true, isError: false})
+        state.entrieslist.push({isLoading: true, isError: false})
         postStartIndex= 0;
         postEndIndex= 4;
     }
@@ -76,15 +80,20 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = 
                     }) ; }
     }) 
     .catch(( err ) => {
-        Alert.alert(
-            'Cannot connect to the server.',
-            'There are two possible errors : \n 1. Your Phone is not connected to the internet. \n 2. The server is not available right now.',
-            [{text: 'OK'}]
-          );
         _onSetState({
             isError: true,
             isLoading: false,
         })
+
+        if(isMain){
+            state.entrieslist.splice(0, state.entrieslist.length)
+            state.entrieslist.push({isLoading: true, isError: false})
+            state.entrieslist.push({isLoading: true, isError: false})
+            state.entrieslist.push({isLoading: true, isError: false})
+            _onSetState({
+                entrieslist: state.entrieslist,
+            })
+        }
     });    
 }
 

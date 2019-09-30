@@ -13,6 +13,7 @@ import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import MainCarousel from './MainCarousel';
 import MainGuides from './MainGuides';
+import { TitleBold } from '../Theming/Theme';
 
 class Main extends Component{
     static navigationOptions = {
@@ -52,6 +53,7 @@ class Main extends Component{
         return (
             <ScrollView>
               <View style={styles.container}>
+                <TitleBold>Welcome, User!</TitleBold>
                 <MainCarousel/> 
                 <MainGuides/>
               </View>

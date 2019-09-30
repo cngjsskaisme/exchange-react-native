@@ -12,9 +12,10 @@
 
 import React, { Component } from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
-import { Surface, Text } from 'react-native-paper';
+import { Surface, Text, ActivityIndicator, Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { TitleBold, ContentMedium, MetaLight } from '../Theming/Theme';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Dimensions } from "react-native";
 
 class MainCard extends Component{
@@ -23,6 +24,9 @@ class MainCard extends Component{
         contents: '',
         pictures: '',
         date: '',
+
+        isLoading: false,
+        isError: false,
     }
 
     constructor(props){
@@ -32,14 +36,52 @@ class MainCard extends Component{
             contents: this.props.contents,
             pictures: this.props.pictures,
             date: this.props.date,
+
+            isLoading: this.props.isLoading,
+            isError: this.props.isError,
+
+            _onGetBulletinBoardsPost: this.props._onGetBulletinBoardsPost
         }
     }
 
 
     render(){
-        return(
+        if(this.state.isError){
+            return(
+            <View style={styles.Card} >        
+                <Surface style={styles.surfaceLoading}>
+                    <View style= {{height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center',}}>
+                        <Icon name="error" size={80} color="#a1a1a1" />
+                        <MetaLight fontSize = {15} style={{textAlign:'center'}}>
+                            Loading Failed.
+                        </MetaLight>
+                        <MetaLight fontSize = {15} style={{textAlign:'center'}}>
+                            Check Your Internet status and refresh it again.
+                        </MetaLight>
+                        <Button onPress={this.state._onGetBulletinBoardsPost}>REFRESH</Button>
+                    </View>
+                </Surface>
+            </View>
+            )
+        }
+
+        else if(this.state.isLoading){
+            return(
+            <View style={styles.Card} >        
+                <Surface style={styles.surfaceLoading}>
+                    <View style= {{height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center',}}>
+                        <ActivityIndicator size={40} style={{paddingBottom: 20,}}/>
+                        <MetaLight fontSize = {15} style={{textAlign:'center'}}>
+                            Loading Cards... 
+                        </MetaLight>
+                    </View>
+                </Surface>
+            </View>
+            )
+        }
+
+        else return(
             <View style={styles.Card} >      
-                {console.log(this.state)}        
                 <Surface style={styles.surface}>
                     <ImageBackground 
                         source={require('../../Mockup_Datas/Images/img01.jpg')} 
@@ -90,6 +132,15 @@ const styles = StyleSheet.create({
           borderColor: '#c4c4c4',
           borderRadius: 20,
           elevation: 5,
+      },
+      surfaceLoading: {
+        height: 220,
+        width: '100%',
+        borderWidth: 0.5,
+        borderStyle: "dashed",
+        borderColor: '#c4c4c4',
+        borderRadius: 20,
+        elevation: 5,
       },
         insidesurface: {
             paddingTop: 15,

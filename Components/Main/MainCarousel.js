@@ -9,7 +9,7 @@
 
 
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView, Image, ImageBackground } from 'react-native';
+import { StyleSheet, View, ScrollView, Image, ImageBackground, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import MainCard from './MainCard';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
@@ -25,7 +25,7 @@ class MainCarousel extends Component{
     currentuserid : 0,
     userid: 0,
     boardid: 0,
-    entrieslist: [],
+    entrieslist: [{}, {}, {},],
     activeSlide: 0,
 
     isLoading: true,
@@ -39,10 +39,11 @@ class MainCarousel extends Component{
       currentuserid : "5d5373177443381df03f3040",
       userid: '5d5373177443381df03f3040',
       boardid : 'mainboards',
-      entrieslist: [],
+      entrieslist: [{}, {}, {},],
       activeSlide: 0,
 
       isLoading: true,
+      isError: false,
     }
   }
   
@@ -59,13 +60,14 @@ class MainCarousel extends Component{
 
   _renderItem = ({ item }) => { 
     return(
-      <View style={{alignItems:'center',}}>
       <MainCard
         title = {item.title}
         contents = {item.contents}
         pictures = {item.pictures}
-        date = {item.date} />
-        </View>
+        date = {item.date} 
+        isLoading = {this.state.isLoading}
+        isError = {this.state.isError}
+        _onGetBulletinBoardsPost = {_onGetBulletinBoardsPost} />
     )
 };
   get pagination () {
@@ -101,28 +103,19 @@ class MainCarousel extends Component{
 
     render(){
       const screenWidth = Dimensions.get('window').width;
-
-      /*if(this.state.isError){
-        return(
-          <View>
-            <ErrorPage What='Main Page'/>
-            <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetState, false, '', '', true)}>Reload</Button>
-          </View>
-        )
-      }*/
-
-        return(
-            <ScrollView style={styles.container}>
+          return(
+            <View style={styles.container}>
               <Carousel
                 onSnapToItem={(index) => this.setState({ activeSlide: index }) }
                 data={this.state.entrieslist}
                 renderItem={this._renderItem}
+                extraData = {this.state}
                 sliderWidth={screenWidth}
                 itemWidth={320}
                 loop={true}
               />
               { this.pagination }
-            </ScrollView>
+            </View>
         );
     }
 }
