@@ -18,6 +18,7 @@ import LoadingPage from '../../Tools/LoadingPage'
 import ConsoleLog from '../../Tools/ConsoleLog';
 import { _onGetBulletinBoardsReplies } from '../../ServerLib/ServerRequest'
 import BulletinBoardsContext from '../BulletinBoardsContext';
+import { ActivityIndicator, Button } from 'react-native-paper';
 
 class BulletinBoardsReplies extends Component{
     static contextType = BulletinBoardsContext
@@ -30,13 +31,15 @@ class BulletinBoardsReplies extends Component{
         userid: 0,
         username: '',
         profile: '', 
-        commentslist: null,
+        commentslist: [],
 
         //가져올 댓글의 시작, 끝 인덱스 번호 
         commentstartindex: 0, 
         commentendindex: 0,
 
-        isLoading: true,
+        isLoading: false,
+        isLoadingMore: false,
+        isError: false,
         isDev: false,
 
         replyEditMode: false,
@@ -52,14 +55,16 @@ class BulletinBoardsReplies extends Component{
             userid: this.props.userid,
             username: this.props.username,
             profile: this.props.profile,
-            commentslist: this.props.commentslist,
+            commentslist: [],
             
             //가져올 댓글의 시작, 끝 인덱스 번호 
             commentstartindex: 0,
             commentendindex: 0,
 
-            isLoading: true,
-            isDev: this.props.isDev,
+            isLoading: false,
+            isLoadingMore: false,
+            isError: false,
+            isDev: false,
         }
     }
 
@@ -71,20 +76,21 @@ class BulletinBoardsReplies extends Component{
 
     // 1. 댓글 목록 새로고침 시 내려보낼 _refresherReplies 함수
     _refresherReplies = async () => {
-        await _onGetBulletinBoardsReplies({...this.state}, this._onSetStateBoardsReplies);
+        await _onGetBulletinBoardsReplies({...this.state}, this._onSetStateBoardsReplies, true);
     }
 
     //컴포넌트 마운트 시
     async componentDidMount(){
         // 일반 사용자 모드일 때
         if (!this.state.isDev)
-            await _onGetBulletinBoardsReplies({...this.state}, this._onSetStateBoardsReplies);
+            await _onGetBulletinBoardsReplies({...this.state}, this._onSetStateBoardsReplies, true);
         // 개발자 모드일 떄
         else{
             this.setState({commentslist : CommentEntries_Mock})
         }
     }
 
+    /*
     // Flatlist RenderItem 함수
     _renderItem = ({ item }) => {
         return(
@@ -109,7 +115,44 @@ class BulletinBoardsReplies extends Component{
                 _refresherReplies = {this._refresherReplies}/>
             </View>
         )
-    };
+    };*/
+
+        // Flatlist RenderItem 함수
+        _renderItem = ({ item }) => {
+            if(item.lastElement){
+                if(item.okToShow)
+                    return(
+                        <View style={{paddingTop: 10, paddingBottom: 10}}>
+                            {this.state.isLoadingMore?
+                                    <ActivityIndicator animating= 'true' size = {30} /> :
+                                <Button onPress={() => _onGetBulletinBoardsReplies({...this.state}, this._onSetStateBoardsReplies)}>Load More...</Button>}
+                        </View>
+                    )
+                else
+                    return(<View></View>)
+            }
+            else
+                return(
+                    <BulletinBoardsRepliesEntries
+                    key = {item.replyid}
+                    boardid = {item.boardid}
+                    entryid = {item.entryid}
+                    replyid = {item.replyid}
+                    currentuserid = {this.state.currentuserid}
+                    userid = {item.userid}
+                    username = {item.username}
+                    profile = {item.profile}
+                    likes = {item.likes}
+                    date = {item.date}
+                    ismine = {item.ismine}
+                    title = {''}
+                    contents = {item.contents}
+                    pictures = {item.pictures}
+                    
+                    replyEditMode = {this.state.replyEditMode}
+                    _refresherReplies = {this._refresherReplies}/>
+                )
+        };
 
     // Flatlist keyExtractor 함수
     _keyExtractor = (item, index) => item.replyid.toString();
@@ -128,7 +171,7 @@ class BulletinBoardsReplies extends Component{
                 <View style={{width: '100%', height: '100%'}}>
                     <LoadingPage What={'Comments'}/> 
                 </View>:
-                this.state.commentslist.length == 0 ?
+                this.state.commentslist.length == 1 ?
                 //댓글이 비어있을 시
                 <EmptyPage What={'Comment'}/> :
                 this.state.isError ? 

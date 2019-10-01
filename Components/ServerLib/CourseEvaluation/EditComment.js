@@ -6,7 +6,7 @@
 */ 
 
 _handleEditComment = async () => {
-    var url = server.serverURL + '/process/CourseEvaluation/EditCourseEvaluationComment';  
+    var url = server.serverURL + '/process/CourseEvaluation/EditComment';  
     
     await this.setState({
       isLoading: true

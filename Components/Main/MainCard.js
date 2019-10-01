@@ -11,10 +11,12 @@
 
 
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Surface, Text } from 'react-native-paper';
+import { StyleSheet, View, ImageBackground } from 'react-native';
+import { Surface, Text, ActivityIndicator, Button } from 'react-native-paper';
 import PropTypes from 'prop-types';
 import { TitleBold, ContentMedium, MetaLight } from '../Theming/Theme';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Dimensions } from "react-native";
 
 class MainCard extends Component{
     static defaultProps= {
@@ -22,6 +24,9 @@ class MainCard extends Component{
         contents: '',
         pictures: '',
         date: '',
+
+        isLoading: false,
+        isError: false,
     }
 
     constructor(props){
@@ -31,23 +36,71 @@ class MainCard extends Component{
             contents: this.props.contents,
             pictures: this.props.pictures,
             date: this.props.date,
+
+            isLoading: this.props.isLoading,
+            isError: this.props.isError,
+
+            _onGetBulletinBoardsPost: this.props._onGetBulletinBoardsPost
         }
     }
 
 
     render(){
-        return(
-            <View style={styles.Card} >
+        if(this.state.isError){
+            return(
+            <View style={styles.Card} >        
+                <Surface style={styles.surfaceLoading}>
+                    <View style= {{height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center',}}>
+                        <Icon name="error" size={80} color="#a1a1a1" />
+                        <MetaLight fontSize = {15} style={{textAlign:'center'}}>
+                            Loading Failed.
+                        </MetaLight>
+                        <MetaLight fontSize = {15} style={{textAlign:'center'}}>
+                            Check Your Internet status and refresh it again.
+                        </MetaLight>
+                        <Button onPress={this.state._onGetBulletinBoardsPost}>REFRESH</Button>
+                    </View>
+                </Surface>
+            </View>
+            )
+        }
+
+        else if(this.state.isLoading){
+            return(
+            <View style={styles.Card} >        
+                <Surface style={styles.surfaceLoading}>
+                    <View style= {{height: '100%', width: '100%', display: 'flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center',}}>
+                        <ActivityIndicator size={40} style={{paddingBottom: 20,}}/>
+                        <MetaLight fontSize = {15} style={{textAlign:'center'}}>
+                            Loading Cards... 
+                        </MetaLight>
+                    </View>
+                </Surface>
+            </View>
+            )
+        }
+
+        else return(
+            <View style={styles.Card} >      
                 <Surface style={styles.surface}>
-                    <TitleBold
-                        fontSize = {20}
-                        numberOfLines = {1}
-                        ellipsizeMode = {'tail'}>{this.state.title}</TitleBold>
-                    <ContentMedium
-                        fontSize = {12}
-                        numberOfLines = {4}
-                        ellipsizeMode = {'tail'}>{this.state.contents}</ContentMedium>
-                    <MetaLight>{this.state.date}</MetaLight>
+                    <ImageBackground 
+                        source={require('../../Mockup_Datas/Images/img01.jpg')} 
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            borderRadius: 10,
+                            overflow: 'hidden',
+                            height: '100%'}}>
+                        <View style={styles.insidesurface}>
+                            <Text style={{fontWeight:'bold', fontSize: 10, color:'blue', letterSpacing: 1, paddingBottom: 5,}}>EVENT</Text>
+                            <View style= {{paddingLeft: 3, paddingBottom: 5,}}>
+                                <TitleBold
+                                    fontSize = {20}
+                                    numberOfLines = {1}
+                                    ellipsizeMode = {'tail'}>{this.state.title}</TitleBold>
+                            </View> 
+                        </View>
+                    </ImageBackground>
                 </Surface>
             </View>
         );
@@ -63,26 +116,39 @@ MainCard.propTypes = {
     name: PropTypes.string
 };
 
-
 const styles = StyleSheet.create({
     Card: {
         display: 'flex',
-        height: 190,
-        width: 320,
-        justifyContent : 'center',
-        alignContent: 'center',
-        paddingLeft: 10,
-    },
-    surface: {
-        padding: 8,
-        height: 150,
-        width: 300,
-        borderWidth: 0.5,
-        borderColor: '#c4c4c4',
-        alignItems: 'center',
+        maxHeight: 500,
+        height: '100%',
+        width: '95%',
         justifyContent: 'center',
+        paddingBottom: 10,
+      },
+      surface: {
+          height: 220,
+          width: '100%',
+          borderWidth: 0.5,
+          borderColor: '#c4c4c4',
+          borderRadius: 20,
+          elevation: 5,
+      },
+      surfaceLoading: {
+        height: 220,
+        width: '100%',
+        borderWidth: 0.5,
+        borderStyle: "dashed",
+        borderColor: '#c4c4c4',
         borderRadius: 20,
-        elevation: 12,
-    },
+        elevation: 5,
+      },
+        insidesurface: {
+            paddingTop: 15,
+            paddingLeft: 10,
+            paddingRight: 10,
+            width: '100%',
+            height: '35%',
+            backgroundColor: 'rgba(255, 255, 255, 0.8)'
+        },
   });
 export default MainCard;

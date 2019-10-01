@@ -5,7 +5,69 @@ export const EventEntries = [
         Events : [
             {
                 title : 'Teacher Day', 
-                typed : [''],
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+                eventID : '12',
+                
+            },
+            {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+                eventID : '12',
+                
+            },
+            {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Teacher Day', 
+                type : [''],
                 contents : 'Babababababa .... ahdjasd',
                 eventID : '12',
             },
@@ -101,8 +163,67 @@ export const EventEntries = [
                 eventID : '12',
             },
             {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+
+            {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+
+            {
+                title : 'Teacher Day', 
+                type : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+
+            {
                 title : 'Punreach Day', 
-                typed : [''],
+                type: [''],
                 contents : 'Babababababa .... ahdjasd',
                 eventID : '12',          
             },
@@ -251,7 +372,7 @@ export const EventEntries = [
             },
             {
                 title : 'Crazy Day', 
-                typed : [''],
+                type : [''],
                 contents : 'Babababababa .... ahdjasd',
 
                 eventID : '12',
@@ -259,7 +380,7 @@ export const EventEntries = [
             },
             {
                 title : 'Crazy Day', 
-                typed : [''],
+                type : [''],
                 contents : 'Babababababa .... ahdjasd',
 
                 eventID : '12',

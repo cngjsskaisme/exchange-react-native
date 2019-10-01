@@ -1,20 +1,19 @@
 import { Alert } from 'react-native';
 import axios from 'axios'; 
-import {server} from '../config';
+import {server} from '../../config';
 
-export default _handleAddReport = async(state, _onSetState) => {
-    var url = server.serverURL + '/process/BulletinBoards/AddReport';
+export default _handleDeleteReplies = async(state, _onSetState) => {
+    var url = server.serverURL + '/process/BulletinBoards/DeleteComment';
     _onSetState({
         isLoading: true,
         isError: false
     }) 
-    await axios.post(url, {title: state.title, contents: state.contents, userid: state.currentuserid, boardid: state.boardid, 
-        entryid: state.entryid, commentid: state.replyid, parentcommentid: state.parentreplyid }) 
+    await axios.post(url, { boardid: state.boardid, entryid: state.entryid, replyid: state.replyid}) 
         .then((response) => {       
             _onSetState({
             isLoading: false
             }) 
-        })
+        }) 
         .catch(( err ) => {
             Alert.alert(
                 'Cannot connect to the server.',

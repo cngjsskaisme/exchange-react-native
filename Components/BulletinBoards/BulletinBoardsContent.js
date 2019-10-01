@@ -35,8 +35,6 @@ class BulletinBoardsContent extends Component{
         contents: "",
         pictures: "",
 
-        commentslist: [],
-
         keyboardHeight:0,
         normalHeight: 0,
         shortHeight: 0,
@@ -61,8 +59,6 @@ class BulletinBoardsContent extends Component{
             title: this.props.navigation.getParam('title'),
             contents: this.props.navigation.getParam('contents'),
             pictures: this.props.navigation.getParam('pictures'),
-
-            commentslist: [],
 
             keyboardHeight: 0,
             normalHeight: 0,

@@ -5,7 +5,7 @@
 */ 
 
 _handleDeleteComment = async () => {
-    var url = server.serverURL + '/process/CourseEvaluation/DeleteCourseEvaluationComment';  
+    var url = server.serverURL + '/process/CourseEvaluation/DeleteComment';  
     
     await this.setState({
       isLoading: true

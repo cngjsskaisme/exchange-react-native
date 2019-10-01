@@ -11,14 +11,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
-import MainCard from './MainCard';
-import Carousel from 'react-native-snap-carousel';
-import Pagination from 'react-native-snap-carousel'
-import { _onGetBulletinBoardsPost } from '../ServerLib/ServerRequest'
-import LoadingPage from '../Tools/LoadingPage';
-import ErrorPage from '../Tools/ErrorPage';
-import { Button } from 'react-native-paper';
-import {Dimensions } from "react-native";
+import MainCarousel from './MainCarousel';
+import MainGuides from './MainGuides';
+import { TitleBold } from '../Theming/Theme';
 
 class Main extends Component{
     static navigationOptions = {
@@ -48,52 +43,20 @@ class Main extends Component{
       }
     }
 
-    async componentDidMount() {
-      await _onGetBulletinBoardsPost({...this.state}, this._onSetState, false, '', '', true);
-    }
-
     _onSetState = (state) => {
       this.setState({
         ...state
       });
     }
 
-    _renderItem = ({ item }) => { 
-      return(
-        <MainCard
-          title = {item.title}
-          contents = {item.contents}
-          pictures = {item.pictures}
-          date = {item.date} />
-      )
-  };
-    
-    _keyExtractor = (item, index) => item.entryid.toString();
-
     render(){
-      const screenWidth = Math.round(Dimensions.get('window').width);
-
-      if(this.state.isLoading)
-        return (<LoadingPage What='Main Page'/>)
-      if(this.state.isError){
-        return(
-          <View>
-            <ErrorPage What='Main Page'/>
-            <Button onPress={() => _onGetBulletinBoardsPost({...this.state}, this._onSetState, false, '', '', true)}>Reload</Button>
-          </View>
-        )
-      }
-      else
         return (
-            <ScrollView style={styles.container}>
-              <Carousel
-                ref={(c) => { this._carousel = c; }}
-                onSnapToItem={(index) => this.setState({ activeSlide: index }) }
-                data={this.state.entrieslist}
-                renderItem={this._renderItem}
-                sliderWidth={screenWidth}
-                itemWidth={340}
-              />
+            <ScrollView>
+              <View style={styles.container}>
+                <TitleBold>Welcome, User!</TitleBold>
+                <MainCarousel/> 
+                <MainGuides/>
+              </View>
             </ScrollView>
           );
         }
@@ -105,6 +68,7 @@ class Main extends Component{
       flex: 1,
       flexDirection: 'column',
       paddingTop: 15,
+      alignItems: "center",
     },
     cards:{
       justifyContent: 'center',
