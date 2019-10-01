@@ -59,14 +59,14 @@ class Day extends Component {
 
     let dot;
     if (marking.marked) {
-      dotStyle.push(this.style.visibleDot);
+      //dotStyle.push(this.style.visibleDot);
       if (isDisabled) {
         dotStyle.push(this.style.disabledDot);
       }
       if (marking.dotColor) {
         dotStyle.push({backgroundColor: marking.dotColor});
       }
-      dot = (<View style={dotStyle}/>);
+      dot = (<View style={dotStyle} />);
     }
 
     if (marking.selected) {
@@ -94,7 +94,7 @@ class Day extends Component {
         disabled={marking.disableTouchEvent}
       >
         <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
-        {dot}{number}
+        {dot}
       </TouchableOpacity>
     );
   }

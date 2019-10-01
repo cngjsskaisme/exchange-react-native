@@ -12,6 +12,7 @@ import BulletinBoardsEditEntry from "./Components/BulletinBoards/BulletinBoardsE
 import BulletinBoardsLists from "./Components/BulletinBoards/BulletinBoardsLists";
 import CourseEvaluation from './Components/Course_Evaluation/CourseEvaluation';
 import CalendarScreen from './Components/EventCalendar/EventCalendar'
+import ExpandableCalendarScreen from './Components/EventCalendar/ExpandableEventCalendar'
 import BulletinBoardsSearch from "./Components/BulletinBoards/BulletinBoardsSearch";
 import BulletinBoardsContext from "./Components/BulletinBoards/BulletinBoardsContext";
 import { Input } from "react-native-elements";
@@ -55,7 +56,7 @@ const TabNavigator = createBottomTabNavigator(
       }
     },
     CalendarScreen : {
-      screen : CalendarScreen,
+      screen : ExpandableCalendarScreen,
       navigationOptions : {
         tabBarLabel : 'CalendarScreen',
         tabBarIcon : ({tintColor}) => (<Icon name="calendar" color={tintColor} size = {20}/>)

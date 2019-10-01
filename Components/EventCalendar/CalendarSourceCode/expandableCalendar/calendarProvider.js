@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {Animated, TouchableOpacity, View} from 'react-native';
+import {Animated, TouchableOpacity, View, Text} from 'react-native';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
 
