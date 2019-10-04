@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
-import {SectionList, Text} from 'react-native';
+import {SectionList, Text, View} from 'react-native';
 import PropTypes from 'prop-types';
 import XDate from 'xdate';
 
@@ -134,6 +134,7 @@ class AgendaList extends Component {
 
   render() {
     return (
+      
       <SectionList
         {...this.props}
         ref={this.list}
@@ -146,15 +147,17 @@ class AgendaList extends Component {
         onScroll={this.onScroll}
         onMomentumScrollBegin={this.onMomentumScrollBegin}
         onMomentumScrollEnd={this.onMomentumScrollEnd}
-        // onScrollToIndexFailed={(info) => { console.warn('onScrollToIndexFailed info: ', info); }}
-        // getItemLayout={this.getItemLayout} // onViewableItemsChanged is not updated when list scrolls!!!
+        //onScrollToIndexFailed={(info) => { console.warn('onScrollToIndexFailed info: ', info); }}
+         //getItemLayout={this.getItemLayout} // onViewableItemsChanged is not updated when list scrolls!!!
       />
+      
+
     );
   }
 
-  // getItemLayout = (data, index) => {
-  //   return {length: commons.screenWidth, offset: commons.screenWidth  * index, index};
-  // }
+   getItemLayout = (data, index) => {
+     return {length: commons.screenWidth, offset: commons.screenWidth  * index, index};
+   }
 }
 
 export default asCalendarConsumer(AgendaList);

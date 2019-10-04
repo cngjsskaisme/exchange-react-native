@@ -1,18 +1,18 @@
+import React, {Component} from 'react';
+import {
+  TouchableOpacity,
+  Text,
+} from 'react-native';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import XDate from 'xdate';
-import { EventEntries } from '../../../../CalendarEventEntries';
-import { shouldUpdate } from '../../../component-updater';
-import styleConstructor from './style';
 
+import styleConstructor from './style';
+import {shouldUpdate} from '../../../component-updater';
 
 class Day extends Component {
   static displayName = 'IGNORE';
   
   static propTypes = {
     // TODO: disabled props should be removed
-    month: PropTypes.instanceOf(XDate),
     state: PropTypes.oneOf(['selected', 'disabled', 'today', '']),
 
     // Specify theme properties to override specific styles for calendar parts. Default = {}
@@ -24,7 +24,6 @@ class Day extends Component {
 
   constructor(props) {
     super(props);
-    
     this.style = styleConstructor(props.theme);
     this.onDayPress = this.onDayPress.bind(this);
     this.onDayLongPress = this.onDayLongPress.bind(this);
@@ -38,7 +37,7 @@ class Day extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return shouldUpdate(this.props, nextProps, ['state', 'marking', 'onPress', 'onLongPress']);
+    return shouldUpdate(this.props, nextProps, ['state', 'children', 'marking', 'onPress', 'onLongPress']);
   }
 
   render() {
@@ -75,32 +74,17 @@ class Day extends Component {
       }
     }
 
-    let number = [];
-    if(String(this.props.marking) != null )
-    {
-    number.push(<Text key={0} style={{color:'green', width: 60,
-
-    alignItems: 'center', paddingLeft: 10,
-      paddingRight: 10, fontWeight:'100'}}>{EventEntries[0].Events.length}</Text>);
-      }
-
     return (
-      <View>
-
-      
       <TouchableOpacity
         testID={this.props.testID}
-        style={[containerStyle,]}
+        style={containerStyle}
         onPress={this.onDayPress}
         onLongPress={this.onDayLongPress}
         activeOpacity={marking.activeOpacity}
         disabled={marking.disableTouchEvent}
       >
-        <Text allowFontScaling={false} style={[textStyle,]}>{String(this.props.children)} {String(this.props.marking)} </Text>
-        
+        <Text allowFontScaling={false} style={textStyle}>{String(this.props.children)}</Text>
       </TouchableOpacity>
-      {number}
-      </View>
     );
   }
 }

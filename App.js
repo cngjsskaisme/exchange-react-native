@@ -56,7 +56,7 @@ const TabNavigator = createBottomTabNavigator(
       }
     },
     CalendarScreen : {
-      screen : ExpandableCalendarScreen,
+      screen : CalendarScreen,
       navigationOptions : {
         tabBarLabel : 'CalendarScreen',
         tabBarIcon : ({tintColor}) => (<Icon name="calendar" color={tintColor} size = {20}/>)

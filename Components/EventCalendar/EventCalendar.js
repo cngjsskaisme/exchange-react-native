@@ -4,9 +4,11 @@ import {
   View,
   StyleSheet
 } from 'react-native';
+import {Button } from 'native-base';
 //import {Agenda} from 'react-native-calendars';
 import Agenda from './CalendarSourceCode/agenda/index';
 import {EventEntries} from './CalendarEventEntries'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class EventCalendar extends Component {
   constructor(props) {
@@ -35,7 +37,7 @@ export default class EventCalendar extends Component {
         renderItem={this.renderItem.bind(this)}
         renderEmptyDate={this.renderEmptyDate.bind(this)}
         rowHasChanged={this.rowHasChanged.bind(this)}
-        markingType={'custom'}
+        //markingType={'custom'}
          markedDates={{
             '2019-09-08' : {},
             '2019-09-09': {textColor: '#666'},
@@ -59,6 +61,11 @@ export default class EventCalendar extends Component {
             for (let j = 0; j < EventEntries[m].Events.length; j++) {
               this.state.items[strTime].push({
                 name : EventEntries[m].Events[j].title,
+                eventDate : EventEntries[m].Date,
+                distributor : EventEntries[m].Events[j].distributor,
+                isAdmin : EventEntries[m].isAdmin,
+                time : EventEntries[m].Events[j].time,
+                place : EventEntries[m].Events[j].place,
                 //name: 'Item for ' + strTime + ' ' + EventEntries[1].text + ' ' + strTime + ' ' + EventEntries[0].Events.length,
                 height: Math.max(50, Math.floor(Math.random() * 150))
               });
@@ -111,7 +118,13 @@ export default class EventCalendar extends Component {
 */
   renderItem(item) {
     return (
-      <View style={[styles.item, {height: item.height}]}><Text>{item.name}</Text></View>
+      <View style={[styles.item,]}>
+        <Text style={{fontSize : 20, paddingTop : 10, paddingLeft : 10}}>{item.time}</Text>
+        <Text style={{fontSize : 30, paddingTop : 10, paddingBottom : 10, paddingLeft : 10}}>{item.name} </Text>
+        <Text style={{fontSize : 20, paddingLeft : 10}}>Location : {item.place}</Text>
+        <Text style={{fontSize : 20, paddingLeft : 10}}>Distributor : {item.distributor}</Text>
+        <TouchableOpacity onPress={() => alert(item.name)}><Text style={{fontSize : 20, paddingTop : 10, paddingLeft : 10}}>See more info</Text></TouchableOpacity>
+      </View>
     );
   }
 
@@ -133,6 +146,7 @@ export default class EventCalendar extends Component {
 
 const styles = StyleSheet.create({
   item: {
+    height : 250,
     backgroundColor: 'white',
     flex: 1,
     borderRadius: 5,
@@ -141,8 +155,17 @@ const styles = StyleSheet.create({
     marginTop: 17
   },
   emptyDate: {
-    height: 15,
-    flex:1,
-    paddingTop: 30
+    height: 40,
+
+    //flex:1,
+    //backgroundColor: 'gray',
+    flex: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginRight: 10,
+    marginTop: 17
+  },
+  eventText : {
+ 
   }
 });

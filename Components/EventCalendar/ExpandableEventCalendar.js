@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import ExpandableCalendar from './CalendarSourceCode/expandableCalendar/index';
 import AgendaList from './CalendarSourceCode/expandableCalendar/agendaList';
-import CalendarProvider from './CalendarSourceCode/expandableCalendar/calendarProvider'
+import CalendarProvider from './CalendarSourceCode/expandableCalendar/calendarProvider';
+import { EventEntries} from './CalendarEventEntries'
 //import {ExpandableCalendar, AgendaList, CalendarProvider} from 'react-native-calendars';
 
 
@@ -35,6 +36,7 @@ function getPastDate(days) {
 }
 
 const ITEMS = [
+  {title: '2019-09-18', data: [{hour: '12am', duration: '1h', title: 'Ashtanga Yoga'}]},
   {title: dates[0], data: [{hour: '12am', duration: '1h', title: 'Ashtanga Yoga'}]},
   {title: dates[1], data: [{hour: '4pm', duration: '1h', title: 'Pilates ABC'}, {hour: '5pm', duration: '1h', title: 'Vinyasa Yoga'}]},
   {title: dates[2], data: [{hour: '1pm', duration: '1h', title: 'Ashtanga Yoga'}, {hour: '2pm', duration: '1h', title: 'Deep Streches'}, {hour: '3pm', duration: '1h', title: 'Private Yoga'}]},
@@ -47,6 +49,13 @@ const ITEMS = [
   {title: dates[9], data: [{hour: '1pm', duration: '1h', title: 'Ashtanga Yoga'}, {hour: '2pm', duration: '1h', title: 'Deep Streches'}, {hour: '3pm', duration: '1h', title: 'Private Yoga'}]},
   {title: dates[10], data: [{hour: '12am', duration: '1h', title: 'Ashtanga Yoga'}]}
 ];
+
+ITEMS.push({
+  title: EventEntries[0].Date,
+  data : [{
+    hour : '10pm', duration : '1h', title : EventEntries[0].Events[0].title
+  }]
+})
 
 export default class ExpandableCalendarScreen extends Component {
 
@@ -122,12 +131,12 @@ export default class ExpandableCalendarScreen extends Component {
       // month
       monthTextColor: black,
       textMonthFontSize: 16,
-      textMonthFontFamily: 'HelveticaNeue',
+      //textMonthFontFamily: 'HelveticaNeue',
       textMonthFontWeight: 'bold',
       // day names
       textSectionTitleColor: black,
       textDayHeaderFontSize: 12,
-      textDayHeaderFontFamily: 'HelveticaNeue',
+      //textDayHeaderFontFamily: 'HelveticaNeue',
       textDayHeaderFontWeight: 'normal',
       // today
       todayBackgroundColor: lightThemeColor,
@@ -135,7 +144,7 @@ export default class ExpandableCalendarScreen extends Component {
       // dates
       dayTextColor: themeColor,
       textDayFontSize: 18,
-      textDayFontFamily: 'HelveticaNeue',
+      //textDayFontFamily: 'HelveticaNeue',
       textDayFontWeight: '500',
       textDayStyle: {marginTop: Platform.OS === 'android' ? 2 : 4},
       // selected date
@@ -154,7 +163,8 @@ export default class ExpandableCalendarScreen extends Component {
   render() {    
     return (
       <CalendarProvider 
-        date={ITEMS[0].title} 
+        //date={ITEMS[0].title} 
+        date = {today}
         onDateChanged={this.onDateChanged} 
         onMonthChange={this.onMonthChange}
         theme={{todayButtonTextColor: '#0059ff'}} 
@@ -167,20 +177,24 @@ export default class ExpandableCalendarScreen extends Component {
           // hideArrows
           // disablePan
           // hideKnob
-          // initialPosition={ExpandableCalendar.positions.OPEN}
+          
+          initialPosition={ExpandableCalendar.positions.OPEN}
+          //selected = {today}
           firstDay={1}
           markedDates={this.getMarkedDates()} // {'2019-06-01': {marked: true}, '2019-06-02': {marked: true}, '2019-06-03': {marked: true}};
           theme={this.getTheme()}
           //leftArrowImageSource={require('../img/previous.png')}
           //rightArrowImageSource={require('../img/next.png')}
-          // calendarStyle={styles.calendar}
-          // headerStyle={styles.calendar} // for horizontal only
+           //calendarStyle={styles.calendar}
+           headerStyle={styles.calendar} // for horizontal only
         />
         <AgendaList
+          
+          //selected = {today}
           sections={ITEMS}
           extraData={this.state}
           renderItem={this.renderItem}
-          // sectionStyle={styles.section}
+          sectionStyle={styles.section}
         />
       </CalendarProvider>
     );

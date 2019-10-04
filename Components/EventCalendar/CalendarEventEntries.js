@@ -1,9 +1,13 @@
 // EventEntries[1].Date
 export const EventEntries = [
     {
-        Date : '2019-09-28',
+        Date : '2019-10-04',
         Events : [
             {
+                isAdmin : true,
+                distributor : 'Hanyang University',
+                place : 'Hanyang University',
+                time : '1:00PM - 10:00PM',
                 title : 'Teacher Day', 
                 type : [''],
                 contents : 'Babababababa .... ahdjasd',
@@ -11,30 +15,23 @@ export const EventEntries = [
                 
             },
             {
-                title : 'Teacher Day', 
-                type : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-                
-            },
-            {
-                title : 'Teacher Day', 
-                type : [''],
+                isAdmin : false,
+                distributor : 'សប្បាយ',
+                place : 'សាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ',
+                time : '1:00PM - 10:00PM',
+                title : 'ពិពណ៍ការងារ', 
+                typed : [''],
                 contents : 'Babababababa .... ahdjasd',
 
                 eventID : '12',
                 
             },
             {
-                title : 'Teacher Day', 
-                type : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Teacher Day', 
+                isAdmin : true,
+                distributor : 'Hanyang University',
+                place : 'Hanyang University',
+                time : '1:00PM - 10:00PM',
+                title : 'Foreigner Day', 
                 type : [''],
                 contents : 'Babababababa .... ahdjasd',
 
@@ -42,7 +39,11 @@ export const EventEntries = [
                 
             },
             {
-                title : 'Teacher Day', 
+                isAdmin : true,
+                distributor : 'Hanyang University',
+                place : 'Hanyang University',
+                time : '1:00PM - 10:00PM',
+                title : 'Korean Day', 
                 type : [''],
                 contents : 'Babababababa .... ahdjasd',
 
@@ -50,7 +51,11 @@ export const EventEntries = [
                 
             },
             {
-                title : 'Teacher Day', 
+                isAdmin : true,
+                distributor : 'Hanyang University',
+                place : 'Hanyang University',
+                time : '1:00PM - 10:00PM',
+                title : 'Your Day', 
                 type : [''],
                 contents : 'Babababababa .... ahdjasd',
 
@@ -58,7 +63,11 @@ export const EventEntries = [
                 
             },
             {
-                title : 'Teacher Day', 
+                isAdmin : true,
+                distributor : 'Hanyang University',
+                place : 'Hanyang University',
+                time : '1:00PM - 10:00PM',
+                title : 'Artificial  Intelligence Day', 
                 type : [''],
                 contents : 'Babababababa .... ahdjasd',
 
@@ -66,104 +75,11 @@ export const EventEntries = [
                 
             },
             {
-                title : 'Teacher Day', 
-                type : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',
-            },
-            {
-                title : 'Teacher Day', 
+                isAdmin : false,
+                distributor : 'Hanyang University',
+                place : 'Hanyang University',
+                time : '1:00PM - 10:00PM',
+                title : 'School Day', 
                 type : [''],
                 contents : 'Babababababa .... ahdjasd',
 
@@ -171,6 +87,10 @@ export const EventEntries = [
                 
             },
             {
+                isAdmin : false,
+                distributor : 'Hanyang University',
+                place : 'Hanyang University',
+                time : '1:00PM - 10:00PM',
                 title : 'Teacher Day', 
                 type : [''],
                 contents : 'Babababababa .... ahdjasd',
@@ -178,351 +98,30 @@ export const EventEntries = [
                 eventID : '12',
                 
             },
-            {
-                title : 'Teacher Day', 
-                type : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-
-            {
-                title : 'Teacher Day', 
-                type : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Teacher Day', 
-                type : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Teacher Day', 
-                type : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-
-            {
-                title : 'Teacher Day', 
-                type : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-
-            {
-                title : 'Punreach Day', 
-                type: [''],
-                contents : 'Babababababa .... ahdjasd',
-                eventID : '12',          
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },{
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                type : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                type : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },{
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-            {
-                title : 'Crazy Day', 
-                typed : [''],
-                contents : 'Babababababa .... ahdjasd',
-
-                eventID : '12',
-                
-            },
-
             
         ]
     },
 
     {
-        Date : '2019-09-29',
+        Date : '2019-10-05',
         Events : [
             {
+                isAdmin : false,
+                distributor : 'សប្បាយ',
+                place : 'សាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ',
+                time : '1:00PM - 10:00PM',
+                title : 'ពិពណ៍ការងារ', 
+                typed : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                isAdmin : false,
+                distributor : 'Hanyang University',
+                place : 'Hanyang University',
+                time : '1:00PM - 10:00PM',
                 title : 'University Festival', 
                 typed : [''],
                 contents : 'Babababababa .... ahdjasd',
@@ -531,6 +130,10 @@ export const EventEntries = [
                 
             },
             {
+                isAdmin : false,
+                distributor : 'HISA',
+                place : 'Hanyang University',
+                time : '1:00PM - 10:00PM',
                 title : 'HISA Culture Festival', 
                 typed : [''],
                 contents : 'Babababababa .... ahdjasd',
@@ -539,6 +142,53 @@ export const EventEntries = [
                 
             },
             {
+                isAdmin : false,
+                distributor : 'PBL',
+                place : 'Hanyang University',
+                time : '1:00PM - 10:00PM',
+                title : 'Haksul Town exhibition', 
+                typed : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            
+        ]
+    },
+
+    {
+        Date : '2019-10-10',
+        Events : [
+            {
+                isAdmin : false,
+                distributor : 'សប្បាយ',
+                place : 'សាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ',
+                time : '1:00PM - 10:00PM',
+                title : 'ពិពណ៍ការងារ', 
+                typed : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                isAdmin : false,
+                distributor : '공과대학 외국인 유학생 홍보대사',
+                place : '한양대학교',
+                time : '1:00PM - 10:00PM',
+                title : '히사 글로벌 문화 축제', 
+                typed : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                isAdmin : false,
+                distributor : 'PBL',
+                place : 'Hanyang University',
+                time : '1:00PM - 10:00PM',
                 title : 'Haksul Town exhibition', 
                 typed : [''],
                 contents : 'Babababababa .... ahdjasd',

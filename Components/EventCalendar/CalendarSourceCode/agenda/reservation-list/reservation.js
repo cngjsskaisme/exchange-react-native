@@ -66,7 +66,6 @@ class ReservationListItem extends Component {
         {this.renderDate(date, reservation)}
         <View style={{flex:1}}>
           {content}
-          <Text>Punreach</Text>
         </View>
       </View>
     );
