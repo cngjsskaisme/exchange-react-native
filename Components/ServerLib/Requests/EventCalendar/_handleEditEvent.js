@@ -8,7 +8,7 @@ export default _handleEditEvent = async(state, _onSetState) => {
         isLoading: true,
         isError: false
     }) 
-    await axios.post(url,{eventid: "5d8d5074e168223dea014a1e", title: "Official& type1 test title3", contents: "Official& type1 test contents3"})  
+    await axios.post(url,{eventid: "5d8d5074e168223dea014a1e", title: "Official& type1 test title3", contents: "Official& type1 test contents3", startdate: "2019-09-01", enddate: "2019-09-10"})  
         .then((response) => {       
             _onSetState({
             isLoading: false

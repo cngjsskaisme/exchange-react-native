@@ -10,12 +10,10 @@ export default _handleAddEvent = async(state, _onSetState) => {
     }) 
     await axios.post(url,{
             userid: "5d5cac858f549f46e0b2a76f", 
-            startday: '2019-09-25', 
-            days: 4,
-            startindex: 0,
-            //endindex: 19,  
-            type: [],
-            //filter: " "
+            startdate: '2019-09-25', 
+            enddate: '2019-10-03',
+            type: ["Ofiifcial"],
+            title: "title1"
         })   
         .then((response) => {       
             _onSetState({

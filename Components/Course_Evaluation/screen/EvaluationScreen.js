@@ -111,20 +111,24 @@ class EvaluationScreen extends Component {
   async componentDidMount(){  
     await this._handleGetCommentsList(); 
   }
-  /*
+  
   _handletest = async () => {
-    var url = server.serverURL + '/process/EventCalendarRequest/MoveToEventCalendar';  
+    var url = server.serverURL + '/process/EventCalendar/ShowEventsList';  
     
     await this.setState({
       isLoading: true
     });
     await axios.post(url, {
-       eventid: "5d8f1a97a671b46b00b174d2", 
-      }) 
+      startday: '2019-09-01', days: 10, type: ["Official"], userid: "5d5373177443381df03f3040", search: " "}) 
+        .then((response) => {       
+          _onSetState({
+            isLoading: false
+            })  
+        }) 
       .then((response) => {       
           this.setState({ 
-            isLoading: false
-          });  
+            isLoading: false 
+          });    
       }) 
       .catch(( err ) => {
           Alert.alert(
@@ -134,7 +138,7 @@ class EvaluationScreen extends Component {
           ); 
       });    
     }
-*/
+  
     
 //data request function - end 
 
@@ -258,7 +262,7 @@ class EvaluationScreen extends Component {
               <View style={styles.bottomPart}>  
                 <Button
                     title="More comments"
-                    //onPress = {this._handletest.bind(this)}
+                    onPress = {this._handletest.bind(this)}
                   /> 
               </View>
             </View>
