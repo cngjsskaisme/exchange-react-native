@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../../config';
 
 export default _handleAddReport = async(state, _onSetState) => {
-    var url = server.serverURL + '/process/BulletinBoards/AddReport';
+    var url = server.serverURL + '/BulletinBoards/AddReport';
     _onSetState({
         isLoading: true,
         isError: false

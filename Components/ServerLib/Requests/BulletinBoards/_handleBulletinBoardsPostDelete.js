@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../../config';
 
 export default _handleBulletinBoardsPostDelete = async(state, _onSetState) => {
-    var url = server.serverURL + '/process/BulletinBoards/DeleteEntry';
+    var url = server.serverURL + '/BulletinBoards/DeleteEntry';
     _onSetState({
         isLoading: true,
         isError: false,
@@ -33,7 +33,7 @@ export default _handleBulletinBoardsPostDelete = async(state, _onSetState) => {
 /*  2019-09-21 response.data.msg 출력 확인 완료한 코드 
 
 _handleBulletinBoardsPostDelete = async(tate, _onSetState) => {
-    var url = server.serverURL + '/process/DeleteEntry';
+    var url = server.serverURL + '/DeleteEntry';
     _onSetState({
         isLoading: true,
         isError: false
