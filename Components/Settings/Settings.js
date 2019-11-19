@@ -14,50 +14,52 @@ import PropTypes from 'prop-types';
 import { ContentMedium, TitleBold, MetaLight } from '../Theming/Theme';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Button } from 'react-native-paper';
+import LoadingPage from '../Tools/LoadingPage'; 
+import {auth} from '../ServerLib/config'
 
 class ErrorPage extends Component{
-    static defaultProps = {
-        What : '',
-    }
 
     constructor(props){
         super(props);
         this.state = {
-            What : this.props.What,
+            isLoading: false, 
         }
-    }
+    } 
+
+    _onSettings = (state) => {
+        this.setState({
+            ...state
+        })
+    } 
+
+    _Logout = async () => {
+        await auth.logout(); 
+        this.props.navigation.navigate('Auth');
+    } //_Logout 종료 
+
+    _DeleteAccount = async () => {
+        //await auth.logout();  
+        this.setState({jwt: await auth.checkauth()})
+        await _handleAuthDeleteAccount({...this.state}, this._onSettings);
+        this.props.navigation.navigate('Auth');
+    } //_DeleteAccount 종료
+
+
 
     render(){
         return(
-            <View style={styles.ErrorView}>
-                <View style={styles.Header}>
-                    <Icon name="mood" size={80} color="#a1a1a1" />
-                    <TitleBold style={{fontSize:30}}>{this.state.What === ''? 'Nothing ' : 'No ' + this.state.What + ' '}here.</TitleBold>
-                </View>
-                <View>
-                    <ContentMedium style={{fontSize:20}}>Be the first person to leave</ContentMedium>
-                    <ContentMedium style={{fontSize:20, textAlign: 'center'}}>{this.state.what === ''? '': this.state.What + ' '}here!</ContentMedium>
-                </View>
-            </View>
+            <View> 
+                {this.state.isLoading?
+                     <View>
+                     <LoadingPage/>
+                     </View> : 
+                        <View style={{ paddingTop: 250}}>   
+                            <Button onPress={this._Logout}>Logout</Button>
+                            <Button onPress={this._DeleteAccount}>Delete Account</Button>
+                        </View>
+                } 
+            </View>    
         );
     }
 }
-
-const styles = StyleSheet.create({
-    ErrorView: {
-        display: 'flex',
-        alignItems: 'center',
-        paddingTop: 30,
-        paddingBottom: 40,
-    },
-    Header: {
-        justifyContent: 'flex-end',
-        paddingBottom: 15,
-        alignItems: 'center'
-    },
-    Body: {
-        
-    }
-})
-
 export default ErrorPage;

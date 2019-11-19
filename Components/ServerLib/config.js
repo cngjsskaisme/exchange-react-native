@@ -2,14 +2,15 @@ import { AsyncStorage } from 'react-native';
 
 // server 연결 관련 
 const server = {
-  serverURL: 'https://y36evadhvh.execute-api.ap-southeast-1.amazonaws.com/prod',
+  serverURL: 'http://10.138.71.112:3000' //'https://y36evadhvh.execute-api.ap-southeast-1.amazonaws.com/prod',
 }; 
 
 //참고: https://medium.com/@njwest/building-a-react-native-jwt-client-api-requests-and-asyncstorage-d1a20ab60cf4 
 // asyncstorage 관련
 const deviceStorage = {
   async saveKey(key, valueToSave) {
-    try {
+    try { 
+      
       await AsyncStorage.setItem(key, valueToSave);
     } catch (error) {
       console.log('AsyncStorage Error: ' + error.message);
@@ -46,12 +47,7 @@ const deviceStorage = {
   async deleteJWT() {
     try{
       await AsyncStorage.removeItem('id_token')
-      .then(
-        () => {
-          this.setState({
-            jwt: ''
-          })
-        }
+      .then( 
       );
     } catch (error) {
       console.log('AsyncStorage Error: ' + error.message);
@@ -73,16 +69,14 @@ const auth = {
   }, 
 
   async checkauth(){ //로그인 혹은 외원 가입이 되어있는 상태인지 확인
-    try{
-    return await deviceStorage.getJWT('id_token');  
+    try{ 
+     
+    return await deviceStorage.getJWT('id_token');   
     } 
     catch(error){
         console.log('AsyncStorage Error: ' + error.message);
      } 
   }, 
-  goauthpage(){ // 홈페이지로 이동하기 위함. (현재의 auth를 다른 페이지가 수핼할 경우 대비)
-    return "Auths";
-  }
 }; 
 
-export {server, deviceStorage}
+export {server, deviceStorage, auth}

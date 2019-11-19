@@ -1,6 +1,6 @@
 import React from "react";
 import { AppRegistry } from "react-native";
-import { createStackNavigator, createBottomTabNavigator, createAppContainer } from "react-navigation";
+import { createStackNavigator, createBottomTabNavigator, createAppContainer, createSwitchNavigator } from "react-navigation";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import SettingsScreen from "./Components/Settings/Settings"
@@ -16,7 +16,21 @@ import ExpandableCalendarScreen from './Components/EventCalendar/ExpandableEvent
 import BulletinBoardsSearch from "./Components/BulletinBoards/BulletinBoardsSearch";
 import BulletinBoardsContext from "./Components/BulletinBoards/BulletinBoardsContext";
 import { Input } from "react-native-elements";
+//창이 만든 거
+import AuthScreen from "./Components/Auth/Auth";
+import LoginScreen from "./Components/Auth/Login";
+import SignUpScreen from "./Components/Auth/Signup"; 
+import NotverifiedScreen from "./Components/Auth/Notverified"
 
+const AuthSwitch = createSwitchNavigator({
+  Auth: AuthScreen,
+  Login: LoginScreen, 
+  Signup: SignUpScreen, 
+  Notverified: NotverifiedScreen
+  }, 
+  {
+    initialRouteName: 'Auth'
+  });
 
 const MainStack = createStackNavigator({
   Main: MainScreen,
@@ -79,7 +93,15 @@ const TabNavigator = createBottomTabNavigator(
   }
 );
 
-const AppContainer = createAppContainer(TabNavigator);
+const AppSwitchNavigator = createSwitchNavigator({ 
+  AuthSwitch: {screen: AuthSwitch}, 
+  TabNavigator: {screen: TabNavigator}
+}, 
+{
+  initialRouteName: 'AuthSwitch'
+})
+
+const AppContainer = createAppContainer(AppSwitchNavigator);
 
 const theme = {
   ...DefaultTheme,

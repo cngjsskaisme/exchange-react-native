@@ -23,7 +23,14 @@ import _handleGetEvents from './Requests/EventCalendar/_handleGetEvents'
 import _handleDeleteRequestedEvent from './Requests/EventCalendarRequest/_handleDeleteRequestedEvent'  
 import _handleEditRequestedEvent from './Requests/EventCalendarRequest/_handleEditRequestedEvent'
 import _handleGetRequestedEventsList from './Requests/EventCalendarRequest/_handleGetRequestedEventsList' 
-import _handleMoveToEventCalendar from './Requests/EventCalendarRequest/_handleMoveToEventCalendar'
+import _handleMoveToEventCalendar from './Requests/EventCalendarRequest/_handleMoveToEventCalendar' 
+
+//Auth 관련 
+import _handleAuthLogin from './Requests/Auth/_handleAuthLogin'; 
+import _handleAuthSignup from './Requests/Auth/_handleAuthSignup'; 
+import _handleAuthChecknicknm from './Requests/Auth/_handleAuthChecknicknm';
+import _handleAuthCheckVerified from './Requests/Auth/_handleAuthCheckVerified'; 
+import _handleAuthDeleteAccount from './Requests/Auth/_handleAuthDeleteAccount'; 
 
 export {
     
@@ -36,7 +43,10 @@ export {
     _handleAddEvent, _handleDeleteEvent, _handleEditEvent, _handleGetEvents, 
 
     //EventCalendarRequest 관련 
-    _handleDeleteRequestedEvent, _handleEditRequestedEvent, _handleGetRequestedEventsList, _handleMoveToEventCalendar
+    _handleDeleteRequestedEvent, _handleEditRequestedEvent, _handleGetRequestedEventsList, _handleMoveToEventCalendar, 
+
+    //Auth 관련 
+    _handleAuthLogin, _handleAuthSignup, _handleAuthChecknicknm, _handleAuthCheckVerified, _handleAuthDeleteAccount
 
 
 }

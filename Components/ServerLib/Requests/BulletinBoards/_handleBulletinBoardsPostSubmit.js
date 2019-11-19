@@ -4,6 +4,7 @@ import {server} from '../../config';
 
 export default _handleBulletinBoardsPostSubmit = async (state, _onSetState) => {
     var url = server.serverURL + '/BulletinBoards/AddEditEntry';
+    
     _onSetState({
         isLoading: true,
         isError: false,

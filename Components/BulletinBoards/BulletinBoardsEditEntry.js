@@ -8,7 +8,6 @@
 추: BulletinBoards.js의 boardid와 entryid를 constructor에서 받기 바람.
 */
 
-
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Alert } from 'react-native';
 import PropTypes from 'prop-types';
