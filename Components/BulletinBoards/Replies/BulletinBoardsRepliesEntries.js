@@ -24,7 +24,6 @@ class BulletinBoardRepliesEntries extends Component{
         boardid: 0,
         entryid: 0,
         replyid: 0,
-        currentuserid: 0,
         userid: 0,
         username: "",
         profile: "",
@@ -45,7 +44,6 @@ class BulletinBoardRepliesEntries extends Component{
             boardid: this.props.boardid,
             entryid: this.props.entryid,
             replyid: this.props.replyid,
-            currentuserid: this.props.currentuserid,
             userid: this.props.userid,
             username: this.props.username,
             profile: this.props.profile,
@@ -116,7 +114,6 @@ class BulletinBoardRepliesEntries extends Component{
                                 entryid = {this.state.entryid}
                                 replyid = {this.state.replyid}
                                 userid = {this.state.userid}
-                                currentuserid = {this.state.currentuserid}
                                 username = {this.state.username}
                                 profile = {this.state.profile}
                                 likes = {this.state.likes}

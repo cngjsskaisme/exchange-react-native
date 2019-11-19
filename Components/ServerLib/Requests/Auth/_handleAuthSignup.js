@@ -18,7 +18,9 @@ export default _handleAuthLogin = async(state, _onSetState) => {
             isLoading: false
             });  
             await deviceStorage.saveKey("id_token", response.data.accesstoken); 
-        
+            _onSetState({
+                issignup: response.data.issignup 
+            })
             if(!response.data.issignup){
                 alert(response.data.msg) 
             }

@@ -22,7 +22,6 @@ class BulletinBoardsRepliesInput extends Component{
     static defaultProps = {
         boardid: 0,
         entryid: 0,
-        currentuserid: 0,
         username: '',
         profile: '',
         contents: '',
@@ -35,7 +34,6 @@ class BulletinBoardsRepliesInput extends Component{
         this.state = {
             boardid: this.props.boardid,
             entryid: this.props.entryid,
-            currentuserid: this.props.currentuserid,
             username: this.props.username,
             profile: this.props.profile,
             contents: '',

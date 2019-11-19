@@ -21,7 +21,8 @@ class SignupScreen extends Component{
         super(props);
         this.state = {
             isLoading: false, 
-            permittednickNm: false, 
+            permittednickNm: false,  
+            issignup: false
         }
     }
     _onSignup = (state) => {
@@ -46,8 +47,11 @@ class SignupScreen extends Component{
             return;
         } 
 
-        await _handleAuthSignup({...this.state}, this._onSignup); 
-        this.props.navigation.navigate('Auth');
+        await _handleAuthSignup({...this.state}, this._onSignup);  
+        if(this.state.issignup){
+            this.props.navigation.navigate('Auth');
+        } 
+        
         } //_onPress 종료
 
     //2. 닉네임 가용 여부 체크

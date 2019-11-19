@@ -1,6 +1,6 @@
 import { Alert } from 'react-native';
 import axios from 'axios'; 
-import {server} from '../../config';
+import {server, deviceStorage} from '../../config';
 
 export default _onGetBulletinBoardsReplies = async (state,_onSetState, isRefresh = false) => {   
     var url = server.serverURL + '/BulletinBoards/ShowComments';
@@ -27,8 +27,8 @@ export default _onGetBulletinBoardsReplies = async (state,_onSetState, isRefresh
             isError: false,
         }) 
     }
-
-    await axios.post(url, {userid: state.userid, boardid: state.boardid, entryid: state.entryid,
+    var jwt = await deviceStorage.getJWT();
+    await axios.post(url, {jwt: jwt, boardid: state.boardid, entryid: state.entryid,
         commentstartindex: commentstartindex, commentendindex: commentendindex})
         .then((response) => {
             // 새로고침시 목록 다 지우고 게시글 목록 새로 받기
