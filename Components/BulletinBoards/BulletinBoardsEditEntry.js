@@ -25,9 +25,6 @@ class BulletinBoardsEditEntry extends Component{
         boardid: 0,
         entryid: 0,
         replyid: 0,
-        userid: 0,
-        currentuserid: 0,
-        username: '',
         profile: '',
         likes: 0,
         date: '',
@@ -51,9 +48,6 @@ class BulletinBoardsEditEntry extends Component{
             boardid: this.props.navigation.getParam('boardid', 0),
             entryid: this.props.navigation.getParam('entryid', 0),
             replyid: this.props.navigation.getParam('entryid', 0),
-            userid: this.props.navigation.getParam('userid', 0),
-            currentuserid: this.props.navigation.getParam('currentuserid', 0),
-            username: this.props.navigation.getParam('username', ''),
             profile: this.props.navigation.getParam('profile', ''),
             likes: this.props.navigation.getParam('likes', 0),
             date: this.props.navigation.getParam('date', ''),
@@ -100,7 +94,6 @@ class BulletinBoardsEditEntry extends Component{
                 await this.state._onSetStatePostMenu({
                     boardid: this.state.boardid,
                     entryid: this.state.entryid,
-                    currentuserid: this.state.currentuserid,
                     profile: this.state.profile,
                     ismine: this.state.ismine,
                     title: this.state.title,
@@ -110,7 +103,6 @@ class BulletinBoardsEditEntry extends Component{
                 await this.state._onSetStateBoardsContent({
                     boardid: this.state.boardid,
                     entryid: this.state.entryid,
-                    currentuserid: this.state.currentuserid,
                     profile: this.state.profile,
                     ismine: this.state.ismine,
                     title: this.state.title,
@@ -124,7 +116,7 @@ class BulletinBoardsEditEntry extends Component{
     render() {
         return(
             <View>
-                {typeof this.state.currentuserid === 'undefined' || this.state.currentuserid === 0? 
+                {this.state.isLoading? 
                     <View>
                     <LoadingPage/>
                     </View> :

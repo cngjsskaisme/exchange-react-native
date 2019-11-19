@@ -12,7 +12,7 @@ export default _handleAuthDeleteAccount = async(state, _onSetState) => {
     });   
     var jwt;
     while(true){
-        jwt = await deviceStorage.getJWT("id_token") 
+        jwt = await deviceStorage.getJWT() 
         if(jwt != null){
             break;
         }

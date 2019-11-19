@@ -34,8 +34,6 @@ class BulletinBoards extends Component{
     
     static defaultProp = {
         boardid: 0,
-        userid: 0,
-        currentuserid: 0,
         boardname: '',
         entrieslist: [],
         isLoading: false,
@@ -48,8 +46,6 @@ class BulletinBoards extends Component{
         super(props);
         this.state = {
             boardid: this.props.navigation.getParam('boardid'),
-            userid: this.props.navigation.getParam('userid'),
-            currentuserid: this.props.navigation.getParam('currentuserid'),
             boardname: this.props.navigation.getParam('boardname'),
             entrieslist: [],
             isLoading: false,
@@ -82,7 +78,6 @@ class BulletinBoards extends Component{
                     size={30}
                     onPress={() => {this.props.navigation.navigate('Search', {
                         boardid: this.state.boardid,
-                        currentuserid: this.state.currentuserid,
                         boardname: this.state.boardname,
                     });}} />
             )
@@ -112,8 +107,6 @@ class BulletinBoards extends Component{
                 <BulletinBoardsEntries
                     key = {item.entryid}
                     boardid = {item.boardid}
-                    userid = {item.userid}
-                    currentuserid = {this.state.currentuserid}
                     entryid = {item.entryid}
                     username = {item.username}
                     profile = {item.profile}
@@ -152,8 +145,6 @@ class BulletinBoards extends Component{
                         icon='add'
                         onPress={() => this.props.navigation.navigate('EntryEdit', { 
                             boardid: this.state.boardid,
-                            userid: this.state.userid,
-                            username: this.state.username,
                             profile: this.state.profile})} />   
                 </View>:
                 this.state.isError ?
@@ -174,9 +165,6 @@ class BulletinBoards extends Component{
                         icon='add'
                         onPress={() => this.props.navigation.navigate('EntryEdit', { 
                             boardid: this.state.boardid,
-                            userid: this.state.userid,
-                            currentuserid: this.state.currentuserid,
-                            username: this.state.username,
                             profile: this.state.profile,
                             
                             _refresherBulletinBoards: this._refresherBulletinBoards})} />
@@ -197,9 +185,6 @@ class BulletinBoards extends Component{
                             icon='add'
                             onPress={() => this.props.navigation.navigate('EntryEdit', { 
                                 boardid: this.state.boardid,
-                                userid: this.state.userid,
-                                currentuserid: this.state.currentuserid,
-                                username: this.state.username,
                                 profile: this.state.profile,
                                 
                                 _refresherBulletinBoards: this._refresherBulletinBoards})} />        

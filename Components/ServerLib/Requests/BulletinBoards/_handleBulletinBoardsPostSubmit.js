@@ -1,6 +1,6 @@
 import { Alert } from 'react-native';
 import axios from 'axios'; 
-import {server} from '../../config';
+import {server, deviceStorage} from '../../config';
 
 export default _handleBulletinBoardsPostSubmit = async (state, _onSetState) => {
     var url = server.serverURL + '/BulletinBoards/AddEditEntry';
@@ -8,8 +8,11 @@ export default _handleBulletinBoardsPostSubmit = async (state, _onSetState) => {
     _onSetState({
         isLoading: true,
         isError: false,
-    });
-    await axios.post(url, {userid: state.currentuserid, boardid: state.boardid, 
+    }); 
+
+    var jwt = await deviceStorage.getJWT(); 
+
+    await axios.post(url, {jwt: jwt, boardid: state.boardid, 
         entryid: state.entryid, title: state.title, contents: state.contents}) 
         .then((response) => {       
             _onSetState({

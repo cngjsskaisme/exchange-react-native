@@ -120,7 +120,6 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       BulletinBoards: {
-        currentuserid : '5d5373177443381df03f3040',
         isDev : false,
         isReplyEditMode : false,
         isReplySubmitted : false,

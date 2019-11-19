@@ -1,14 +1,15 @@
 import { Alert } from 'react-native';
 import axios from 'axios'; 
-import {server} from '../../config';
+import {server, deviceStorage} from '../../config';
 
 export default _handleAddReport = async(state, _onSetState) => {
     var url = server.serverURL + '/BulletinBoards/AddReport';
     _onSetState({
         isLoading: true,
         isError: false
-    }) 
-    await axios.post(url, {title: state.title, contents: state.contents, userid: state.currentuserid, boardid: state.boardid, 
+    })  
+    var jwt = await deviceStorage.getJWT();
+    await axios.post(url, {title: state.title, contents: state.contents, jwt: jwt, boardid: state.boardid, 
         entryid: state.entryid, commentid: state.replyid, parentcommentid: state.parentreplyid }) 
         .then((response) => {       
             _onSetState({

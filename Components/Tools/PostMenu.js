@@ -23,8 +23,8 @@ class PostMenu extends Component{
         boardid: 0,
         entryid: 0,
         replyid: 0,
-        currentuserid: 0,
-        username: '',
+        //currentuserid: 0,
+        //username: '',
         profile: '',
         likes: 0,
         date: '2019-01-01',
@@ -52,8 +52,8 @@ class PostMenu extends Component{
             boardid: this.props.boardid,
             entryid: this.props.entryid,
             replyid: this.props.replyid,
-            currentuserid: this.props.currentuserid,
-            username: this.props.username,
+            //currentuserid: this.props.currentuserid,
+            //username: this.props.username,
             profile: this.props.profile,
             likes: this.props.likes,
             date: this.props.date,
@@ -193,7 +193,7 @@ class PostMenu extends Component{
                                 this.state._onSetStateBoardsEntries({
                                     boardid: this.state.boardid,
                                     entryid: this.state.entryid,
-                                    currentuserid: this.state.currentuserid,
+                                    //currentuserid: this.state.currentuserid,
                                     profile: this.state.profile,
                                     ismine: this.state.ismine,
                                     title: this.state.title,
@@ -207,7 +207,7 @@ class PostMenu extends Component{
                                 this.state._onSetStateBoardsContent({
                                     boardid: this.state.boardid,
                                     entryid: this.state.entryid,
-                                    currentuserid: this.state.currentuserid,
+                                    //currentuserid: this.state.currentuserid,
                                     profile: this.state.profile,
                                     ismine: this.state.ismine,
                                     title: this.state.title,
@@ -223,7 +223,7 @@ class PostMenu extends Component{
                                 {
                                     boardid: this.state.boardid,
                                     entryid: this.state.entryid,
-                                    currentuserid: this.state.currentuserid,
+                                    //currentuserid: this.state.currentuserid,
                                     profile: this.state.profile,
                                     ismine: this.state.ismine,
                                     title: this.state.title,
@@ -254,7 +254,7 @@ class PostMenu extends Component{
                 >
                     <Menu.Item onPress={() => this._handleAddReport({...this.state}, this._onSetStatePostMenu)} title="Report" />
                     <Divider />
-                    <Menu.Item onPress={() => this._handleLikeIncrease({...this.state}, this._onSetStatePostMenu)} title="Like this!" />
+                    <Menu.Item onPress={() => _handleLikeIncrease({...this.state}, this._onSetStatePostMenu)} title="Like this!" />
                 </Menu>
             </View>);
         }

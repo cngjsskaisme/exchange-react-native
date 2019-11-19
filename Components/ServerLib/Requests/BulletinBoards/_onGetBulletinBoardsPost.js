@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { BulletinBoardsEntries_Mock } from '../../../../Mockup_Datas/UnifiedEntries'
 import axios from 'axios'; 
-import {server} from '../../config';
+import {server, deviceStorage} from '../../config'; 
 
 export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = false, searchquery = "", language = "", isMain = false) => {   
     
@@ -40,8 +40,11 @@ export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = 
             isLoadingMore: true,
             isError: false,
         }) 
-    }
-    await axios.post(url, {userid: state.userid, boardid: state.boardid, 
+    } 
+
+    var jwt = await deviceStorage.getJWT();
+
+    await axios.post(url, {jwt: jwt, boardid: state.boardid, 
         postStartIndex: postStartIndex, postEndIndex: postEndIndex, search: searchquery, language: language})
         .then((response) => {
             // 새로고침시 목록 다 지우고 게시글 목록 새로 받기

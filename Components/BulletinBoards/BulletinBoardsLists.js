@@ -30,7 +30,6 @@ class BulletinBoardsLists extends Component{
 
     static defaultProp = {
         boardslist: null,
-        currentuserid: 0,
         isLoading: false,
         isError: false,
         isDev: false
@@ -40,7 +39,6 @@ class BulletinBoardsLists extends Component{
         super(props);
         this.state = {
             boardslist : null,
-            currentuserid: "5d5373177443381df03f3040", //userid 반환 여기서 하게끔 boardslist에서 불러오기 (onget)
             isLoading: false,
             isError: false,
             isDev: false //개발자 모드는 여기서 활성화
@@ -69,8 +67,6 @@ class BulletinBoardsLists extends Component{
                 key={item.boardid}
                 onPress={() => {this.props.navigation.navigate('BulletinBoards', { 
                         boardid : item.boardid, 
-                        userid : item.userid,
-                        currentuserid: this.state.currentuserid,
                         boardname : item.boardname, 
                         isDev : this.state.isDev })}}>
                 <View style={styles.BulletinBoards}>

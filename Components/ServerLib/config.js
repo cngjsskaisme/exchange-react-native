@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native';
 
 // server 연결 관련 
 const server = {
-  serverURL: 'http://10.138.71.112:3000' //'https://y36evadhvh.execute-api.ap-southeast-1.amazonaws.com/prod',
+  serverURL: 'http://192.168.1.28:3000' //'https://y36evadhvh.execute-api.ap-southeast-1.amazonaws.com/prod',
 }; 
 
 //참고: https://medium.com/@njwest/building-a-react-native-jwt-client-api-requests-and-asyncstorage-d1a20ab60cf4 
@@ -34,10 +34,10 @@ const deviceStorage = {
       console.log('AsyncStorage Error: ' + error.message);
     }
   },  
-  async getJWT(element) {
+  async getJWT() {
     let value = "";
     try { 
-      value = await AsyncStorage.getItem(element); 
+      value = await AsyncStorage.getItem('id_token'); 
       return value;
     } catch (error) {
       console.log('AsyncStorage Error: ' + error.message);

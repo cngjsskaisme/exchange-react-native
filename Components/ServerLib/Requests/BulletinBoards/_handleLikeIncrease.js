@@ -1,6 +1,6 @@
 import { Alert } from 'react-native';
 import axios from 'axios'; 
-import {server} from '../../config';
+import {server, deviceStorage} from '../../config';
 
 export default _handleLikeIncrease = async(state, _onSetState) => {
     
@@ -9,8 +9,9 @@ export default _handleLikeIncrease = async(state, _onSetState) => {
     _onSetState({
         isLoading: true,
         isError: false
-    }) 
-    await axios.post(url, {boardid: state.boardid, entryid: state.entryid, replyid: state.replyid, userid: state.currentuserid}) 
+    })  
+    var jwt = await deviceStorage.getJWT();
+    await axios.post(url, {boardid: state.boardid, entryid: state.entryid, replyid: state.replyid, jwt: jwt}) 
         .then((response) => {       
             _onSetState({
             isLoading: false,
