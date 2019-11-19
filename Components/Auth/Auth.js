@@ -16,13 +16,6 @@ import { _handleAuthCheckVerified } from '../ServerLib/ServerRequest';
 import {auth, deviceStorage} from "../ServerLib/config";
 
 export default class AuthScreen extends Component{
-    
-    /*
-    static defaultProps = {
-         // isLoading: false,
-        _onSetState: () => {},
-    }
-    */
 
     constructor(props){
         super(props);
@@ -45,15 +38,14 @@ export default class AuthScreen extends Component{
             this.setState({jwt: await auth.checkauth()}) 
             await _handleAuthCheckVerified({...this.state}, this._onAuth)
             
-            /*
+            
             if(this.state.isverified == false){
                 navigation.navigate("Notverified");
             }  
 
             else{ 
-                */  
                 navigation.navigate("Main");  
-            //}
+            }
         } else {
             navigation.navigate("Login"); 
         }      

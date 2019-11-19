@@ -30,7 +30,11 @@ import _handleAuthLogin from './Requests/Auth/_handleAuthLogin';
 import _handleAuthSignup from './Requests/Auth/_handleAuthSignup'; 
 import _handleAuthChecknicknm from './Requests/Auth/_handleAuthChecknicknm';
 import _handleAuthCheckVerified from './Requests/Auth/_handleAuthCheckVerified'; 
-import _handleAuthDeleteAccount from './Requests/Auth/_handleAuthDeleteAccount'; 
+import _handleAuthDeleteAccount from './Requests/Auth/_handleAuthDeleteAccount';  
+
+//Main 관련 
+
+import _handleGetCurrentUserName from './Requests/Main/_handleGetCurrentUserName'; 
 
 export {
     
@@ -46,8 +50,10 @@ export {
     _handleDeleteRequestedEvent, _handleEditRequestedEvent, _handleGetRequestedEventsList, _handleMoveToEventCalendar, 
 
     //Auth 관련 
-    _handleAuthLogin, _handleAuthSignup, _handleAuthChecknicknm, _handleAuthCheckVerified, _handleAuthDeleteAccount
+    _handleAuthLogin, _handleAuthSignup, _handleAuthChecknicknm, _handleAuthCheckVerified, _handleAuthDeleteAccount,
 
+    //Main 관련 
+    _handleGetCurrentUserName
 
 }
 

@@ -13,9 +13,10 @@ import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import MainCarousel from './MainCarousel';
 import MainGuides from './MainGuides';
-import { TitleBold } from '../Theming/Theme';
+import { TitleBold } from '../Theming/Theme'; 
+import {_handleGetCurrentUserName} from '../ServerLib/ServerRequest'; 
 
-class Main extends Component{
+export default class Main extends Component{
     static navigationOptions = {
         title: 'Main Page',
       };
@@ -34,11 +35,9 @@ class Main extends Component{
     constructor(props){
       super(props);
       this.state = {
-        currentuserid : "5d5373177443381df03f3040",
-        userid: '5d5373177443381df03f3040',
-        boardid : 'notifications',
+        boardid : 'board1',
         entrieslist: [],
-
+        name: "user",
         isLoading: true,
       }
     }
@@ -49,11 +48,23 @@ class Main extends Component{
       });
     }
 
+    _onMain = (state) => {
+      this.setState({
+          ...state
+      })
+    } 
+
+  //render 되기 전 현재 로그인 한 사용자의 ID를 불러온다.
+   async componentWillMount(){
+    await _handleGetCurrentUserName({...this.state}, this._onMain);
+  }
+  
+
     render(){
         return (
             <ScrollView>
               <View style={styles.container}>
-                <TitleBold>Welcome, User!</TitleBold>
+        <TitleBold>Welcome, {this.state.name}!</TitleBold>
                 <MainCarousel/> 
                 <MainGuides/>
               </View>
@@ -78,5 +89,3 @@ class Main extends Component{
 Main.propTypes = {
     
   };
-
-export default Main;
