@@ -4,7 +4,7 @@ import {server} from '../../config';
 
 export default _handleLikeIncrease = async(state, _onSetState) => {
     
-    const url = server.serverURL + '/process/BulletinBoards/FlipLikeEntry';
+    const url = server.serverURL + '/BulletinBoards/FlipLikeEntry';
       
     _onSetState({
         isLoading: true,
@@ -67,10 +67,10 @@ replyid: state.replyid,
 userid: state.userid
 위의 두 변수가 추가적으로 필요하다. 
 
-if(replyid == 0 && likespressed==false) => 해당 게시판의 좋아요 증가 함수 호출  (url = server.serverURL + '/process/IncreLikeEntry') 
-if(replyid == 0 && likespressed==true) => 해당 게시판의 좋아요 취소 함수 호출  (url = server.serverURL + '/process/DecreLikeEntry')
-if(replyid != 0 && likespressed==false) => 해당 댓글의 좋아요 증가 함수 호출  (url = server.serverURL + '/process/IncreLikeComment')
-if(replyid == 0 && likespressed==false) => 해당 댓글의 좋아요 취소 함수 호출  (url = server.serverURL + '/process/DecreLikeComment') 
+if(replyid == 0 && likespressed==false) => 해당 게시판의 좋아요 증가 함수 호출  (url = server.serverURL + '/IncreLikeEntry') 
+if(replyid == 0 && likespressed==true) => 해당 게시판의 좋아요 취소 함수 호출  (url = server.serverURL + '/DecreLikeEntry')
+if(replyid != 0 && likespressed==false) => 해당 댓글의 좋아요 증가 함수 호출  (url = server.serverURL + '/IncreLikeComment')
+if(replyid == 0 && likespressed==false) => 해당 댓글의 좋아요 취소 함수 호출  (url = server.serverURL + '/DecreLikeComment') 
 //////////////////////////////////////////////////////////////////////////////////////////
 */
 

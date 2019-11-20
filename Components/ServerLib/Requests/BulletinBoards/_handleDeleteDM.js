@@ -4,7 +4,7 @@ import {server} from '../../config';
 
 export default _handleDeleteDM = async(state, _onSetState) => {
 
-    var url = server.serverURL + '/process/BulletinBoards/DeleteDM';
+    var url = server.serverURL + '/BulletinBoards/DeleteDM';
     await this.setState({
       isLoading: true
     }); 

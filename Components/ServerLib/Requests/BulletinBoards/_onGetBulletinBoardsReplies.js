@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../../config';
 
 export default _onGetBulletinBoardsReplies = async (state,_onSetState, isRefresh = false) => {   
-    var url = server.serverURL + '/process/BulletinBoards/ShowComments';
+    var url = server.serverURL + '/BulletinBoards/ShowComments';
 
     // 새로고침인 경우 isLoading 활성화 후 모든 목록 다시 받기
     if(isRefresh){

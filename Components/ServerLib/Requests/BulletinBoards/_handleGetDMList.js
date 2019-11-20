@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../../config';
 
 export default _handleGetDMList = async(state, _onSetState) => {
-    var url = server.serverURL + '/process/BulletinBoards/ShowDMList';  
+    var url = server.serverURL + '/BulletinBoards/ShowDMList';  
 
     _onSetState({
         isLoading: true,

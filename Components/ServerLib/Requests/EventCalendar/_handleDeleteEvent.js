@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../../config';
 
 export default _handleDeleteEvent = async(state, _onSetState) => {
-    var url = server.serverURL + '/process/EventCalendar/DeleteEvent';  
+    var url = server.serverURL + '/EventCalendar/DeleteEvent';  
     _onSetState({
       isLoading: true,
       isError: false
