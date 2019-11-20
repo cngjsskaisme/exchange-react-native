@@ -13,6 +13,7 @@ export default _handleGetEventsList = async(state, _onSetState) => {
       startday: '2019-09-01', days: 10, type: ["Official"], userid: "5d5373177443381df03f3040", search: " "}) 
         .then((response) => {       
           _onSetState({
+            EventEntries : response.data.EventEntries,
             isLoading: false
             })  
         }) 

@@ -93,7 +93,7 @@ class BulletinBoardsLists extends Component{
         return(
             <View>{
                 this.state.isDev ? 
-                // 개발자 모드일 때
+                // 개발자 모드일 때               
                     <FlatList 
                         data = {BulletinBoardsLists_Mock}
                         renderItem = {this._renderItem}

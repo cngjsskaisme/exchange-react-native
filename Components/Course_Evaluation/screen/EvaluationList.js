@@ -13,22 +13,14 @@ difficulty : 여러 수준을 모아서 제일 많이 나타나는 수준을 선
         (예시 : Average이 많이 입력되면 difficulty = 'Average' : string,
 grade : 여러 학점을 모아서 제일 많이 나타나는 학점을 선택. 
         (예시 : A0이 많이 입력되면 difficulty = 'Average' : string,
-
 위 데이터들이 다 UnifiedEntries.js의 CourseRatingEntries_Mock에 있음
-
 rating,difficulty, exam: 최빈값 
 user가 이미 comment를 썼다면 입력하지 않도록 
-
 teaching skill은 무시. 
-
 과목 리스트는 입력 안 되게. 
 댓글들은 수정, 삭제 되게끔. 내용 없이 입력하면 no comment 넣기 
-
 same class name & different professor: 다른 수업. 
 profile: 교수명, 과목 리스트(courseid, coursebane, school 이름) 
-
-
-
 *** Comment Part ***
 commenterID : 각각 댓글 넘긴 사람의 ID. Foreign Key. integer
 commenterName : string
@@ -39,7 +31,6 @@ commenterAssignment : commenter가 입력한 과제수. String
 commenterGrade : commenter가 입력한 학점. String
 commenterDifficulty : commenter가 입력한 수준. String
 rating : commenter가 입력한 rating. number (0-5)
-
 위 comment 데이터들이 아직 없음 
 */
 
@@ -133,7 +124,8 @@ class EvaluationList extends Component {
                   [{text: 'OK'}]
               ); 
           });    
-      }
+    }
+
   
     // It is necessary to execute '_handleGetCoursesList' 
     async componentDidMount(){
