@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../../config';
 
 export default _handleGetEventsList = async(state, _onSetState) => {
-    var url = server.serverURL + '/EventCalendar/ShowEventsList';  
+    var url = server.serverURL + '/process/EventCalendar/ShowEventsList';  
     _onSetState({
       isLoading: true,
       isError: false
@@ -13,6 +13,7 @@ export default _handleGetEventsList = async(state, _onSetState) => {
       startday: '2019-09-01', days: 10, type: ["Official"], userid: "5d5373177443381df03f3040", search: " "}) 
         .then((response) => {       
           _onSetState({
+            EventEntries : response.data.EventEntries,
             isLoading: false
             })  
         }) 

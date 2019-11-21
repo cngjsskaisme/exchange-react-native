@@ -4,22 +4,40 @@ import {
   View,
   StyleSheet
 } from 'react-native';
-import {Button } from 'native-base';
+import {Button, Fab } from 'native-base';
 //import {Agenda} from 'react-native-calendars';
 import Agenda from './CalendarSourceCode/agenda/index';
 import {EventEntries} from './CalendarEventEntries'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {_handleGetEventsList} from '../ServerLib/Requests/EventCalendar/_handleGetEvents';
+import LoadingPage from '../Tools/LoadingPage';
+
 
 export default class EventCalendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: {}
+      items: {},
+      active: false,
+      EventEntries : null,
+      isLoading: true,  
     };
   }
+
+
+// 컴포넌트 마운트 시
+async componentDidMount(){
+    // 일반 사용자 모드일 때
+      await _handleGetEventsList(this._onSetState); 
+}
+
   render() {
     
     return (
+
+
+      
       <Agenda
         
         /*
@@ -47,11 +65,15 @@ export default class EventCalendar extends Component {
         // theme={{calendarBackground: 'red', agendaKnobColor: 'green'}}
         //renderDay={(day, item) => (<Text>{day ? day.day: 'item'}</Text>)}
       />
+      
+
     );
   }
 
   loadItems(day) {
+    this.state.isLoading ? <LoadingPage/>:
     setTimeout(() => {
+      
       for (let i = -15; i < 85; i++) {
         const time = day.timestamp + i * 24 * 60 * 60 * 1000;
         const strTime = this.timeToString(time);
@@ -167,5 +189,15 @@ const styles = StyleSheet.create({
   },
   eventText : {
  
-  }
+  },
+  fabStyle:{
+
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 30,
+    bottom: 15,
+  },
 });

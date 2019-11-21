@@ -162,10 +162,10 @@ export const EventEntries = [
         Events : [
             {
                 isAdmin : false,
-                distributor : 'សប្បាយ',
-                place : 'សាកលវិទ្យាល័យភូមិន្ទភ្នំពេញ',
+                distributor : 'រ៉ានី ពណ្ណរាជ',
+                place : 'សាកលវិទ្យាល័យហ៉ាន់យ៉ាង',
                 time : '1:00PM - 10:00PM',
-                title : 'ពិពណ៍ការងារ', 
+                title : 'ប្រឡងភាសាខ្មែរ', 
                 typed : [''],
                 contents : 'Babababababa .... ahdjasd',
 
@@ -190,6 +190,18 @@ export const EventEntries = [
                 place : 'Hanyang University',
                 time : '1:00PM - 10:00PM',
                 title : 'Haksul Town exhibition', 
+                typed : [''],
+                contents : 'Babababababa .... ahdjasd',
+
+                eventID : '12',
+                
+            },
+            {
+                isAdmin : false,
+                distributor : '汉阳大学',
+                place : '汉阳大学',
+                time : '1:00PM - 10:00PM',
+                title : '文化载体', 
                 typed : [''],
                 contents : 'Babababababa .... ahdjasd',
 
