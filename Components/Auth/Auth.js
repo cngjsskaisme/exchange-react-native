@@ -35,17 +35,8 @@ export default class AuthScreen extends Component{
        
         //await auth.logout()     
         if (await auth.checkauth()) {  
-            this.setState({jwt: await auth.checkauth()}) 
-            await _handleAuthCheckVerified({...this.state}, this._onAuth)
-            
-            
-            if(this.state.isverified == false){
-                navigation.navigate("Notverified");
-            }  
-
-            else{ 
                 navigation.navigate("Main");  
-            }
+            
         } else {
             navigation.navigate("Login"); 
         }      

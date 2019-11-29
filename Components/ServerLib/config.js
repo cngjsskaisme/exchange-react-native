@@ -2,10 +2,9 @@ import { AsyncStorage } from 'react-native';
 
 // server 연결 관련 
 const server = {
-  serverURL: 'http://192.168.1.28:3000' //'https://y36evadhvh.execute-api.ap-southeast-1.amazonaws.com/prod',
+  serverURL:  'https://y36evadhvh.execute-api.ap-southeast-1.amazonaws.com/prod' //'http://172.16.129.193:3000' //
 }; 
 
-//참고: https://medium.com/@njwest/building-a-react-native-jwt-client-api-requests-and-asyncstorage-d1a20ab60cf4 
 // asyncstorage 관련
 const deviceStorage = {
   async saveKey(key, valueToSave) {

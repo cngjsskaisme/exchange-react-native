@@ -98,7 +98,7 @@ class SignupScreen extends Component{
                             <TextInput
                                 placeholder='Your password'
                                 value = {this.state.loginid} 
-                                placeholder='Your HYU email: You should verify your account using this email address after sign up'
+                                placeholder='Your HYU email'
                                 onChangeText={loginid => this.setState({ loginid})}/> 
 
                             <TextInput
