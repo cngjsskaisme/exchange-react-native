@@ -13,6 +13,7 @@ import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import MainCarousel from './MainCarousel';
 import MainGuides from './MainGuides';
+import ButtonBlock from './ButtonBlock';
 import { TitleBold } from '../Theming/Theme'; 
 import {_handleGetCurrentUserName} from '../ServerLib/ServerRequest'; 
 
@@ -64,9 +65,9 @@ export default class Main extends Component{
         return (
             <ScrollView>
               <View style={styles.container}>
-        <TitleBold>Welcome, {this.state.name}!</TitleBold>
-                <MainCarousel/> 
-                <MainGuides/>
+                <TitleBold>Welcome, {this.state.name}!</TitleBold>
+                <ButtonBlock/>
+                
               </View>
             </ScrollView>
           );
@@ -76,7 +77,7 @@ export default class Main extends Component{
   
   const styles = StyleSheet.create({
     container: {
-      flex: 1,
+
       flexDirection: 'column',
       paddingTop: 15,
       alignItems: "center",
