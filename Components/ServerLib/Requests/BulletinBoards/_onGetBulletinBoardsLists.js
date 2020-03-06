@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../../config'; 
 
 export default _onGetBulletinBoardsLists = async (_onSetState) => {   
-    var url =  server.serverURL + "/BulletinBoards/ShowBulletinBoardsList";
+    var url =  server.serverURL + "/bulletinboards/showbulletinboardslist";
     _onSetState({
         isLoading: true,
         isError: false

@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server, deviceStorage} from '../../config';
 
 export default _handleAddReport = async(state, _onSetState) => {
-    var url = server.serverURL + '/BulletinBoards/AddReport';
+    var url = server.serverURL + '/bulletinboards/addreport';
     _onSetState({
         isLoading: true,
         isError: false

@@ -2,7 +2,7 @@ import { AsyncStorage } from 'react-native';
 
 // server 연결 관련 
 const server = {
-  serverURL:  'https://y36evadhvh.execute-api.ap-southeast-1.amazonaws.com/prod' //'http://172.16.129.193:3000' //
+  serverURL: 'http://192.168.74.121:3000'  //'https://y36evadhvh.execute-api.ap-southeast-1.amazonaws.com/prod' //' //
 }; 
 
 // asyncstorage 관련

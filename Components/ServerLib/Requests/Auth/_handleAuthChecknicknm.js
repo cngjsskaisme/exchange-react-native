@@ -4,7 +4,7 @@ import {server} from '../../config';
 
 export default _handleAuthLogin = async(state, _onSetState) => {
              
-    var url = server.serverURL + '/user/checknickNm'; 
+    var url = server.serverURL + '/users/checknicknm'; 
     
     _onSetState({
         //isLoading: true,

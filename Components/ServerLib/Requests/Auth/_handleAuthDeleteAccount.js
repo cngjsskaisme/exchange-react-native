@@ -4,7 +4,7 @@ import {server, auth, deviceStorage} from '../../config';
 
 export default _handleAuthDeleteAccount = async(state, _onSetState) => {
      
-    var url = server.serverURL + '/user/DeleteAccount'; 
+    var url = server.serverURL + '/users/deleteaccount'; 
     
     _onSetState({
         isLoading: true,

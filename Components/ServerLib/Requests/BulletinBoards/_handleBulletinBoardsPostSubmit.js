@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server, deviceStorage} from '../../config';
 
 export default _handleBulletinBoardsPostSubmit = async (state, _onSetState) => {
-    var url = server.serverURL + '/BulletinBoards/AddEditEntry';
+    var url = server.serverURL + '/bulletinboards/addeditentry';
     
     _onSetState({
         isLoading: true,

@@ -4,7 +4,7 @@ import {server, deviceStorage} from '../../config';
 
 export default _handleLikeIncrease = async(state, _onSetState) => {
     
-    const url = server.serverURL + '/BulletinBoards/FlipLikeEntry';
+    const url = server.serverURL + '/bulletinboards/fliplikeentry';
       
     _onSetState({
         isLoading: true,

@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../../config';
 
 export default _handleGetUserNameList = async(state, _onSetState) => {
-    var url = server.serverURL + '/BulletinBoards/ShowUserNameList';
+    var url = server.serverURL + '/bulletinboards/showusernamelist';
     
     _onSetState({
         isLoading: true,

@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../../config';
 
 export default _handleDeleteReplies = async(state, _onSetState) => {
-    var url = server.serverURL + '/BulletinBoards/DeleteComment';
+    var url = server.serverURL + '/bulletinboards/deletecomment';
     _onSetState({
         isLoading: true,
         isError: false

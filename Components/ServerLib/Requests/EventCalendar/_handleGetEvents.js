@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../../config';
 
 export default _handleGetEventsList = async(state, _onSetState) => {
-    var url = server.serverURL + '/process/EventCalendar/ShowEventsList';  
+    var url = server.serverURL + '/eventcalendars/showeventslist';  
     _onSetState({
       isLoading: true,
       isError: false

@@ -9,7 +9,7 @@ import {server, deviceStorage} from '../../config';
 
 export default _handleAuthCheckVerified = async(state, _onSetState) => {
              
-    var url = server.serverURL + '/user/CheckVerified'; 
+    var url = server.serverURL + '/users/checkverified'; 
     
     _onSetState({
         isLoading: true,

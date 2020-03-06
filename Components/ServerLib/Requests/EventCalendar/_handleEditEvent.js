@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../../config';
 
 export default _handleEditEvent = async(state, _onSetState) => {
-    var url = server.serverURL + '/EventCalendar/EditEvent';
+    var url = server.serverURL + '/eventcalendars/editevent';
     _onSetState({
         isLoading: true,
         isError: false

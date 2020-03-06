@@ -5,7 +5,7 @@ import {server, deviceStorage} from '../../config';
 
 export default _onGetBulletinBoardsPost = async (state,_onSetState, isRefresh = false, searchquery = "", language = "", isMain = false) => {   
     
-    var url = server.serverURL + '/BulletinBoards/ShowBulletinBoard';
+    var url = server.serverURL + '/bulletinboards/showbulletinboard';
 
     // 새로고침인 경우 isLoading 활성화 후 모든 목록 다시 받기
     if(isRefresh){

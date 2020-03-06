@@ -4,7 +4,7 @@ import {server, deviceStorage} from '../../config';
 
 export default _handleAuthLogin = async(state, _onSetState) => {
              
-    var url = server.serverURL + '/signup'; 
+    var url = server.serverURL + '/users/signup'; 
     
     _onSetState({
         isLoading: true,

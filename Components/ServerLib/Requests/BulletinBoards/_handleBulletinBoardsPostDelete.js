@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server} from '../../config';
 
 export default _handleBulletinBoardsPostDelete = async(state, _onSetState) => {
-    var url = server.serverURL + '/BulletinBoards/DeleteEntry';
+    var url = server.serverURL + '/bulletinboards/deleteentry';
     _onSetState({
         isLoading: true,
         isError: false,

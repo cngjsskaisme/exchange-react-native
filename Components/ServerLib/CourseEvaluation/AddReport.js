@@ -5,11 +5,11 @@
 */  
 
 _handleAddReport = async() => { 
-    var url = server.serverURL + '/BulletinBoards/AddReport';
+    var url = server.serverURL + '/bulletinboards/addreport';
     await axios.post(url, {
       boardid: "CourseEvaluation",  
       commentid: "5d7dd78efbc83a72bb7b4dec",  
-      userid: "5d5373177443381df03f3040",
+      userid: "5d5373177443381df03f3040"
     })
       .then((response) => {       
           this.setState({ 

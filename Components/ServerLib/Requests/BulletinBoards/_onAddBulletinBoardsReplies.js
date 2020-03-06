@@ -3,7 +3,7 @@ import axios from 'axios';
 import {server, deviceStorage} from '../../config';
 
 export default _onAddBulletinBoardsReplies = async(state, _onSetState) => {
-    var url = server.serverURL + '/BulletinBoards/AddComment';
+    var url = server.serverURL + '/bulletinboards/addcomment';
     _onSetState({
         isLoading: true,
         isError: false

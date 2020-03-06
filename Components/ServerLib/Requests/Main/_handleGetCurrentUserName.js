@@ -4,7 +4,7 @@ import {server, deviceStorage} from '../../config';
 
 export default _handleGetCurrentUserName = async(state, _onSetState) => {
      
-    var url = server.serverURL + '/user/GetCurrentUserName'; 
+    var url = server.serverURL + '/users/getcurrentusername'; 
     
     _onSetState({
         isLoading: true,
