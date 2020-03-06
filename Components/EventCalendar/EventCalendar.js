@@ -71,7 +71,7 @@ async componentDidMount(){
   }
 
   loadItems(day) {
-    
+    this.state.isLoading ? <LoadingPage/>:
     setTimeout(() => {
       
       for (let i = -15; i < 85; i++) {
